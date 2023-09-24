@@ -444,6 +444,7 @@ void SetMultiuseSpriteTemplateToTrainerFront(u16 trainerPicId, u8 battlerPositio
  * differ for matching purposes in the caller's codegen. */
 #define GetMonData(...) CAT(GetMonData, NARG_8(__VA_ARGS__))(__VA_ARGS__)
 #define GetBoxMonData(...) CAT(GetBoxMonData, NARG_8(__VA_ARGS__))(__VA_ARGS__)
+u8 SendMonToPC(struct Pokemon* mon);
 u32 GetMonData3(struct Pokemon *mon, s32 field, u8 *data);
 u32 GetMonData2(struct Pokemon *mon, s32 field);
 u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data);

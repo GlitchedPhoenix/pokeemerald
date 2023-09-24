@@ -343,6 +343,11 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
 
     gBattleResources->AI_ScriptsStack->size = 0;
     sBattler_AI = gActiveBattler;
+	
+	#if TX_DEBUG_SYSTEM_ENABLE == TRUE
+    if (gIsDebugBattle)
+        AI_THINKING_STRUCT->aiFlags = gDebugAIFlags;
+	#endif
 
     // Decide a random target battlerId in doubles.
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
