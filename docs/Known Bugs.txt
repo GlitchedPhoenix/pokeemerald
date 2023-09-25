@@ -1,4 +1,3 @@
 - Shops can still sell TMs in multiples.
 - Weird red section of fog
 - Objects darken in Petalburg Woods. Might be fine, but it's inconsistent.
-- Reflection immediately disappear when stepping to a tile that ordinarily doesn't have one.

@@ -334,7 +334,15 @@ static void TryHidePlayerReflection(void)
         x = playerObjEvent->currentCoords.x;
         y = playerObjEvent->currentCoords.y;
         MoveCoords(DIR_SOUTH, &x, &y);
-        if (!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x, y)))
+        if ((!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x, y))) &&
+		    (!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x + 1, y))) &&
+			(!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x - 1, y))) &&
+			(!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x, y + 1))) &&
+		    (!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x + 1, y + 1))) &&
+			(!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x - 1, y + 1))) &&
+			(!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x, y - 1))) &&
+		    (!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x + 1, y - 1))) &&
+			(!MetatileBehavior_IsReflective(MapGridGetMetatileBehaviorAt(x - 1, y - 1))))
             playerObjEvent->hideReflection = TRUE;
         else 
             playerObjEvent->hideReflection = FALSE;

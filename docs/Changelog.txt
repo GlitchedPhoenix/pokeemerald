@@ -17,11 +17,11 @@ Mechanical Changes
 - Most Marts now change their stock according to your badge count.
 - The bag's items pocket can now hold 99 items instead of 30, with a storeable quantity of up to 999 of each.
 - Healing items and vitamins have been moved to their own pocket.
-- Trade evolutions can now be evolved using a key item obtained during the story.
 
 Pokemon Changes
 - Chinchou and Lanturn now have a 5% chance of holding a Deep Sea Scale.
 - Carvanha and Sharpedo now have a 5% chance of holding a Deep Sea Tooth.
+- All trade evolutions can be evolved using a key item obtained during the story.
 
 Wild Encounters
 - Lunatone can now be found at night in Meteor Falls, replacing Solrock.
