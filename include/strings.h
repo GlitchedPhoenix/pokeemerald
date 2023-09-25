@@ -36,6 +36,7 @@ extern const u8 gText_Beauty[];
 extern const u8 gText_Cute[];
 extern const u8 gText_Smart[];
 extern const u8 gText_Tough[];
+extern const u8 gText_MedicinePocket[];
 
 extern const u8 gText_Normal[];
 extern const u8 gText_Super[];

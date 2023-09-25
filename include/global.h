@@ -1000,7 +1000,7 @@ struct SaveBlock1
     /*0x6C8*/ struct ItemSlot bagPocket_PokeBalls[BAG_POKEBALLS_COUNT];
 	/*0x708*/ //struct ItemSlot bagPocket_TMHM[BAG_TMHM_COUNT];
 		  u8 bagPocket_TMHMOwnedFlags[14]; //allow for a total of 112 TMs/HMs
-		  u8 bagPocket_TMHMPadding[122]; //do not touch the save layout, take 242 bytes of free space
+			  struct ItemSlot bagPocket_Medicine[BAG_MEDICINE_COUNT];
     /*0x790*/ struct ItemSlot bagPocket_Berries[BAG_BERRIES_COUNT];
     /*0x848*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
     /*0x988*/ u8 seen1[NUM_DEX_FLAG_BYTES];
@@ -1058,7 +1058,7 @@ struct SaveBlock1
     /*0x31DC*/ struct Roamer roamer;
     /*0x31F8*/ struct EnigmaBerry enigmaBerry;
     /*0x322C*/ struct MysteryGiftSave mysteryGift;
-    /*0x3598*/ u8 unused_3598[0x180];
+    /*0x3598*/ u8 unused_3598[0x10];
     /*0x3718*/ u32 trainerHillTimes[NUM_TRAINER_HILL_MODES];
     /*0x3728*/ struct RamScript ramScript;
     /*0x3B14*/ struct RecordMixingGift recordMixingGift;
