@@ -482,6 +482,9 @@ const u32 gItemIconPalette_Magnet[] = INCBIN_U32("graphics/items/icon_palettes/m
 const u32 gItemIcon_MysticWater[] = INCBIN_U32("graphics/items/icons/mystic_water.4bpp.lz");
 const u32 gItemIconPalette_MysticWater[] = INCBIN_U32("graphics/items/icon_palettes/mystic_water.gbapal.lz");
 
+const u32 gItemIcon_WirelessCharm[] = INCBIN_U32("graphics/items/icons/wireless_charm.4bpp.lz");
+const u32 gItemIconPalette_WirelessCharm[] = INCBIN_U32("graphics/items/icon_palettes/wireless_charm.gbapal.lz");
+
 const u32 gItemIcon_SharpBeak[] = INCBIN_U32("graphics/items/icons/sharp_beak.4bpp.lz");
 const u32 gItemIconPalette_SharpBeak[] = INCBIN_U32("graphics/items/icon_palettes/sharp_beak.gbapal.lz");
 

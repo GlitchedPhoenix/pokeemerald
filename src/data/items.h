@@ -4209,15 +4209,17 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_TMHM,
     },
 
-    [ITEM_15B] =
+    [ITEM_WIRELESS_CHARM] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
+        .name = _("WIRELESSCHARM"),
+        .itemId = ITEM_WIRELESS_CHARM,
         .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .description = sWirelessCharmDesc,
+		.registrability = TRUE,
+		.importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
     },
 
     [ITEM_15C] =

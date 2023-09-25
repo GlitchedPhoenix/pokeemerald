@@ -358,6 +358,7 @@ struct Evolution
     u16 method;
     u16 param;
     u16 targetSpecies;
+	u16 param2;
 };
 
 #define NUM_UNOWN_FORMS 28

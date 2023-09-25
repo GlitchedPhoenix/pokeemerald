@@ -5572,6 +5572,13 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
                 targetSpecies = gEvolutionTable[species][i].targetSpecies;
                 break;
             }
+			if (gEvolutionTable[species][i].method == EVO_STONE_HELD
+             && gEvolutionTable[species][i].param == evolutionItem
+             && gEvolutionTable[species][i].param2 == heldItem)
+            {
+                targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            }
         }
         break;
     }

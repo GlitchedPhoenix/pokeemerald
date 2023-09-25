@@ -382,7 +382,7 @@
 #define ITEM_HM08 346
 
 // Unknown
-#define ITEM_15B 347
+#define ITEM_WIRELESS_CHARM 347
 #define ITEM_15C 348
 
 // FireRed/LeafGreen
@@ -448,11 +448,11 @@
 #define NUM_TECHNICAL_MACHINES 50
 #define NUM_HIDDEN_MACHINES     8
 
-#define MAX_BAG_ITEM_CAPACITY  99
+#define MAX_BAG_ITEM_CAPACITY  999
 #define MAX_PC_ITEM_CAPACITY   999
 #define MAX_BERRY_CAPACITY     999
 
-#define BAG_ITEM_CAPACITY_DIGITS 2
+#define BAG_ITEM_CAPACITY_DIGITS 3
 #define BERRY_CAPACITY_DIGITS 3
 #define MAX_ITEM_DIGITS BERRY_CAPACITY_DIGITS
 
@@ -477,6 +477,6 @@
 #define ITEM_B_USE_OTHER    2
 
 // Check if the item is one that can be used on a Pokemon.
-#define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= MAX_BERRY_INDEX)
+#define ITEM_HAS_EFFECT(item) (((item) >= ITEM_POTION && (item) <= MAX_BERRY_INDEX) || (item == ITEM_WIRELESS_CHARM))
 
 #endif  // GUARD_CONSTANTS_ITEMS_H

@@ -44,6 +44,10 @@ const u8 gItemEffect_SuperPotion[7] = {
     [6] = 50, // Amount of HP to recover
 };
 
+const u8 sItemEffect_WirelessCharm[6] = {
+    [4] = ITEM4_EVO_STONE,
+};
+
 const u8 gItemEffect_FullHeal[6] = {
     [3] = ITEM3_STATUS_ALL,
 };
@@ -437,6 +441,7 @@ const u8 *const gItemEffectTable[] =
     [ITEM_THUNDER_STONE - ITEM_POTION] = gItemEffect_ThunderStone,
     [ITEM_WATER_STONE - ITEM_POTION]   = gItemEffect_WaterStone,
     [ITEM_LEAF_STONE - ITEM_POTION]    = gItemEffect_LeafStone,
+	[ITEM_WIRELESS_CHARM - ITEM_POTION] = sItemEffect_WirelessCharm,
     [ITEM_CHERI_BERRY - ITEM_POTION]   = gItemEffect_CheriBerry,
     [ITEM_CHESTO_BERRY - ITEM_POTION]  = gItemEffect_ChestoBerry,
     [ITEM_PECHA_BERRY - ITEM_POTION]   = gItemEffect_PechaBerry,

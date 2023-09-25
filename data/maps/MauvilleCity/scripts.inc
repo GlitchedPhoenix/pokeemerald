@@ -128,6 +128,14 @@ MauvilleCity_EventScript_WallyAndUncleExitNorth::
 	waitmovement 0
 	msgbox MauvilleCity_Text_UncleVisitUsSometime, MSGBOX_DEFAULT
 	closemessage
+	applymovement LOCALID_WALLY, MauvilleCity_Movement_WallyFaceNorth
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox MauvilleCity_Text_WallyGiveBracelet, MSGBOX_DEFAULT
+	closemessage
+	giveitem ITEM_WIRELESS_CHARM
+	closemessage
 	applymovement OBJ_EVENT_ID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitNorth2
 	applymovement LOCALID_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitNorth2
 	applymovement LOCALID_WALLY, MauvilleCity_Movement_WallyExitNorth2
@@ -147,12 +155,46 @@ MauvilleCity_EventScript_WallyAndUncleExitEast::
 	waitmovement 0
 	msgbox MauvilleCity_Text_UncleVisitUsSometime, MSGBOX_DEFAULT
 	closemessage
+	applymovement LOCALID_WALLY, MauvilleCity_Movement_WallyFaceEast
+	waitmovement 0
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceLeft
+	waitmovement 0
+	msgbox MauvilleCity_Text_WallyGiveBracelet, MSGBOX_DEFAULT
+	closemessage
+	giveitem ITEM_WIRELESS_CHARM
+	closemessage
 	applymovement OBJ_EVENT_ID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitEast2
 	applymovement LOCALID_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitEast2
 	applymovement LOCALID_WALLY, MauvilleCity_Movement_WallyExitEast2
 	waitmovement 0
 	goto MauvilleCity_EventScript_DefeatedWally
 	end
+
+MauvilleCity_Movement_WallyFaceNorth::
+	emote_exclamation_mark
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_up
+	walk_right
+	walk_right
+	step_end
+
+MauvilleCity_Movement_WallyFaceEast::
+	emote_exclamation_mark
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_up
+	walk_up
+	walk_right
+	step_end
+
+MauvilleCity_Text_WallyGiveBracelet::
+	.string "Before I leave, {PLAYER}, I\n"
+	.string "want you to have this.$"
 
 MauvilleCity_EventScript_DefeatedWally::
 	removeobject LOCALID_WALLY
@@ -260,6 +302,7 @@ MauvilleCity_Movement_WallyExitNorth2:
 MauvilleCity_Movement_WallyExitEast2:
 	delay_16
 	delay_16
+	walk_down
 	walk_left
 	walk_left
 	walk_left

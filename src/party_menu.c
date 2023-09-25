@@ -5320,6 +5320,7 @@ static void Task_SacredAshDisplayHPRestored(u8 taskId)
 
 void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc task)
 {
+	u16 species;
     PlaySE(SE_SELECT);
     gCB2_AfterEvolution = gPartyMenu.exitCallback;
     if (ExecuteTableBasedItemEffect_(gPartyMenu.slotId, gSpecialVar_ItemId, 0))
@@ -5331,7 +5332,16 @@ void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc task)
     }
     else
     {
-        RemoveBagItem(gSpecialVar_ItemId, 1);
+        if(gSpecialVar_ItemId != ITEM_WIRELESS_CHARM)
+			RemoveBagItem(gSpecialVar_ItemId, 1);
+		species = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES);
+		if(species == SPECIES_SLOWPOKE || species == SPECIES_POLIWHIRL || species == SPECIES_ONIX
+		|| species == SPECIES_SEADRA || species == SPECIES_SCYTHER || species == SPECIES_PORYGON
+		|| species == SPECIES_CLAMPERL)
+		{
+			u16 heldItem = 0;
+			SetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_HELD_ITEM, &heldItem);
+		}
         FreePartyPointers();
     }
 }

@@ -271,6 +271,11 @@ static const u8 sCarbosDesc[] = _(
     "SPEED stat of one\n"
     "POKéMON.");
 
+static const u8 sWirelessCharmDesc[] = _(
+    "A necklace from\n"
+    "WALLY. It evolves\n"
+    "certain POKéMON.");
+
 static const u8 sCalciumDesc[] = _(
     "Raises the base\n"
     "SP. ATK stat of one\n"
