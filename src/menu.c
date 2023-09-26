@@ -195,6 +195,11 @@ void AddTextPrinterForMessageWithTextColor(bool8 allowSkippingDelayWithButtonPre
     gTextFlags.canABSpeedUpPrint = allowSkippingDelayWithButtonPress;
 
     color = ContextNpcGetTextColor();
+	if (gSpecialVar_TextColor > 15)
+		FlagSet(FLAG_SYS_TEXTCOLORS2);
+	 else
+		FlagClear(FLAG_SYS_TEXTCOLORS2);
+	LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     AddTextPrinterParameterized2(0, 1, gStringVar4, GetPlayerTextSpeedDelay(), NULL, gSpecialVar_TextColor, 1, 3);      
 }
 

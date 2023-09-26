@@ -231,6 +231,8 @@
 #define EXT_CTRL_CODE_PAUSE_MUSIC            0x17
 #define EXT_CTRL_CODE_RESUME_MUSIC           0x18
 
+//Adding 16 to any text color will use an alternate palette for more variety.
+
 #define TEXT_COLOR_TRANSPARENT  0x0
 #define TEXT_COLOR_WHITE        0x1
 #define TEXT_COLOR_DARK_GRAY    0x2
@@ -241,12 +243,29 @@
 #define TEXT_COLOR_LIGHT_GREEN  0x7
 #define TEXT_COLOR_BLUE         0x8
 #define TEXT_COLOR_LIGHT_BLUE   0x9
-#define TEXT_DYNAMIC_COLOR_1    0xA // Usually white
-#define TEXT_DYNAMIC_COLOR_2    0xB // Usually white w/ tinge of green
-#define TEXT_DYNAMIC_COLOR_3    0xC // Usually white
-#define TEXT_DYNAMIC_COLOR_4    0xD // Usually aquamarine
-#define TEXT_DYNAMIC_COLOR_5    0xE // Usually blue-green
-#define TEXT_DYNAMIC_COLOR_6    0xF // Usually cerulean
+#define TEXT_DYNAMIC_COLOR_1    0xA
+#define TEXT_DYNAMIC_COLOR_2    0xB
+#define TEXT_DYNAMIC_COLOR_3    0xC
+#define TEXT_DYNAMIC_COLOR_4    0xD
+#define TEXT_DYNAMIC_COLOR_5    0xE
+#define TEXT_DYNAMIC_COLOR_6    0xF
+
+#define TEXT_COLOR_TRANSPARENT2 0x10
+#define TEXT_COLOR_UNUSED1      0x11
+#define TEXT_COLOR_UNUSED2      0x12
+#define TEXT_COLOR_UNUSED3      0x13
+#define TEXT_COLOR_DARK_RED     0x14
+#define TEXT_COLOR_UNUSED4      0x15
+#define TEXT_COLOR_UNUSED5      0x16
+#define TEXT_COLOR_UNUSED6      0x17
+#define TEXT_COLOR_DARK_BLUE    0x18
+#define TEXT_COLOR_UNUSED7      0x19
+#define TEXT_COLOR_UNUSED8      0x1A
+#define TEXT_COLOR_UNUSED9      0x1B
+#define TEXT_COLOR_UNUSEDA      0x1C
+#define TEXT_COLOR_UNUSEDB      0x1D
+#define TEXT_COLOR_UNUSEDC      0x1E
+#define TEXT_COLOR_UNUSEDD      0x1F
 
 #define PLACEHOLDER_ID_UNKNOWN       0x0
 #define PLACEHOLDER_ID_PLAYER        0x1

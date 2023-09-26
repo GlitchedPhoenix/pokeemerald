@@ -114,6 +114,10 @@ bool8 ScrCmd_textcolor(struct ScriptContext * ctx)
  {
      gSpecialVar_PrevTextColor = gSpecialVar_TextColor;
      gSpecialVar_TextColor = ScriptReadByte(ctx);
+	 if (gSpecialVar_TextColor > 15)
+		FlagSet(FLAG_SYS_TEXTCOLORS2);
+	 else
+		FlagClear(FLAG_SYS_TEXTCOLORS2);
      return FALSE;
  }
 

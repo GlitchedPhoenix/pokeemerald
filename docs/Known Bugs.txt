@@ -1,0 +1,1 @@
+- Alt textcolors will linger in the Pokemon and Save menus.

@@ -576,7 +576,7 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
 
     ResetPaletteFade();
     LoadPalette(sMainMenuBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-    LoadPalette(sMainMenuTextPal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    LoadPalette(GetTextWindowPalette(4), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();

@@ -264,6 +264,47 @@ LittlerootTown_EventScript_Twin::
 	release
 	end
 
+LittlerootTown_EventScript_ColorTest::
+	lock
+	faceplayer
+	textcolor 20
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 24
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 19
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 3
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 4
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 5
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 6
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 7
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 8
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 9
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 10
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 11
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 12
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 13
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 14
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	textcolor 18
+	msgbox Text_ColorTest, MSGBOX_DEFAULT
+	release
+	end
+
+Text_ColorTest::
+	.string "Behold, the color of this text$!"
+
 LittlerootTown_EventScript_GoSaveBirch::
 	special GetPlayerBigGuyGirlString
 	msgbox LittlerootTown_Text_CanYouGoSeeWhatsHappening, MSGBOX_DEFAULT

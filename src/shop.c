@@ -972,29 +972,16 @@ static const struct WindowTemplate sTMNameWindow =
 };
 
 static void BuyMenuDrawGraphics(void)
-{
-	u8 windowId;
-	
+{	
     BuyMenuDrawMapGraphics();
     BuyMenuCopyMenuBgToBg1TilemapBuffer();
     AddMoneyLabelObject(19, 11);
     PrintMoneyAmountInMoneyBoxWithBorder(WIN_MONEY, 1, 13, GetMoney(&gSaveBlock1Ptr->money));
-
-    LoadMessageBoxAndBorderGfx();
-    windowId = AddWindow(&sTMNameWindow);
-    DrawStdWindowFrame(windowId, FALSE);
-	
-    StringExpandPlaceholders(gStringVar1, sDebugText_Util_WarpToMap_SelMax);
-    StringCopy(gStringVar3, gText_DigitIndicator[0]);
-    StringExpandPlaceholders(gStringVar4, sDebugText_Util_WarpToMap_SelectMapGroup);
-    AddTextPrinterParameterized(windowId, 1, gStringVar4, 1, 1, 0, NULL);
 	
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
     ScheduleBgCopyTilemapToVram(2);
     ScheduleBgCopyTilemapToVram(3);
-	
-	CopyWindowToVram(windowId, 3);
 }
 
 static void BuyMenuDrawMapGraphics(void)
