@@ -1487,6 +1487,7 @@ static void CreateFogHorizontalSprites(void)
                 sprite->x = (i % 5) * 64 + 32;
                 sprite->y = (i / 5) * 64 + 32;
                 gWeatherPtr->sprites.s2.fogHSprites[i] = sprite;
+				sprite->oam.paletteNum = gWeatherPtr->contrastColorMapSpritePalIndex;
             }
             else
             {
@@ -1495,7 +1496,6 @@ static void CreateFogHorizontalSprites(void)
         }
 
         gWeatherPtr->fogHSpritesCreated = TRUE;
-		sprite->oam.paletteNum = gWeatherPtr->targetColorMapIndex;
     }
 }
 
