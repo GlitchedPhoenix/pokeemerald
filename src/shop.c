@@ -828,7 +828,10 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
                 5);
         }
 
-        StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
+        if (ItemId_GetPocket(itemId) == POCKET_TM_HM && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+            StringCopy(gStringVar4, gText_SoldOut2);
+        else
+            StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
         x = GetStringRightAlignXOffset(FONT_NARROW, gStringVar4, 120);
         AddTextPrinterParameterized4(windowId, FONT_NARROW, x, y, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, gStringVar4);
     }
@@ -954,16 +957,44 @@ static void BuyMenuDisplayMessage(u8 taskId, const u8 *text, TaskFunc callback)
     ScheduleBgCopyTilemapToVram(0);
 }
 
+#define TM_WINDOW_WIDTH_EXTRA 8
+#define TM_WINDOW_HEIGHT_EXTRA 2
+
+static const struct WindowTemplate sTMNameWindow =
+{
+    .bg = 0,
+    .tilemapLeft = 10,
+    .tilemapTop = 0x20,
+    .width = TM_WINDOW_WIDTH_EXTRA,
+    .height = 2 * TM_WINDOW_HEIGHT_EXTRA,
+    .paletteNum = 15,
+    .baseBlock = 1,
+};
+
 static void BuyMenuDrawGraphics(void)
 {
+	u8 windowId;
+	
     BuyMenuDrawMapGraphics();
     BuyMenuCopyMenuBgToBg1TilemapBuffer();
     AddMoneyLabelObject(19, 11);
     PrintMoneyAmountInMoneyBoxWithBorder(WIN_MONEY, 1, 13, GetMoney(&gSaveBlock1Ptr->money));
+
+    LoadMessageBoxAndBorderGfx();
+    windowId = AddWindow(&sTMNameWindow);
+    DrawStdWindowFrame(windowId, FALSE);
+	
+    StringExpandPlaceholders(gStringVar1, sDebugText_Util_WarpToMap_SelMax);
+    StringCopy(gStringVar3, gText_DigitIndicator[0]);
+    StringExpandPlaceholders(gStringVar4, sDebugText_Util_WarpToMap_SelectMapGroup);
+    AddTextPrinterParameterized(windowId, 1, gStringVar4, 1, 1, 0, NULL);
+	
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
     ScheduleBgCopyTilemapToVram(2);
     ScheduleBgCopyTilemapToVram(3);
+	
+	CopyWindowToVram(windowId, 3);
 }
 
 static void BuyMenuDrawMapGraphics(void)
@@ -1178,7 +1209,9 @@ static void Task_BuyMenu(u8 taskId)
             else
                 sShopData->totalCost = gDecorations[itemId].price;
 
-            if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
+            if (ItemId_GetPocket(itemId) == POCKET_TM_HM && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+                BuyMenuDisplayMessage(taskId, gText_SoldOut, BuyMenuReturnToItemList);
+            else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
             {
                 BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
             }
@@ -1193,8 +1226,11 @@ static void Task_BuyMenu(u8 taskId)
                     CopyItemName(itemId, gStringVar1);
                     if (ItemId_GetPocket(itemId) == POCKET_TM_HM)
                     {
-                        StringCopy(gStringVar2, gMoveNames[ItemIdToBattleMoveId(itemId)]);
-                        BuyMenuDisplayMessage(taskId, gText_Var1CertainlyHowMany2, Task_BuyHowManyDialogueInit);
+                        ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, 6);
+                        StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1ThatllBeVar2);
+                        tItemCount = 1;
+                        sShopData->totalCost = (ItemId_GetPrice(tItemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * tItemCount;
+                        BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuConfirmPurchase);
                     }
                     else
                     {
@@ -1296,8 +1332,9 @@ static void BuyMenuTryMakePurchase(u8 taskId)
     {
         if (AddBagItem(tItemId, tItemCount) == TRUE)
         {
-            BuyMenuDisplayMessage(taskId, gText_HereYouGoThankYou, BuyMenuSubtractMoney);
+            RedrawListMenu(tListTaskId);
             RecordItemPurchase(taskId);
+			BuyMenuDisplayMessage(taskId, gText_HereYouGoThankYou, BuyMenuSubtractMoney);
         }
         else
         {
