@@ -581,12 +581,112 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Machine::
 LittlerootTown_ProfessorBirchsLab_EventScript_Rival::
 	lock
 	faceplayer
+	call_if_set FLAG_SYS_GAME_CLEAR, LittlerootTown_ProfessorBirchsLab_EventScript_RivalCheckProg
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_RivalFuturePlans
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_RivalHaveYouGoneToBattleFrontier
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_RivalTakeBreakFromFieldwork
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayWhereShouldIGoNext
 	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanWhereShouldIGoNext
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_RivalCheckProg::
+	goto_if_unset FLAG_RECEIVED_STARTER_EGG, LittlerootTown_ProfessorBirchsLab_EventScript_RivalGiveEgg
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_RivalGiveEgg::
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayHaveThisEgg
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanHaveThisEgg
+	getpartysize
+	goto_if_eq VAR_RESULT, PARTY_SIZE, LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg
+	setflag FLAG_RECEIVED_STARTER_EGG
+	switch(VAR_STARTER_MON)
+	case 0, LittlerootTown_ProfessorBirchsLab_EventScript_GetTorchicEgg
+	case 1, LittlerootTown_ProfessorBirchsLab_EventScript_GetMudkipEgg
+	case 2, LittlerootTown_ProfessorBirchsLab_EventScript_GetTreeckoEgg
+	end
+
+LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg::
+	.string "Clear up some space in your\n"
+	.string "team first, though.$"
+
+LittlerootTown_ProfessorBirchsLab_EventScript_MayHaveThisEgg::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayTakeThisEgg, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BrendanHaveThisEgg::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanTakeThisEgg, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_MayTheresTheEgg::
+	textcolor 4
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayThatsTheEgg, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BrendanTheresTheEgg::
+	textcolor 8
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BrendanThatsTheEgg, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_Text_MayTakeThisEgg::
+	.string "Hi, {PLAYER}!\p"
+	.string "I heard you were having some trouble\n"
+	.string "with a few entries of your POKéDEX.\p"
+	.string "So I have this for you!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_MayThatsTheEgg::
+	.string "A nice couple near MAUVILLE gave\n"
+	.string "that to me, but it never hatched...\p"
+	.string "But I'm probably not going to be out\n"
+	.string "as much as before, so maybe you'll\l"
+	.string "be a bit luckier than me!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BrendanTakeThisEgg::
+	.string "Oh hey, {PLAYER}, I got a\n"
+	.string "present for you.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BrendanThatsTheEgg::
+	.string "I got that EGG a while ago, but it\n"
+	.string "hasn't hatched yet.\p"
+	.string "Since I'm gonna be spending more\n"
+	.string "time back home, it might be better\l"
+	.string "for you to take care of it.$"
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GetTorchicEgg::
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	message LavaridgeTown_Text_ReceivedTheEgg
+	waitfanfare
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayTheresTheEgg
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanTheresTheEgg
+	giveegg SPECIES_TORCHIC
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GetMudkipEgg::
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	message LavaridgeTown_Text_ReceivedTheEgg
+	waitfanfare
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayTheresTheEgg
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanTheresTheEgg
+	giveegg SPECIES_MUDKIP
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_GetTreeckoEgg::
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	message LavaridgeTown_Text_ReceivedTheEgg
+	waitfanfare
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayTheresTheEgg
+	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanTheresTheEgg
+	giveegg SPECIES_TREECKO
 	release
 	end
 
@@ -999,3 +1099,4 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 	.string "we meet. I'll be waiting!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
+	
