@@ -15,6 +15,19 @@ FortreeCity_EventScript_Man::
 	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_NPC
 	end
 
+FortreeCity_EventScript_ConstructionWorker1::
+	faceplayer
+	msgbox FortreeCity_Text_ConstructionWorker1, MSGBOX_DEFAULT
+	applymovement 8, Common_Movement_FaceDown
+	applymovement 9, Common_Movement_FaceDown
+	waitmovement 0
+	release
+	end
+
+FortreeCity_Text_ConstructionWorker1::
+	.string "Sorry, this area is under\n"
+	.string "construction.$"
+
 FortreeCity_EventScript_Woman::
 	lock
 	faceplayer
