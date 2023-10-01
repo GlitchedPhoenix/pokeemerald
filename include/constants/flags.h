@@ -254,7 +254,7 @@
 #define FLAG_RECEIVED_TM_ROAR                0xE7
 #define FLAG_RECEIVED_TM_GIGA_DRAIN          0xE8
 
-#define FLAG_UNUSED_0x0E9                    0xE9 // Unused Flag
+#define FLAG_SHINY_CREATION                  0xE9
 
 #define FLAG_RECEIVED_TM_REST                0xEA
 #define FLAG_RECEIVED_TM_ATTRACT             0xEB
@@ -513,7 +513,7 @@
 #define FLAG_DEFEATED_LUGIA                  0x1DD
 
 #define FLAG_RECEIVED_STARTER_EGG            0x1DE
-#define FLAG_UNUSED_0x1DF                    0x1DF // Unused Flag
+#define FLAG_RECEIVED_WALLY_STARTER          0x1DF
 #define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
 #define FLAG_UNUSED_0x1E1                    0x1E1 // Unused Flag
 #define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag

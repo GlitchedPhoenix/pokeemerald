@@ -1,14 +1,77 @@
-Poliwag line
+Rematch party mons
+
 Lapras
-Drowzee line
-Dratini line
-Tauros
-Kanghaskhan
-Chansey line
-Ponyta line
-Growlithe line
-Electabuzz
-Tyrogue line
-Onix line
 Kanto fossils
 Eevee line
+
+
+
+FireRed area:
+Grass:
+- Pidgey
+- Pidgeotto
+- Growlithe
+- Tauros
+- Kanghaskhan
+- Electabuzz
+- Onix
+- Hitmonchan
+
+Water:
+- Tentacool
+- Tentacruel
+- Poliwag
+- Poliwrath
+- Lapras
+
+Fishing:
+- Magikarp
+- Gyarados
+- Shellder
+- Dratini
+
+
+LeafGreen area
+Grass:
+- Rattata
+- Raticate
+- Ponyta
+- Chansey
+- Kanghaskhan
+- Magmar
+- Drowzee
+- Hitmonlee
+
+Water:
+- Tentacool
+- Tentacruel
+- Slowpoke
+- Slowbro
+- Lapras
+
+Fishing:
+- Magikarp
+- Gyarados
+- Krabby
+- Dratini
+
+
+
+Safari Zone mons
+
+Hoothoot line
+Ledyba line
+Spinarak line
+Mareep line
+Aipom
+Sunkern line
+Wooper
+Pineco line
+Gligar
+Snubbull line
+Shuckle
+Teddiursa line
+Remoraid line
+Houndour line
+Stantler
+Miltank

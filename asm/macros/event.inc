@@ -1760,6 +1760,13 @@
 	.macro dynmultistack left:req, top:req, ignoreBPress:req, maxBeforeScroll:req, shouldSort:req, initialSelected:req, callbacks:req
 	_dynmultichoice \left, \top, \ignoreBPress, \maxBeforeScroll, \shouldSort, \initialSelected, \callbacks, NULL
 	.endm
+	
+	.macro showmonshinypic species:req, x:req, y:req
+	.byte 0xe5
+	.2byte \species
+	.byte \x
+	.byte \y
+	.endm
 
 
 @ Supplementary

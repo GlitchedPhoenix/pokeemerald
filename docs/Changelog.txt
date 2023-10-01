@@ -1,5 +1,6 @@
 Bugfixes
 - The RNG now seeds properly.
+- If the clock has run dry, berries will still grow and time will still progress simply by saving and resetting.
 
 Mechanical Changes
 - Pressing B during a wild battle snaps the cursor to RUN.
@@ -8,11 +9,7 @@ Mechanical Changes
 - Buying more than 10 of any Poke Ball rewards you with a Premier Ball for every 10 you buy.
 - Money penalty on loss uses the modern formula, and doesn't brutalize your wallet.
 - Trees stay Cut permanently.
-- Fishing always turns up an encounter.
-- Poison is survivable in the field.
-- Items can now be moved between party members.
-- Medicine can be used multiple times without returning to the bag.
-- Hidden Power now displays its true type and power.
+- Fishing always turns up an encounter, and is less frustrating.
 - Text now scrolls 4x as fast.
 - Most Marts now change their stock according to your badge count.
 - The bag's items pocket can now hold 99 items instead of 30, with a storeable quantity of up to 999 of each.
@@ -21,7 +18,12 @@ Mechanical Changes
 Pokemon Changes
 - Chinchou and Lanturn now have a 5% chance of holding a Deep Sea Scale.
 - Carvanha and Sharpedo now have a 5% chance of holding a Deep Sea Tooth.
-- All trade evolutions can be evolved using a key item obtained during the story.
+- All trade evolutions can be evolved using a key item obtained during the story. Trade evolutions involving an item need to be holding that item.
+- Poison is survivable in the field.
+- Items can now be moved between party members.
+- Medicine can be used multiple times without returning to the bag.
+- Hidden Power now displays its true type and power both in summary and battle.
+- The reward for completing the Hoenn dex has been altered.
 
 Wild Encounters
 - Lunatone can now be found at night in Meteor Falls, replacing Solrock.
@@ -32,6 +34,9 @@ Wild Encounters
 - Meditite is now available on the exterior of Mt. Pyre at a 10% chance, replacing Wingull.
 - In Victory Road B1F, Meditite and Medicham are available at 10% and 5% respectively.
 - In Victory Road B2F, Medicham is available at 15%.
+- The other 2 Hoenn starters can be obtained by speaking to May after beating the game, and Wally after his first rematch.
+- The 3 Johto starters can be found in Artisan Cave (Chikorita), Desert Underpass (Cyndaquil), and Steven's cave in Meteor Falls (Totodile) respectively at a 2% chance.
+- Pokemon not normally available in Emerald have their met game changed to a legal game when caught or hatched, meaning they can be passed through Bank.
 
 Misc Changes
 - NPCs now have differently colored text depending on gender. Certain NPCs have their own text colors.

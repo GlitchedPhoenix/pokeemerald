@@ -298,7 +298,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Cyndaquil::
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyChoseJohtoStarter
 	applymovement LOCALID_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	showmonpic SPECIES_CYNDAQUIL, 10, 3
+	showmonshinypic SPECIES_CYNDAQUIL, 10, 3
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_YoullTakeCyndaquil, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_GiveCyndaquil
@@ -309,7 +309,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Totodile::
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyChoseJohtoStarter
 	applymovement LOCALID_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	showmonpic SPECIES_TOTODILE, 10, 3
+	showmonshinypic SPECIES_TOTODILE, 10, 3
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_YoullTakeTotodile, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile
@@ -320,7 +320,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Chikorita::
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyChoseJohtoStarter
 	applymovement LOCALID_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	showmonpic SPECIES_CHIKORITA, 10, 3
+	showmonshinypic SPECIES_CHIKORITA, 10, 3
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_YoullTakeChikorita, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_GiveChikorita
@@ -340,6 +340,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime::
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveCyndaquil::
 	bufferspeciesname STR_VAR_1, SPECIES_CYNDAQUIL
 	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_CYNDAQUIL
+	setflag FLAG_SHINY_CREATION
 	givemon SPECIES_CYNDAQUIL, 5
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, LittlerootTown_ProfessorBirchsLab_EventScript_SendCyndaquilToParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, LittlerootTown_ProfessorBirchsLab_EventScript_SendCyndaquilToPC
@@ -381,6 +382,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedCyndaquil::
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile::
 	bufferspeciesname STR_VAR_1, SPECIES_TOTODILE
 	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_TOTODILE
+	setflag FLAG_SHINY_CREATION
 	givemon SPECIES_TOTODILE, 5
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToPC
@@ -422,6 +424,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedTotodile::
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveChikorita::
 	bufferspeciesname STR_VAR_1, SPECIES_CHIKORITA
 	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_CHIKORITA
+	setflag FLAG_SHINY_CREATION
 	givemon SPECIES_CHIKORITA, 5
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, LittlerootTown_ProfessorBirchsLab_EventScript_SendChikoritaToParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, LittlerootTown_ProfessorBirchsLab_EventScript_SendChikoritaToPC
@@ -600,7 +603,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_RivalGiveEgg::
 	call_if_eq VAR_RESULT, MALE, LittlerootTown_ProfessorBirchsLab_EventScript_MayHaveThisEgg
 	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_ProfessorBirchsLab_EventScript_BrendanHaveThisEgg
 	getpartysize
-	goto_if_eq VAR_RESULT, PARTY_SIZE, LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg
+	goto_if_eq VAR_RESULT, PARTY_SIZE, LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForEgg
 	setflag FLAG_RECEIVED_STARTER_EGG
 	switch(VAR_STARTER_MON)
 	case 0, LittlerootTown_ProfessorBirchsLab_EventScript_GetTorchicEgg
@@ -608,9 +611,14 @@ LittlerootTown_ProfessorBirchsLab_EventScript_RivalGiveEgg::
 	case 2, LittlerootTown_ProfessorBirchsLab_EventScript_GetTreeckoEgg
 	end
 
+LittlerootTown_ProfessorBirchsLab_EventScript_NoRoomForEgg::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg
+	release
+	end
+
 LittlerootTown_ProfessorBirchsLab_Text_NoRoomForEgg::
-	.string "Clear up some space in your\n"
-	.string "team first, though.$"
+	.string "Oh! You have too many POKéMON\n"
+	.string "with you right now.$"
 
 LittlerootTown_ProfessorBirchsLab_EventScript_MayHaveThisEgg::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MayTakeThisEgg, MSGBOX_DEFAULT

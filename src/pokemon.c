@@ -2200,6 +2200,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u32 personality;
     u32 value;
     u16 checksum;
+	u8 version;
 
     ZeroBoxMonData(boxMon);
 
@@ -2207,8 +2208,6 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         personality = fixedPersonality;
     else
         personality = Random32();
-
-    SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
 
     // Determine original trainer ID
     if (otIdType == OT_ID_RANDOM_NO_SHINY)
@@ -2231,8 +2230,17 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
               | (gSaveBlock2Ptr->playerTrainerId[1] << 8)
               | (gSaveBlock2Ptr->playerTrainerId[2] << 16)
               | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
+		
+		if (FlagGet(FLAG_SHINY_CREATION))
+        {
+            u8 nature = personality % NUM_NATURES;  // keep current nature
+            do {
+                personality = Random32();
+                personality = ((((Random() % SHINY_ODDS) ^ (HIHALF(value) ^ LOHALF(value))) ^ LOHALF(personality)) << 16) | LOHALF(personality);
+            } while (nature != GetNatureFromPersonality(personality));
+        }
     }
-
+	SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
     SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
 
     checksum = CalculateBoxMonChecksum(boxMon);
@@ -2248,7 +2256,13 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     value = GetCurrentRegionMapSectionId();
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
-    SetBoxMonData(boxMon, MON_DATA_MET_GAME, &gGameVersion);
+	if ((species == SPECIES_ZANGOOSE) || (species == SPECIES_SURSKIT) || (species == SPECIES_MEDITITE) || (species == SPECIES_MEDICHAM) || (species == SPECIES_ROSELIA))
+		version = VERSION_RUBY;
+	else if (species == SPECIES_LUNATONE)
+		version = VERSION_SAPPHIRE;
+	else
+		version = gGameVersion;
+    SetBoxMonData(boxMon, MON_DATA_MET_GAME, &version);
     value = ITEM_POKE_BALL;
     SetBoxMonData(boxMon, MON_DATA_POKEBALL, &value);
     SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
@@ -2291,6 +2305,8 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     }
 
     GiveBoxMonInitialMoveset(boxMon);
+	
+	FlagClear(FLAG_SHINY_CREATION);
 }
 
 void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)

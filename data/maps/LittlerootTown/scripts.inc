@@ -149,6 +149,7 @@ LittlerootTown_EventScript_GoInsideWithMom::
 	delay 10
 	applymovement LOCALID_MOM, LittlerootTown_Movement_MomApproachPlayerAtTruck
 	waitmovement 0
+	textcolor 4
 	msgbox LittlerootTown_Text_OurNewHomeLetsGoInside, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_MOM, LittlerootTown_Movement_MomApproachDoor
@@ -213,6 +214,7 @@ LittlerootTown_EventScript_BeginDexUpgradeScene::
 	applymovement LOCALID_BIRCH, Common_Movement_ExclamationMark
 	waitmovement 0
 	delay 80
+	textcolor 8
 	msgbox LittlerootTown_Text_BirchSomethingToShowYouAtLab, MSGBOX_DEFAULT
 	closemessage
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_RIVAL
@@ -518,6 +520,7 @@ LittlerootTown_EventScript_GiveRunningShoesTrigger::
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, LittlerootTown_EventScript_SetHomeDoorCoordsMale
 	call_if_eq VAR_RESULT, FEMALE, LittlerootTown_EventScript_SetHomeDoorCoordsFemale
+	textcolor 4
 	msgbox LittlerootTown_Text_WaitPlayer, MSGBOX_DEFAULT
 	closemessage
 	checkplayergender
@@ -939,11 +942,14 @@ LittlerootTown_EventScript_SetReceivedRunningShoes::
 	end
 
 LittlerootTown_EventScript_GiveRunningShoes::
+	textcolor 4
 	msgbox LittlerootTown_Text_WearTheseRunningShoes, MSGBOX_DEFAULT
+	textcolor 2
 	playfanfare MUS_OBTAIN_ITEM
 	message LittlerootTown_Text_SwitchShoesWithRunningShoes
 	waitfanfare
 	setflag FLAG_RECEIVED_RUNNING_SHOES
+	textcolor 4
 	msgbox LittlerootTown_Text_ExplainRunningShoes, MSGBOX_DEFAULT
 	msgbox LittlerootTown_Text_ComeHomeIfAnythingHappens, MSGBOX_DEFAULT
 	closemessage

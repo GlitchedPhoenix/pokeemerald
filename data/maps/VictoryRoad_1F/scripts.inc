@@ -87,6 +87,7 @@ VictoryRoad_1F_EventScript_ExitWally::
 	trainerbattle_single TRAINER_WALLY_VR_2, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, VictoryRoad_1F_EventScript_RematchWally
+	goto_if_unset FLAG_RECEIVED_WALLY_STARTER, VictoryRoad_1F_EventScript_WallyGiveStarter
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -94,6 +95,60 @@ VictoryRoad_1F_EventScript_RematchWally::
 	trainerbattle_rematch TRAINER_WALLY_VR_2, VictoryRoad_1F_Text_WallyIntro, VictoryRoad_1F_Text_WallyDefeat
 	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+VictoryRoad_1F_EventScript_WallyGiveStarter::
+	msgbox VictoryRoad_1F_Text_WallyGiveStarter, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	setflag FLAG_RECEIVED_WALLY_STARTER
+	switch(VAR_STARTER_MON)
+	case 0, VictoryRoad_EventScript_WallyGiveMudkip
+	case 1, VictoryRoad_EventScript_WallyGiveTreecko
+	case 2, VictoryRoad_EventScript_WallyGiveTorchic
+	end
+
+VictoryRoad_EventScript_WallyGiveMudkip::
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	message VictoryRoad_Text_ReceivedMudkip
+	waitfanfare
+	givemon SPECIES_MUDKIP, 5
+	textcolor 6
+	msgbox VictoryRoad_1F_Text_WallyReceivedStarter, MSGBOX_DEFAULT
+	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+VictoryRoad_EventScript_WallyGiveTreecko::
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	message VictoryRoad_Text_ReceivedTreecko
+	waitfanfare
+	givemon SPECIES_TREECKO, 5
+	textcolor 6
+	msgbox VictoryRoad_1F_Text_WallyReceivedStarter, MSGBOX_DEFAULT
+	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+VictoryRoad_EventScript_WallyGiveTorchic::
+	playfanfare MUS_OBTAIN_ITEM
+	textcolor 2
+	message VictoryRoad_Text_ReceivedTorchic
+	waitfanfare
+	givemon SPECIES_TORCHIC, 5
+	textcolor 6
+	msgbox VictoryRoad_1F_Text_WallyReceivedStarter, MSGBOX_DEFAULT
+	msgbox VictoryRoad_1F_Text_WallyPostBattle, MSGBOX_AUTOCLOSE
+	end
+	
+
+VictoryRoad_Text_ReceivedTorchic::
+	.string "{PLAYER} recieved the TORCHIC!$"
+
+VictoryRoad_Text_ReceivedMudkip::
+	.string "{PLAYER} recieved the MUDKIP!$"
+
+VictoryRoad_Text_ReceivedTreecko::
+	.string "{PLAYER} recieved the TREECKO!$"
 
 VictoryRoad_1F_EventScript_Edgar::
 	trainerbattle_single TRAINER_EDGAR, VictoryRoad_1F_Text_EdgarIntro, VictoryRoad_1F_Text_EdgarDefeat
@@ -156,6 +211,16 @@ VictoryRoad_1F_Text_WallyPostBattle:
 	.string "too… But one of these days, {PLAYER},\l"
 	.string "I'm going to catch up to you…\p"
 	.string "And challenge the POKéMON LEAGUE!$"
+
+VictoryRoad_1F_Text_WallyGiveStarter:
+	.string "WALLY: You really are incredible,\n"
+	.string "{PLAYER}.\l"
+	.string "Here, take this.$"
+
+VictoryRoad_1F_Text_WallyReceivedStarter:
+	.string "PROF. BIRCH gave me this to help\n"
+	.string "me, but I don't the space on my\l"
+	.string "team...$"
 
 VictoryRoad_1F_Text_EdgarIntro:
 	.string "I've made it this far a couple times,\n"
