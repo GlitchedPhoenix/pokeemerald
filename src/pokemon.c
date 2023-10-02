@@ -2257,7 +2257,9 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     value = GetCurrentRegionMapSectionId();
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
-	if (value == MAPSEC_GREENLEAF_RESERVE)
+	if (value == MAPSEC_ASHEN_RANGE)
+		version = VERSION_FIRE_RED;
+	else if (value == MAPSEC_GREENLEAF_RESERVE)
 		version = VERSION_LEAF_GREEN;
 	else if ((species == SPECIES_ZANGOOSE) || (species == SPECIES_SURSKIT) || (species == SPECIES_MEDITITE) || (species == SPECIES_MEDICHAM) || (species == SPECIES_ROSELIA))
 		version = VERSION_RUBY;

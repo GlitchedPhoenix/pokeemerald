@@ -14,21 +14,11 @@ Grass:
 - Tauros
 - Kanghaskhan
 - Electabuzz
-- Onix
+- Cubone
 - Hitmonchan
 
-Water:
-- Tentacool
-- Tentacruel
-- Poliwag
-- Poliwrath
-- Lapras
-
-Fishing:
-- Magikarp
-- Gyarados
-- Shellder
-- Dratini
+Rock Smash:
+- Onix
 
 
 LeafGreen area
@@ -52,7 +42,7 @@ Water:
 Fishing:
 - Magikarp
 - Gyarados
-- Krabby
+- Poliwag
 - Dratini
 
 

@@ -2,10 +2,10 @@
   "id": "MAP_REDFIRE_RANGE",
   "name": "RedfireRange",
   "layout": "LAYOUT_REDFIRE_RANGE",
-  "music": "MUS_RG_SEVII_45",
-  "region_map_section": "MAPSEC_ALTERING_CAVE",
+  "music": "MUS_RG_CINNABAR",
+  "region_map_section": "MAPSEC_ASHEN_RANGE",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
+  "weather": "WEATHER_VOLCANIC_ASH",
   "map_type": "MAP_TYPE_ROUTE",
   "allow_cycling": true,
   "allow_escaping": false,
@@ -15,17 +15,130 @@
   "connections": [
     {
       "map": "MAP_FALLARBOR_TOWN",
-      "offset": -12,
+      "offset": 0,
       "direction": "up"
     },
     {
       "map": "MAP_ROUTE113",
-      "offset": 8,
+      "offset": 20,
       "direction": "up"
+    },
+    {
+      "map": "MAP_ROUTE114",
+      "offset": -20,
+      "direction": "left"
+    },
+    {
+      "map": "MAP_ROUTE114",
+      "offset": -20,
+      "direction": "left"
     }
   ],
   "object_events": [
-
+    {
+      "graphics_id": "OBJ_EVENT_GFX_CUTTABLE_TREE",
+      "x": 39,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_CutTree",
+      "flag": "FLAG_TREE_REDFIRE_RANGE"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 18,
+      "y": 15,
+      "elevation": 5,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_12"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 17,
+      "y": 31,
+      "elevation": 5,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_13"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 39,
+      "y": 21,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_11"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 26,
+      "y": 14,
+      "elevation": 4,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_14"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 29,
+      "y": 39,
+      "elevation": 4,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_15"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_FOSSIL",
+      "x": 28,
+      "y": 31,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "AshenRange_EventScript_HelixFossil",
+      "flag": "FLAG_ITEM_ASHEN_RANGE_HELIX_FOSSIL"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_DEOXYS_TRIANGLE",
+      "x": 40,
+      "y": 38,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "AshenRange_EventScript_DeoxysAttackForm",
+      "flag": "0"
+    }
   ],
   "warp_events": [
 
@@ -34,6 +147,45 @@
 
   ],
   "bg_events": [
-
+    {
+      "type": "hidden_item",
+      "x": 26,
+      "y": 13,
+      "elevation": 0,
+      "item": "ITEM_NUGGET",
+      "flag": "FLAG_HIDDEN_ITEM_ASHEN_RANGE_NUGGET"
+    },
+    {
+      "type": "hidden_item",
+      "x": 41,
+      "y": 22,
+      "elevation": 0,
+      "item": "ITEM_PROTEIN",
+      "flag": "FLAG_HIDDEN_ITEM_ASHEN_RANGE_PROTEIN"
+    },
+    {
+      "type": "hidden_item",
+      "x": 19,
+      "y": 39,
+      "elevation": 0,
+      "item": "ITEM_CALCIUM",
+      "flag": "FLAG_HIDDEN_ITEM_ASHEN_RANGE_CALCUM"
+    },
+    {
+      "type": "hidden_item",
+      "x": 43,
+      "y": 33,
+      "elevation": 0,
+      "item": "ITEM_CARBOS",
+      "flag": "FLAG_HIDDEN_ITEM_ASHEN_RANGE_CARBOS"
+    },
+    {
+      "type": "hidden_item",
+      "x": 37,
+      "y": 4,
+      "elevation": 0,
+      "item": "ITEM_FIRE_STONE",
+      "flag": "FLAG_HIDDEN_ITEM_ASHEN_RANGE_FIRE_STONE"
+    }
   ]
 }

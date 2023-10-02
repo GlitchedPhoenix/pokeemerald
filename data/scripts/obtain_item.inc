@@ -22,10 +22,16 @@ EventScript_BufferPocketNameAndTryFanfare::
 	case POCKET_POKE_BALLS, EventScript_BufferPokeballsPocket
 	case POCKET_TM_HM,      EventScript_BufferTMHMsPocket
 	case POCKET_BERRIES,    EventScript_BufferBerriesPocket
+	case POCKET_MEDICINE,   EventScript_BufferMedicinePocket
 	end
 
 EventScript_BufferItemsPocket::
 	bufferstdstring STR_VAR_3, STDSTRING_ITEMS
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return
+
+EventScript_BufferMedicinePocket::
+	bufferstdstring STR_VAR_3, STDSTRING_MEDICINE
 	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
@@ -49,10 +55,20 @@ EventScript_BufferBerriesPocket::
 	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
 	return
 
+EventScript_NormalObtainMessage::
+	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
+	return
+
+EventScript_TMObtainMessage::
+	msgbox gText_PutItemInTMCase, MSGBOX_DEFAULT
+	return
+
 EventScript_ObtainedItem::
 	message gText_ObtainedTheItem
 	waitfanfare
-	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
+	checkitemtype ITEMID
+	call_if_eq VAR_RESULT, POCKET_TM_HM, EventScript_TMObtainMessage
+	call_if_ne VAR_RESULT, POCKET_TM_HM, EventScript_NormalObtainMessage
 	setvar VAR_RESULT, TRUE
 	return
 

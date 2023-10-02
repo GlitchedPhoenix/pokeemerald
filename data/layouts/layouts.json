@@ -4424,8 +4424,8 @@
     {
       "id": "LAYOUT_REDFIRE_RANGE",
       "name": "RedfireRange_Layout",
-      "width": 36,
-      "height": 44,
+      "width": 46,
+      "height": 46,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/RedfireRange/border.bin",
