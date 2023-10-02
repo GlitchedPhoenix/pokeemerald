@@ -44,6 +44,7 @@
 #include "constants/items.h"
 #include "constants/layouts.h"
 #include "constants/moves.h"
+#include "constants/region_map_sections.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "constants/union_room.h"
@@ -2256,7 +2257,9 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     value = GetCurrentRegionMapSectionId();
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
-	if ((species == SPECIES_ZANGOOSE) || (species == SPECIES_SURSKIT) || (species == SPECIES_MEDITITE) || (species == SPECIES_MEDICHAM) || (species == SPECIES_ROSELIA))
+	if (value == MAPSEC_GREENLEAF_RESERVE)
+		version = VERSION_LEAF_GREEN;
+	else if ((species == SPECIES_ZANGOOSE) || (species == SPECIES_SURSKIT) || (species == SPECIES_MEDITITE) || (species == SPECIES_MEDICHAM) || (species == SPECIES_ROSELIA))
 		version = VERSION_RUBY;
 	else if (species == SPECIES_LUNATONE)
 		version = VERSION_SAPPHIRE;

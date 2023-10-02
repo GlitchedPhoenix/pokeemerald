@@ -19,6 +19,11 @@ Route113_EventScript_CheckSetAshWeather::
 	setweather WEATHER_VOLCANIC_ASH
 	return
 
+Route113_EventScript_GateBlock::
+	msgbox FortreeCity_Text_ConstructionWorker1
+	release
+	end
+
 Route113_EventScript_DontSetAshWeather::
 	return
 

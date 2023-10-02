@@ -4414,12 +4414,22 @@
     {
       "id": "LAYOUT_LEAFY_FOREST",
       "name": "LeafyForest_Layout",
-      "width": 46,
+      "width": 48,
       "height": 60,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/LeafyForest/border.bin",
       "blockdata_filepath": "data/layouts/LeafyForest/map.bin"
+    },
+    {
+      "id": "LAYOUT_REDFIRE_RANGE",
+      "name": "RedfireRange_Layout",
+      "width": 36,
+      "height": 44,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fallarbor",
+      "border_filepath": "data/layouts/RedfireRange/border.bin",
+      "blockdata_filepath": "data/layouts/RedfireRange/map.bin"
     }
   ]
 }
