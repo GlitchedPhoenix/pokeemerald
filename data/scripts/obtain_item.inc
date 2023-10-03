@@ -66,7 +66,6 @@ EventScript_TMObtainMessage::
 EventScript_ObtainedItem::
 	message gText_ObtainedTheItem
 	waitfanfare
-	checkitemtype ITEMID
 	call_if_eq VAR_RESULT, POCKET_TM_HM, EventScript_TMObtainMessage
 	call_if_ne VAR_RESULT, POCKET_TM_HM, EventScript_NormalObtainMessage
 	setvar VAR_RESULT, TRUE
@@ -136,7 +135,8 @@ EventScript_PickUpItem::
 	bufferitemnameplural STR_VAR_2, VAR_0x8004, VAR_0x8005
 	pyramid_inchallenge
 	goto_if_eq VAR_RESULT, TRUE, EventScript_PutBattlePyramidItemInBag
-	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
+	call_if_eq VAR_0x8008, TRUE, EventScript_TMObtainMessage
+	call_if_eq VAR_0x8008, FALSE, EventScript_NormalObtainMessage
 	return
 
 EventScript_PutBattlePyramidItemInBag::
@@ -194,7 +194,8 @@ EventScript_PutHiddenItemInPocket::
 	waitfanfare
 	bufferitemnameplural STR_VAR_2, VAR_0x8004, 1
 	copyvar VAR_0x8004, VAR_0x8008
-	msgbox gText_PutItemInPocket, MSGBOX_DEFAULT
+	call_if_eq VAR_RESULT, TRUE, EventScript_TMObtainMessage
+	call_if_eq VAR_RESULT, FALSE, EventScript_NormalObtainMessage
 	special TryPutTreasureInvestigatorsOnAir
 	special SetHiddenItemFlag
 	releaseall

@@ -100,7 +100,7 @@ static const u8 Str_Beauty[] = _("Beauty");
 static const u8 Str_Smart[] = _("Smart");
 static const u8 Str_Sheen[] = _("Sheen");
 static const u8 Str_Fateful[] = _("Fateful");
-static const u8 Str_Fateful2[] = _("Unused Ribbons");
+static const u8 Str_Fateful2[] = _("Forme");
 static const u8 Str_CoolRibbon[] = _("Cool Ribbons");
 static const u8 Str_CuteRibbon[] = _("Cute Ribbons");
 static const u8 Str_ToughRibbon[] = _("Tough Ribbons");
@@ -255,7 +255,7 @@ enum {
     VAL_RIBBON_TOUGHRIBBON,
     VAL_RIBBON_GIFTRIBBON,
     VAL_RIBBON_FATEFUL,
-    VAL_RIBBON_FATEFUL2,
+    VAL_FORME,
     VAL_MOVE_1,
     VAL_MOVE_2,
     VAL_MOVE_3,
@@ -346,7 +346,7 @@ static const struct EditPokemonStruct DebugPkmCreator_Options[] =
         [VAL_RIBBON_TOUGHRIBBON]   = {Str_ToughRibbon, EDIT_NORMAL, 0, 3, 0, MON_DATA_TOUGH_RIBBON, 1},
         [VAL_RIBBON_GIFTRIBBON]    = {Str_GiftRibbon, EDIT_HEX, 0, 127, 0, MON_DATA_MARINE_RIBBON, 2},
         [VAL_RIBBON_FATEFUL]       = {Str_Fateful, EDIT_BOOL, 0, 1, 0, MON_DATA_MODERN_FATEFUL_ENCOUNTER, 1},
-        [VAL_RIBBON_FATEFUL2]      = {Str_Fateful2, EDIT_NORMAL, 0, 3, 0, MON_DATA_UNUSED_RIBBONS, 1},
+        [VAL_FORME]                = {Str_Fateful2, EDIT_NORMAL, 0, 3, 0, MON_DATA_FORME, 1},
         // Move data
         [VAL_MOVE_1]               = {Str_Move, EDIT_NORMAL, 0, MOVES_COUNT - 1, MOVE_POUND, MON_DATA_MOVE1, 3},
         [VAL_MOVE_2]               = {Str_Move, EDIT_NORMAL, 0, MOVES_COUNT - 1, 0, MON_DATA_MOVE2, 3},
@@ -374,7 +374,7 @@ static const u8 DebugPkmCreator_Pages[PAGE_COUNT + 1][7] =
     {VAL_COOL, VAL_CUTE, VAL_BEAUTY, VAL_SMART, VAL_TOUGH, VAL_SHEEN, 0xFF},
     {VAL_RIBBON_COOLRIBBON, VAL_RIBBON_CUTERIBBON, VAL_RIBBON_BEAUTYRIBBON, VAL_RIBBON_SMARTRIBBON, VAL_RIBBON_TOUGHRIBBON, VAL_RIBBON_ARTISTRIBBON, 0xFF},
     {VAL_RIBBON_CHAMPRIBBON, VAL_RIBBON_WINRIBBON, VAL_RIBBON_VICTORYRIBBON, VAL_RIBBON_EFFORTRIBBON, VAL_RIBBON_GIFTRIBBON, VAL_RIBBON_FATEFUL, 0xFF},
-    {VAL_LANGUAGE, VAL_GAME, VAL_METLVL, VAL_METLOCATATION, VAL_BALL, VAL_RIBBON_FATEFUL2, 0xFF},
+    {VAL_LANGUAGE, VAL_GAME, VAL_METLVL, VAL_METLOCATATION, VAL_BALL, VAL_FORME, 0xFF},
 };
 
 static const u8 DebugPkmCreator_AltIndexes[PAGE_COUNT + 1][6][3] =

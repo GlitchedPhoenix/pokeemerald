@@ -94,6 +94,7 @@ enum {
     MON_DATA_SPEED2,
     MON_DATA_SPATK2,
     MON_DATA_SPDEF2,
+	MON_DATA_FORME,
 };
 
 struct PokemonSubstruct0
@@ -103,7 +104,7 @@ struct PokemonSubstruct0
     u32 experience;
     u8 ppBonuses;
     u8 friendship;
-    u16 filler;
+    u16 forme:2;
 };
 
 struct PokemonSubstruct1
@@ -278,7 +279,7 @@ struct BattlePokemon
     /*0x20*/ u8 ability;
     /*0x21*/ u8 type1;
     /*0x22*/ u8 type2;
-    /*0x23*/ u8 unknown;
+    /*0x23*/ u8 form;
     /*0x24*/ u8 pp[MAX_MON_MOVES];
     /*0x28*/ u16 hp;
     /*0x2A*/ u8 level;

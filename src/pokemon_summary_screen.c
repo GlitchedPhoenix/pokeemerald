@@ -1391,6 +1391,11 @@ static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *mon)
         sum->item = GetMonData(mon, MON_DATA_HELD_ITEM);
         sum->pid = GetMonData(mon, MON_DATA_PERSONALITY);
         sum->sanity = GetMonData(mon, MON_DATA_SANITY_IS_BAD_EGG);
+		
+		if(sum->species == SPECIES_DEOXYS)
+		{
+			sum->pid = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_FORME);
+		}
 
         if (sum->sanity)
             sum->isEgg = TRUE;

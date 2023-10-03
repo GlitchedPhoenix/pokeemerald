@@ -1,1 +1,6 @@
 - Alt textcolors will linger in the Pokemon and Save menus.
+
+- Deoxys always turns into Defense form when form changing
+- Deoxys doesn't display correctly on summary screen
+- Deoxys sprite doesn't display at all on PC.
+- Deoxys sprite defaults to Normal sprite during battle.

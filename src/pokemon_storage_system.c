@@ -4460,6 +4460,10 @@ static void InitBoxMonSprites(u8 boxId)
             if (species != SPECIES_NONE)
             {
                 personality = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+				if(species == SPECIES_DEOXYS)
+                {
+                    personality = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_FORME);
+                }
                 sStorage->boxMonsSprites[count] = CreateMonIconSprite(species, personality, 8 * (3 * j) + 100, 8 * (3 * i) + 44, 2, 19 - j);
             }
             else
@@ -4491,6 +4495,11 @@ static void CreateBoxMonIconAtPos(u8 boxPosition)
         s16 x = 8 * (3 * (boxPosition % IN_BOX_COLUMNS)) + 100;
         s16 y = 8 * (3 * (boxPosition / IN_BOX_COLUMNS)) + 44;
         u32 personality = GetCurrentBoxMonData(boxPosition, MON_DATA_PERSONALITY);
+		
+		if(species == SPECIES_DEOXYS)
+        {
+            personality = GetCurrentBoxMonData(boxPosition, MON_DATA_FORME);
+        }
 
         sStorage->boxMonsSprites[boxPosition] = CreateMonIconSprite(species, personality, x, y, 2, 19 - (boxPosition % IN_BOX_COLUMNS));
         if (sStorage->boxOption == OPTION_MOVE_ITEMS)
@@ -4589,8 +4598,14 @@ static u8 CreateBoxMonIconsInColumn(u8 column, u16 distance, s16 speed)
         {
             if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
             {
+				u32 personality = sStorage->boxPersonalities[boxPosition];
+
+                if(sStorage->boxSpecies[boxPosition] == SPECIES_DEOXYS)
+                {
+                    personality = GetCurrentBoxMonData(boxPosition, MON_DATA_FORME);
+                }
                 sStorage->boxMonsSprites[boxPosition] = CreateMonIconSprite(sStorage->boxSpecies[boxPosition],
-                                                                                        sStorage->boxPersonalities[boxPosition],
+                                                                                        personality,
                                                                                         x, y, 2, subpriority);
                 if (sStorage->boxMonsSprites[boxPosition] != NULL)
                 {
@@ -4613,8 +4628,14 @@ static u8 CreateBoxMonIconsInColumn(u8 column, u16 distance, s16 speed)
         {
             if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
             {
+				u32 personality = sStorage->boxPersonalities[boxPosition];
+
+                if(sStorage->boxSpecies[boxPosition] == SPECIES_DEOXYS)
+                {
+                    personality = GetCurrentBoxMonData(boxPosition, MON_DATA_FORME);
+                }
                 sStorage->boxMonsSprites[boxPosition] = CreateMonIconSprite(sStorage->boxSpecies[boxPosition],
-                                                                                        sStorage->boxPersonalities[boxPosition],
+                                                                                        personality,
                                                                                         x, y, 2, subpriority);
                 if (sStorage->boxMonsSprites[boxPosition] != NULL)
                 {
@@ -4720,7 +4741,33 @@ static void GetIncomingBoxMonData(u8 boxId)
         {
             sStorage->boxSpecies[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES_OR_EGG);
             if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
-                sStorage->boxPersonalities[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+            {
+                if(sStorage->boxSpecies[boxPosition] == SPECIES_DEOXYS)
+                {
+
+                    sStorage->boxPersonalities[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_FORME);
+                    switch(sStorage->boxPersonalities[boxPosition]) //pid was hijacked to hold Deoxys forms
+                    {   //setting result to arbitrarily high numbers
+                        //picked highest ones to not interfere with
+                        //Pokemon expansion.
+                        case 1: //Attack Forme
+                            sStorage->boxSpecies[boxPosition] = 65531;
+                            break;
+                        case 2: //Defense Forme
+                            sStorage->boxSpecies[boxPosition] = 65532;
+                            break;
+                        case 3: //Speed Forme
+                            sStorage->boxSpecies[boxPosition] = 65533;
+                            break;
+                        default: //Normal Forme
+                            sStorage->boxSpecies[boxPosition] = 65530;
+                    }
+                }
+                else
+                {
+                    sStorage->boxPersonalities[boxPosition] = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+                }
+            }
             boxPosition++;
         }
     }
@@ -4748,6 +4795,11 @@ static void CreatePartyMonsSprites(bool8 visible)
     u16 i, count;
     u16 species = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG);
     u32 personality = GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY);
+	
+	if(species == SPECIES_DEOXYS)
+    {
+        personality = GetMonData(&gPlayerParty[0], MON_DATA_FORME);
+    }
 
     sStorage->partySprites[0] = CreateMonIconSprite(species, personality, 104, 64, 1, 12);
     count = 1;
@@ -4757,6 +4809,10 @@ static void CreatePartyMonsSprites(bool8 visible)
         if (species != SPECIES_NONE)
         {
             personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
+			if(species == SPECIES_DEOXYS)
+            {
+                personality = GetMonData(&gPlayerParty[i], MON_DATA_FORME);
+            }
             sStorage->partySprites[i] = CreateMonIconSprite(species, personality, 152,  8 * (3 * (i - 1)) + 16, 1, 12);
             count++;
         }
@@ -5152,6 +5208,10 @@ static struct Sprite *CreateMonIconSprite(u16 species, u32 personality, s16 x, s
 
     species = GetIconSpecies(species, personality);
     template.paletteTag = PALTAG_MON_ICON_0 + gMonIconPaletteIndices[species];
+	if(species >= 65530 && species <= 65533)
+    {
+        template.paletteTag = 0xDAC0 + gMonIconPaletteIndices[SPECIES_DEOXYS];
+    }
     tileNum = TryLoadMonIconTiles(species);
     if (tileNum == 0xFFFF)
         return NULL;
@@ -6884,7 +6944,14 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             StringGet_Nickname(sStorage->displayMonName);
             sStorage->displayMonLevel = GetMonData(mon, MON_DATA_LEVEL);
             sStorage->displayMonMarkings = GetMonData(mon, MON_DATA_MARKINGS);
-            sStorage->displayMonPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
+            if(sStorage->displayMonSpecies == SPECIES_DEOXYS)
+            {
+                sStorage->displayMonPersonality = GetMonData(mon, MON_DATA_FORME);
+            }
+            else
+            {
+                sStorage->displayMonPersonality = GetMonData(mon, MON_DATA_PERSONALITY);
+            }
             sStorage->displayMonPalette = GetMonFrontSpritePal(mon);
             gender = GetMonGender(mon);
             sStorage->displayMonItemId = GetMonData(mon, MON_DATA_HELD_ITEM);
@@ -6909,7 +6976,14 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             StringGet_Nickname(sStorage->displayMonName);
             sStorage->displayMonLevel = GetLevelFromBoxMonExp(boxMon);
             sStorage->displayMonMarkings = GetBoxMonData(boxMon, MON_DATA_MARKINGS);
-            sStorage->displayMonPersonality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
+            if(sStorage->displayMonSpecies == SPECIES_DEOXYS)
+            {
+                sStorage->displayMonPersonality = GetBoxMonData(boxMon, MON_DATA_FORME);
+            }
+            else
+            {
+                sStorage->displayMonPersonality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
+            }
             sStorage->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonality(sStorage->displayMonSpecies, otId, sStorage->displayMonPersonality);
             gender = GetGenderFromSpeciesAndPersonality(sStorage->displayMonSpecies, sStorage->displayMonPersonality);
             sStorage->displayMonItemId = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
@@ -8444,6 +8518,11 @@ static void MultiMove_SetIconToBg(u8 x, u8 y)
     u8 position = x + (IN_BOX_COLUMNS * y);
     u16 species = GetCurrentBoxMonData(position, MON_DATA_SPECIES_OR_EGG);
     u32 personality = GetCurrentBoxMonData(position, MON_DATA_PERSONALITY);
+	
+	if(species == SPECIES_DEOXYS)
+    {
+        personality = GetCurrentBoxMonData(position, MON_DATA_FORME);
+    }
 
     if (species != SPECIES_NONE)
     {

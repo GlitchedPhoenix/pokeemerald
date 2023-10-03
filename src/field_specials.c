@@ -65,6 +65,7 @@
 #include "constants/weather.h"
 #include "constants/metatile_labels.h"
 #include "palette.h"
+#include "constants/metatile_behaviors.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -1409,6 +1410,15 @@ void GiveLeadMonEffortRibbon(void)
 bool8 Special_AreLeadMonEVsMaxedOut(void)
 {
     if (GetMonEVCount(&gPlayerParty[GetLeadMonIndex()]) >= MAX_TOTAL_EVS)
+        return TRUE;
+
+    return FALSE;
+}
+
+bool8 Special_LeadMonIsDeoxys(void)
+{
+	
+    if (GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SPECIES) == SPECIES_DEOXYS);
         return TRUE;
 
     return FALSE;
