@@ -67,6 +67,26 @@ SootopolisCity_OnTransition:
 	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetExpertBlockCaveEntrance
 	end
 
+SootopolisCity_EventScript_DeoxysNormalForm::
+	lock
+	specialvar VAR_RESULT, Special_LeadMonIsDeoxys
+	goto_if_eq VAR_RESULT, TRUE, SootopolisCity_EventScript_DeoxysNormalForm2
+	msgbox Deoxys_Text_MysteriousTriangle, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_EventScript_DeoxysNormalForm2::
+	msgbox Deoxys_Text_MysteriousTriangle, MSGBOX_DEFAULT
+	msgbox Deoxys_Text_Suddenly, MSGBOX_DEFAULT
+	playse SE_WARP_OUT
+	fadescreenspeed FADE_TO_WHITE, 2
+	fadescreen FADE_FROM_WHITE
+	setvar VAR_DEOXYS_FORM_CHANGE, 0
+	callnative (SetFirstDeoxysForm)
+	msgbox Deoxys_Text_YouFeltChange, MSGBOX_DEFAULT
+	release
+	end
+
 SootopolisCity_EventScript_HideMapNamePopup::
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	return

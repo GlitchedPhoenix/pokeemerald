@@ -5,11 +5,13 @@ EventScript_CutTree::
 	checkpartymove MOVE_CUT
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CheckTreeCantCut
 	setfieldeffectargument 0, VAR_RESULT
+	goto_if_set FLAG_SYS_USE_CUT, EventScript_CutTreeDown
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	buffermovename STR_VAR_2, MOVE_CUT
 	msgbox Text_WantToCut, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_CancelCut
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
+	setflag FLAG_SYS_USE_CUT
 	closemessage
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
@@ -25,6 +27,7 @@ EventScript_UseCut::
 	end
 
 EventScript_CutTreeDown::
+	PlaySE(SE_M_CUT);
 	applymovement VAR_LAST_TALKED, Movement_CutTreeDown
 	waitmovement 0
 	removeobject VAR_LAST_TALKED
@@ -64,11 +67,17 @@ EventScript_RockSmash::
 	checkpartymove MOVE_ROCK_SMASH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
 	setfieldeffectargument 0, VAR_RESULT
+	goto_if_set FLAG_SYS_USE_ROCK_SMASH, EventScript_SmashRock
+	goto EventScript_RockSmashFirstTime
+	end
+
+EventScript_RockSmashFirstTime::
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	buffermovename STR_VAR_2, MOVE_ROCK_SMASH
 	msgbox Text_WantToSmash, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_CancelSmash
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
+	setflag FLAG_SYS_USE_ROCK_SMASH
 	closemessage
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate
@@ -84,6 +93,7 @@ EventScript_UseRockSmash::
 	end
 
 EventScript_SmashRock::
+	PlaySE(SE_M_ROCK_THROW);
 	applymovement VAR_LAST_TALKED, Movement_SmashRock
 	waitmovement 0
 	removeobject VAR_LAST_TALKED

@@ -44,6 +44,8 @@ void ClearTempFieldEventData(void)
     FlagClear(FLAG_SYS_ENC_UP_ITEM);
     FlagClear(FLAG_SYS_ENC_DOWN_ITEM);
     FlagClear(FLAG_SYS_USE_STRENGTH);
+	FlagClear(FLAG_SYS_USE_ROCK_SMASH);
+	FlagClear(FLAG_SYS_USE_CUT);
     FlagClear(FLAG_SYS_CTRL_OBJ_DELETE);
     FlagClear(FLAG_NURSE_UNION_ROOM_REMINDER);
 }

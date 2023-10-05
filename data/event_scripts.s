@@ -1060,3 +1060,5 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/maps/LeafyForest/scripts.inc"
 
 	.include "data/maps/RedfireRange/scripts.inc"
+
+	.include "data/maps/CometValley_Entrance/scripts.inc"

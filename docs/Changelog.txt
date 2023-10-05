@@ -7,13 +7,20 @@ Mechanical Changes
 - The game now asks if you want to use another repel after using one up.
 - TMs are reusable.
 - Buying more than 10 of any Poke Ball rewards you with a Premier Ball for every 10 you buy.
-- Money penalty on loss uses the modern formula, and doesn't brutalize your wallet.
-- Trees stay Cut permanently.
+- Money penalty on loss uses the modern formula, which doesn't doesn't brutalize your wallet.
 - Fishing always turns up an encounter, and is less frustrating.
 - Text now scrolls 4x as fast.
 - Most Marts now change their stock according to your badge count.
 - The bag's items pocket can now hold 99 items instead of 30, with a storeable quantity of up to 999 of each.
 - Healing items and vitamins have been moved to their own pocket.
+
+Map Changes
+- Trees stay Cut permanently.
+- Two new post-game areas have been added featuring some Pokemon exclusive to FireRed or LeafGreen.
+- After catching or defeating Deoxys, 4 meteors will appear around the region that will change its forme.
+- Encounter rate on ocean routes has been halved, while underwater encounter rates have been doubled.
+- Cut and Rock Smash now skip the prompt after their first use, similar to Strength.
+- Mirage Island is now 256x more likely to appear.
 
 Pokemon Changes
 - Chinchou and Lanturn now have a 5% chance of holding a Deep Sea Scale.
@@ -24,6 +31,8 @@ Pokemon Changes
 - Medicine can be used multiple times without returning to the bag.
 - Hidden Power now displays its true type and power both in summary and battle.
 - The reward for completing the Hoenn dex has been altered.
+- Stat EVS now cap at 252 instead of 255.
+- Feebas is now found at a 20% chance with a Good or Super Rod on non-Feebas tiles.
 
 Wild Encounters
 - Lunatone can now be found at night in Meteor Falls, replacing Solrock.
@@ -40,3 +49,4 @@ Wild Encounters
 
 Misc Changes
 - NPCs now have differently colored text depending on gender. Certain NPCs have their own text colors.
+- The Ganlon, Petaya, Apicot, Salac, and Enigma berries are now available in various post-game areas.

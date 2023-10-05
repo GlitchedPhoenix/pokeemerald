@@ -29,6 +29,26 @@ BattleFrontier_OutsideEast_EventScript_BattleTowerSign::
 	msgbox BattleFrontier_OutsideEast_Text_BattleTowerSign, MSGBOX_SIGN
 	end
 
+BattleFrontier_EventScript_DeoxysSpeedForm::
+	lock
+	specialvar VAR_RESULT, Special_LeadMonIsDeoxys
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_EventScript_DeoxysSpeedForm2
+	msgbox Deoxys_Text_MysteriousTriangle, MSGBOX_DEFAULT
+	release
+	end
+
+BattleFrontier_EventScript_DeoxysSpeedForm2::
+	msgbox Deoxys_Text_MysteriousTriangle, MSGBOX_DEFAULT
+	msgbox Deoxys_Text_Suddenly, MSGBOX_DEFAULT
+	playse SE_WARP_OUT
+	fadescreenspeed FADE_TO_WHITE, 2
+	fadescreen FADE_FROM_WHITE
+	setvar VAR_DEOXYS_FORM_CHANGE, 3
+	callnative (SetFirstDeoxysForm)
+	msgbox Deoxys_Text_YouFeltChange, MSGBOX_DEFAULT
+	release
+	end
+
 BattleFrontier_OutsideEast_EventScript_BattlePalaceSign::
 	msgbox BattleFrontier_OutsideEast_Text_BattlePalaceSign, MSGBOX_SIGN
 	end
