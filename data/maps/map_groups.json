@@ -430,7 +430,9 @@
     "TerraCave_End",
     "AlteringCave",
     "MeteorFalls_StevensCave",
-    "CometValley_Entrance"
+    "CometValley_Entrance",
+    "CometValley_Main",
+    "CometValley_Clearing"
   ],
   "gMapGroup_IndoorDynamic": [
     "SecretBase_RedCave1",

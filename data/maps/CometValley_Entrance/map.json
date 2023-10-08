@@ -2,7 +2,7 @@
   "id": "MAP_COMET_VALLEY_ENTRANCE",
   "name": "CometValley_Entrance",
   "layout": "LAYOUT_COMET_VALLEY_ENTRANCE",
-  "music": "MUS_ABANDONED_SHIP",
+  "music": "MUS_ROUTE110",
   "region_map_section": "MAPSEC_ROUTE_114",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -18,32 +18,74 @@
   ],
   "warp_events": [
     {
-      "x": 16,
+      "x": 24,
       "y": 26,
       "elevation": 0,
       "dest_map": "MAP_ROUTE115",
       "dest_warp_id": "3"
     },
     {
-      "x": 17,
+      "x": 25,
       "y": 26,
       "elevation": 0,
       "dest_map": "MAP_ROUTE115",
       "dest_warp_id": "4"
     },
     {
-      "x": 18,
+      "x": 26,
       "y": 26,
       "elevation": 0,
       "dest_map": "MAP_ROUTE115",
       "dest_warp_id": "5"
     },
     {
-      "x": 20,
+      "x": 28,
       "y": 6,
       "elevation": 0,
       "dest_map": "MAP_METEOR_FALLS_STEVENS_CAVE",
       "dest_warp_id": "1"
+    },
+    {
+      "x": 12,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_COMET_VALLEY_MAIN",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 13,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_COMET_VALLEY_MAIN",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 14,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_COMET_VALLEY_MAIN",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 12,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_COMET_VALLEY_MAIN",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 13,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_COMET_VALLEY_MAIN",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 14,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_COMET_VALLEY_MAIN",
+      "dest_warp_id": "2"
     }
   ],
   "coord_events": [

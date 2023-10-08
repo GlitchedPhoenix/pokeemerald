@@ -4434,12 +4434,32 @@
     {
       "id": "LAYOUT_COMET_VALLEY_ENTRANCE",
       "name": "CometValley_Entrance_Layout",
-      "width": 30,
+      "width": 38,
       "height": 34,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Fallarbor",
       "border_filepath": "data/layouts/CometValley_Entrance/border.bin",
       "blockdata_filepath": "data/layouts/CometValley_Entrance/map.bin"
+    },
+    {
+      "id": "LAYOUT_COMET_VALLEY_MAIN",
+      "name": "CometValley_Main_Layout",
+      "width": 58,
+      "height": 90,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_CometValley",
+      "border_filepath": "data/layouts/CometValley_Main/border.bin",
+      "blockdata_filepath": "data/layouts/CometValley_Main/map.bin"
+    },
+    {
+      "id": "LAYOUT_COMET_VALLEY_CLEARING",
+      "name": "CometValley_Clearing_Layout",
+      "width": 50,
+      "height": 50,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_CometValley",
+      "border_filepath": "data/layouts/CometValley_Clearing/border.bin",
+      "blockdata_filepath": "data/layouts/CometValley_Clearing/map.bin"
     }
   ]
 }

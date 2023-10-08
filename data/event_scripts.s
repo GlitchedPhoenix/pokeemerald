@@ -1062,3 +1062,7 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/maps/RedfireRange/scripts.inc"
 
 	.include "data/maps/CometValley_Entrance/scripts.inc"
+
+	.include "data/maps/CometValley_Main/scripts.inc"
+
+	.include "data/maps/CometValley_Clearing/scripts.inc"
