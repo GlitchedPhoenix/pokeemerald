@@ -102,6 +102,7 @@ BirthIsland_Exterior_EventScript_Deoxys::
 BirthIsland_Exterior_EventScript_DefeatedDeoxys::
 	setflag FLAG_DEFEATED_DEOXYS
 	setvar VAR_0x8004, SPECIES_DEOXYS
+	clearflag FLAG_HIDE_CHANGE_METEORS
 	goto Common_EventScript_LegendaryFlewAway
 	end
 

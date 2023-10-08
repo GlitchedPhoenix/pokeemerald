@@ -16,6 +16,7 @@
 #include "field_screen_effect.h"
 #include "frontier_pass.h"
 #include "frontier_util.h"
+#include "graphics.h"
 #include "gpu_regs.h"
 #include "international_string_util.h"
 #include "item_menu.h"
@@ -622,6 +623,8 @@ void ShowStartMenu(void)
         StopPlayerAvatar();
     }
     CreateStartMenuTask(Task_ShowStartMenu);
+	FlagClear(FLAG_SYS_TEXTCOLORS2);
+	LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     LockPlayerFieldControls();
 }
 

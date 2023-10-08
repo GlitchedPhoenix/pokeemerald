@@ -1417,9 +1417,13 @@ bool8 Special_AreLeadMonEVsMaxedOut(void)
 
 bool8 Special_LeadMonIsDeoxys(void)
 {
-	
-    if (GetMonData(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SPECIES) == SPECIES_DEOXYS);
-        return TRUE;
+	u8 partyCount = CalculatePlayerPartyCount();
+    u32 i;
+    for (i = 0; i < partyCount; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) == SPECIES_DEOXYS)
+            return TRUE;
+    }
 
     return FALSE;
 }
