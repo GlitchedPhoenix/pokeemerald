@@ -13,18 +13,39 @@ MauvilleCity_BikeShop_EventScript_Rydel::
 	end
 
 MauvilleCity_BikeShop_EventScript_SkipGreeting::
-	msgbox MauvilleCity_BikeShop_Text_DidYouComeFromFarAway, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_YesFar
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_NotFar
+	msgbox MauvilleCity_BikeShop_Text_YouCameBack, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_YesDeclined
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_NoDeclined
 	end
 
+MauvilleCity_BikeShop_Text_YouCameBack::
+	.string "Well well well, look who's back\n"
+	.string "for one of my awesome bikes.$"
+
+MauvilleCity_BikeShop_EventScript_YesDeclined::
+	setflag FLAG_RECEIVED_BIKE
+	msgbox MauvilleCity_BikeShop_Text_KnewYouWould
+	goto MauvilleCity_BikeShop_EventScript_ChooseBike
+	end
+
+MauvilleCity_BikeShop_EventScript_NoDeclined::
+	msgbox MauvilleCity_BikeShop_Text_Fine
+	release
+	end
+
+MauvilleCity_BikeShop_Text_KnewYouWould::
+	.string "Ha! I knew you would come\n"
+	.string "around!$"
+
+MauvilleCity_BikeShop_Text_Fine::
+	.string "Fine! I didn't want to give\n"
+	.string "you a FREE bike anyway!$"
+
 MauvilleCity_BikeShop_EventScript_ChooseBike::
-	message MauvilleCity_BikeShop_Text_ExplainBikesChooseWhichOne
-	waitmessage
-	multichoice 21, 8, MULTI_BIKE, TRUE
-	switch VAR_RESULT
-	case 0, MauvilleCity_BikeShop_EventScript_GetMachBike
-	case 1, MauvilleCity_BikeShop_EventScript_GetAcroBike
+	msgbox MauvilleCity_BikeShop_Text_ExplainBikes, MSGBOX_DEFAULT
+	giveitem ITEM_ACRO_BIKE
+	msgbox MauvilleCity_BikeShop_Text_NotAJabAtAnyoneInParticular, MSGBOX_DEFAULT
+	release
 	end
 
 MauvilleCity_BikeShop_EventScript_NotFar::
@@ -35,64 +56,18 @@ MauvilleCity_BikeShop_EventScript_NotFar::
 
 MauvilleCity_BikeShop_EventScript_YesFar::
 	setflag FLAG_RECEIVED_BIKE
+	msgbox MauvilleCity_BikeShop_Text_ExplainDistance, MSGBOX_DEFAULT
 	goto MauvilleCity_BikeShop_EventScript_ChooseBike
 	end
 
-MauvilleCity_BikeShop_EventScript_GetMachBike::
-	msgbox MauvilleCity_BikeShop_Text_ChoseMachBike, MSGBOX_DEFAULT
-	giveitem ITEM_MACH_BIKE
-	goto MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes
-	end
-
-MauvilleCity_BikeShop_EventScript_GetAcroBike::
-	msgbox MauvilleCity_BikeShop_Text_ChoseAcroBike, MSGBOX_DEFAULT
-	giveitem ITEM_ACRO_BIKE
-	goto MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes
-	end
-
-MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes::
-	msgbox MauvilleCity_BikeShop_Text_ComeBackToSwitchBikes, MSGBOX_DEFAULT
-	special SwapRegisteredBike
-	release
-	end
-
 MauvilleCity_BikeShop_EventScript_AskSwitchBikes::
-	msgbox MauvilleCity_BikeShop_Text_WantToSwitchBikes, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_SwitchBikes
-	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_KeepBike
-	end
-
-@ If the player does not have a bike on them Rydel assumes its stored in the PC
-MauvilleCity_BikeShop_EventScript_SwitchBikes::
-	msgbox MauvilleCity_BikeShop_Text_IllSwitchBikes, MSGBOX_DEFAULT
-	checkitem ITEM_ACRO_BIKE
-	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_BikeShop_EventScript_SwitchAcroForMach
-	checkitem ITEM_MACH_BIKE
-	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_BikeShop_EventScript_SwitchMachForAcro
-	msgbox MauvilleCity_BikeShop_Text_OhYourBikeIsInPC, MSGBOX_DEFAULT
+	msgbox MauvilleCity_BikeShop_Text_Tutorial, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_BikeShop_EventScript_KeepBike::
-	msgbox MauvilleCity_BikeShop_Text_HappyYouLikeIt, MSGBOX_DEFAULT
-	release
-	end
-
-MauvilleCity_BikeShop_EventScript_SwitchAcroForMach::
-	incrementgamestat GAME_STAT_TRADED_BIKES
-	msgbox MauvilleCity_BikeShop_Text_ExchangedAcroForMach, MSGBOX_DEFAULT
-	removeitem ITEM_ACRO_BIKE
-	giveitem ITEM_MACH_BIKE
-	goto MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes
-	end
-
-MauvilleCity_BikeShop_EventScript_SwitchMachForAcro::
-	incrementgamestat GAME_STAT_TRADED_BIKES
-	msgbox MauvilleCity_BikeShop_Text_ExchangedMachForAcro, MSGBOX_DEFAULT
-	removeitem ITEM_MACH_BIKE
-	giveitem ITEM_ACRO_BIKE
-	goto MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes
-	end
+MauvilleCity_BikeShop_Text_Tutorial::
+	.string "Remember! To change modes, press\n"
+	.string "the lever on your {COLOR RED}{SHADOW LIGHT_RED}right{COLOR BLUE}{SHADOW LIGHT_GRAY}!$"
 
 MauvilleCity_BikeShop_EventScript_Assistant::
 	msgbox MauvilleCity_BikeShop_Text_HandbooksAreInBack, MSGBOX_NPC
@@ -187,71 +162,57 @@ MauvilleCity_BikeShop_Text_DidYouComeFromFarAway:
 
 MauvilleCity_BikeShop_Text_GuessYouDontNeedBike:
 	.string "RYDEL: Is that right?\p"
-	.string "Then, I guess you have no need for\n"
-	.string "any of my BIKES.$"
+	.string "Well then, I guess you don't\n"
+	.string "NEED any of my bikes, do you?$"
 
-MauvilleCity_BikeShop_Text_ExplainBikesChooseWhichOne:
+MauvilleCity_BikeShop_Text_ExplainDistance:
 	.string "RYDEL: Hm, hm… … … … …\p"
 	.string "You're saying that you came all this\n"
 	.string "way from LITTLEROOT?\p"
-	.string "My goodness!\n"
-	.string "That's ridiculously far!\p"
+	.string "That's pretty far, isn't it?\p"
 	.string "If you had one of my BIKES, you could\n"
 	.string "go anywhere easily while feeling the\l"
-	.string "gentle caress of the wind!\p"
+	.string "gentle caress of the wind!$"
+
+MauvilleCity_BikeShop_Text_ExplainBikes:
 	.string "I'll tell you what!\n"
 	.string "I'll give you a BIKE!\p"
-	.string "Oh, wait a second!\p"
-	.string "I forgot to tell you that there are\n"
-	.string "two kinds of BIKES!\p"
-	.string "They are the MACH BIKE and\n"
-	.string "the ACRO BIKE!\p"
-	.string "The MACH BIKE is for cyclists who want\n"
-	.string "to feel the wind with their bodies!\p"
-	.string "And an ACRO BIKE is for those who\n"
-	.string "prefer technical rides!\p"
-	.string "I'm a real sweetheart, so you can\n"
-	.string "have whichever one you like!\p"
-	.string "Which one will you choose?$"
-
-MauvilleCity_BikeShop_Text_ChoseMachBike:
-	.string "{PLAYER} chose the MACH BIKE.$"
-
-MauvilleCity_BikeShop_Text_ChoseAcroBike:
-	.string "{PLAYER} chose the ACRO BIKE.$"
-
-MauvilleCity_BikeShop_Text_ComeBackToSwitchBikes:
-	.string "RYDEL: If you get the urge to switch\n"
-	.string "BIKES, just come see me!$"
-
-MauvilleCity_BikeShop_Text_WantToSwitchBikes:
-	.string "RYDEL: Oh? Were you thinking about\n"
-	.string "switching BIKES?$"
-
-MauvilleCity_BikeShop_Text_IllSwitchBikes:
-	.string "RYDEL: Okay, no problem!\n"
-	.string "I'll switch BIKES for you!$"
-
-MauvilleCity_BikeShop_Text_ExchangedMachForAcro:
-	.string "{PLAYER} got the MACH BIKE exchanged\n"
-	.string "for an ACRO BIKE.$"
-
-MauvilleCity_BikeShop_Text_ExchangedAcroForMach:
-	.string "{PLAYER} got the ACRO BIKE exchanged\n"
-	.string "for a MACH BIKE.$"
+	.string "In fact, I'll even give you one of\n"
+	.string "my special prototypes!\p"
+	.string "See, a while ago we dealt two\n"
+	.string "different kinds of bikes, the\l"
+	.string "MACH and ACRO bikes.\p"
+	.string "But, a few of our customers got\n"
+	.string "a little frustrated because I\l"
+	.string "didn't make just one bike that could\l"
+	.string "both go fast and do tricks.\p"
+	.string "Personally, I like to think that\n"
+	.string "the full experience of my bikes is\l"
+	.string "earned by trading them to\l"
+	.string "experience what the other can't!\p"
+	.string "But, some people think that's just\n"
+	.string "a lame excuse to make them buy both.\p"
+	.string "SO!\p"
+	.string "I designed a better, third version.\p"
+	.string "Allow me to introduce you to...\p"
+	.string "the MACRO BIKE!$"
+	
+MauvilleCity_BikeShop_Text_NotAJabAtAnyoneInParticular::
+	.string "While riding, you can click the\n"
+	.string "lever on your {COLOR RED}{SHADOW LIGHT_RED}right{COLOR BLUE}{SHADOW LIGHT_GRAY} to swap\l"
+	.string "between flying like the wind and\l"
+	.string "impressing all your friends with\l"
+	.string "your crazy tricks!\p"
+	.string "However, do keep in mind that I\n"
+	.string "took the rubber grips off of\l"
+	.string "the handle bars.\p"
+	.string "What? Just because you have the\n"
+	.string "definitive version doesn't mean\l"
+	.string "you get to have EVERYTHING.$"
 
 MauvilleCity_BikeShop_Text_HappyYouLikeIt:
 	.string "RYDEL: Good, good!\n"
 	.string "I'm happy that you like it!$"
-
-MauvilleCity_BikeShop_Text_OhYourBikeIsInPC:
-	.string "Oh? What happened to that BIKE\n"
-	.string "I gave you?\p"
-	.string "Oh, I get it, you stored it using your PC.\p"
-	.string "Well, take it out of PC storage,\n"
-	.string "and I'll be happy to exchange it!\p"
-	.string "May the wind always be at your back\n"
-	.string "on your adventure!$"
 
 MauvilleCity_BikeShop_Text_HandbooksAreInBack:
 	.string "I'm learning about BIKES while\n"
@@ -261,7 +222,7 @@ MauvilleCity_BikeShop_Text_HandbooksAreInBack:
 	.string "the back.$"
 
 MauvilleCity_BikeShop_Text_MachHandbookWhichPage:
-	.string "It's a handbook on the MACH BIKE.\p"
+	.string "It's a handbook on MACH mode.\p"
 	.string "Which page do you want to read?$"
 
 MauvilleCity_BikeShop_Text_HowToRideMachBike:
@@ -273,7 +234,7 @@ MauvilleCity_BikeShop_Text_HowToRideMachBike:
 	.string "Want to read a different page?$"
 
 MauvilleCity_BikeShop_Text_HowToTurnMachBike:
-	.string "A MACH BIKE is speedy, but it can't\n"
+	.string "MACH mode is speedy, but it can't\n"
 	.string "stop very quickly.\p"
 	.string "It gets a little tricky to get around\n"
 	.string "a corner.\p"
@@ -286,12 +247,12 @@ MauvilleCity_BikeShop_Text_SandySlopes:
 	.string "throughout the HOENN region.\p"
 	.string "The loose, crumbly sand makes it\n"
 	.string "impossible to climb normally.\p"
-	.string "But if you have a MACH BIKE, you can\n"
-	.string "zip up a sandy slope.\p"
+	.string "But with your bike in MACH mode,\n"
+	.string "you can zip up a sandy slope.\p"
 	.string "Want to read a different page?$"
 
 MauvilleCity_BikeShop_Text_AcroHandbookWhichPage:
-	.string "It's a handbook on the ACRO BIKE.\p"
+	.string "It's a handbook on ACRO mode.\p"
 	.string "Which page do you want to read?$"
 
 MauvilleCity_BikeShop_Text_Wheelies:

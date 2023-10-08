@@ -1,3 +1,4 @@
 - Alt textcolors will linger in the Pokemon and Save menus.
 - Deoxys meteors activate no matter what pokemon you have
 - Puddle sprites draw on top of other NPCs.
+- Acro bike hops can noclip the player

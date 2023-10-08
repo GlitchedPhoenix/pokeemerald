@@ -1038,9 +1038,9 @@ static const u8 sBasementKeyDesc[] = _(
     "MAUVILLE CITY.");
 
 static const u8 sAcroBikeDesc[] = _(
-    "A folding bicycle\n"
-    "capable of jumps\n"
-    "and wheelies.");
+    "An all-in-one bike\n"
+    "that swaps between\n"
+    "speed and tricks.");
 
 static const u8 sPokeblockCaseDesc[] = _(
     "A case for holding\n"
