@@ -623,7 +623,7 @@ void ShowStartMenu(void)
         StopPlayerAvatar();
     }
     CreateStartMenuTask(Task_ShowStartMenu);
-	FlagClear(FLAG_SYS_TEXTCOLORS2);
+	VarSet(VAR_SYS_TEXTCOLORS, 0);
 	LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     LockPlayerFieldControls();
 }

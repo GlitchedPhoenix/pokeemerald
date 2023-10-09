@@ -246,6 +246,7 @@
 #define MOVEMENT_ACTION_RUN_UP_SLOW                     0x9F
 #define MOVEMENT_ACTION_RUN_LEFT_SLOW                   0xA0
 #define MOVEMENT_ACTION_RUN_RIGHT_SLOW                  0xA1
+#define MOVEMENT_ACTION_BURN_TREE                       0xA2
 
 #define MOVEMENT_ACTION_STEP_END 0xFE
 #define MOVEMENT_ACTION_NONE     0xFF
@@ -309,6 +310,7 @@
 
 #define ANIM_STAY_STILL      0
 #define ANIM_REMOVE_OBSTACLE 1
+#define ANIM_REMOVE_OBSTACLE2 2
 
 #define ANIM_TAKE_OUT_ROD_SOUTH   0
 #define ANIM_TAKE_OUT_ROD_NORTH   1

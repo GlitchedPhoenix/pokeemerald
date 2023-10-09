@@ -1286,8 +1286,8 @@
 #define FLAG_UNUSED_0x4D4                                           0x4D4 // Unused Flag
 #define FLAG_UNUSED_0x4D5                                           0x4D5 // Unused Flag
 #define FLAG_UNUSED_0x4D6                                           0x4D6 // Unused Flag
-#define FLAG_UNUSED_0x4D7                                           0x4D7 // Unused Flag
-#define FLAG_UNUSED_0x4D8                                           0x4D8 // Unused Flag
+#define FLAG_CAN_BURN_TREE                                          0x4D7
+#define FLAG_BURN_NO_WATER                                          0x4D8
 #define FLAG_TREE_REDFIRE_RANGE                                     0x4D9
 #define FLAG_TREE_PETALBURGWOODS_1                                  0x4DA
 #define FLAG_TREE_PETALBURGWOODS_2                                  0x4DB

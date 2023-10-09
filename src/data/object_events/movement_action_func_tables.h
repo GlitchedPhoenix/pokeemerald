@@ -166,6 +166,9 @@ u8 MovementAction_RockSmashBreak_Step2(struct ObjectEvent *, struct Sprite *);
 u8 MovementAction_CutTree_Step0(struct ObjectEvent *, struct Sprite *);
 u8 MovementAction_CutTree_Step1(struct ObjectEvent *, struct Sprite *);
 u8 MovementAction_CutTree_Step2(struct ObjectEvent *, struct Sprite *);
+u8 MovementAction_BurnTree_Step0(struct ObjectEvent *, struct Sprite *);
+u8 MovementAction_BurnTree_Step1(struct ObjectEvent *, struct Sprite *);
+u8 MovementAction_BurnTree_Step2(struct ObjectEvent *, struct Sprite *);
 u8 MovementAction_SetFixedPriority_Step0(struct ObjectEvent *, struct Sprite *);
 u8 MovementAction_ClearFixedPriority_Step0(struct ObjectEvent *, struct Sprite *);
 u8 MovementAction_InitAffineAnim_Step0(struct ObjectEvent *, struct Sprite *);
@@ -359,6 +362,7 @@ u8 (*const gMovementActionFuncs_EmoteHeart[])(struct ObjectEvent *, struct Sprit
 u8 (*const gMovementActionFuncs_RevealTrainer[])(struct ObjectEvent *, struct Sprite *);
 u8 (*const gMovementActionFuncs_RockSmashBreak[])(struct ObjectEvent *, struct Sprite *);
 u8 (*const gMovementActionFuncs_CutTree[])(struct ObjectEvent *, struct Sprite *);
+u8 (*const gMovementActionFuncs_BurnTree[])(struct ObjectEvent *, struct Sprite *);
 u8 (*const gMovementActionFuncs_SetFixedPriority[])(struct ObjectEvent *, struct Sprite *);
 u8 (*const gMovementActionFuncs_ClearFixedPriority[])(struct ObjectEvent *, struct Sprite *);
 u8 (*const gMovementActionFuncs_InitAffineAnim[])(struct ObjectEvent *, struct Sprite *);
@@ -593,6 +597,7 @@ u8 (*const *const gMovementActionFuncs[])(struct ObjectEvent *, struct Sprite *)
     [MOVEMENT_ACTION_RUN_UP_SLOW] = gMovementActionFuncs_RunUpSlow,
     [MOVEMENT_ACTION_RUN_LEFT_SLOW] = gMovementActionFuncs_RunLeftSlow,
     [MOVEMENT_ACTION_RUN_RIGHT_SLOW] = gMovementActionFuncs_RunRightSlow,
+	[MOVEMENT_ACTION_BURN_TREE] = gMovementActionFuncs_BurnTree,
 };
 
 u8 (*const gMovementActionFuncs_FaceDown[])(struct ObjectEvent *, struct Sprite *) = {
@@ -1195,6 +1200,13 @@ u8 (*const gMovementActionFuncs_CutTree[])(struct ObjectEvent *, struct Sprite *
     MovementAction_CutTree_Step0,
     MovementAction_CutTree_Step1,
     MovementAction_CutTree_Step2,
+    MovementAction_Finish,
+};
+
+u8 (*const gMovementActionFuncs_BurnTree[])(struct ObjectEvent *, struct Sprite *) = {
+    MovementAction_BurnTree_Step0,
+    MovementAction_BurnTree_Step1,
+    MovementAction_BurnTree_Step2,
     MovementAction_Finish,
 };
 

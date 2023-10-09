@@ -94,6 +94,94 @@ static u8 * const sScriptStringVars[] =
     gStringVar3,
 };
 
+static const u16 sCutSubs[] = {
+	MOVE_CUT,
+	MOVE_KARATE_CHOP,
+	MOVE_GUILLOTINE,
+	MOVE_RAZOR_WIND,
+	MOVE_FURY_SWIPES,
+	MOVE_HYPER_FANG,
+	MOVE_SUPER_FANG,
+	MOVE_SLASH,
+	MOVE_AEROBLAST,
+	MOVE_AERIAL_ACE,
+	MOVE_FALSE_SWIPE,
+	MOVE_FURY_CUTTER,
+	MOVE_CROSS_CHOP,
+	MOVE_LEAF_BLADE,
+	MOVE_AIR_CUTTER,
+	MOVE_DRAGON_CLAW
+};
+
+static const u16 sBurnSubs[] = {
+	MOVE_EMBER,
+	MOVE_FLAMETHROWER,
+	MOVE_FIRE_BLAST,
+	MOVE_SACRED_FIRE,
+	MOVE_BLAST_BURN,
+	MOVE_OVERHEAT,
+	MOVE_FLAME_WHEEL,
+	MOVE_ERUPTION,
+	MOVE_WILL_O_WISP
+};
+
+static const u16 sRockSmashSubs[] = {
+	MOVE_ROCK_SMASH,
+	MOVE_MEGA_PUNCH,
+	MOVE_MEGA_KICK,
+	MOVE_JUMP_KICK,
+	MOVE_HI_JUMP_KICK,
+	MOVE_HORN_DRILL,
+	MOVE_HYPER_BEAM,
+	MOVE_SKULL_BASH,
+	MOVE_DYNAMIC_PUNCH,
+	MOVE_IRON_TAIL,
+	MOVE_FOCUS_PUNCH,
+	MOVE_BRICK_BREAK,
+	MOVE_CRUSH_CLAW,
+	MOVE_SKY_UPPERCUT,
+	MOVE_DRAGON_CLAW,
+	MOVE_PSYCHO_BOOST
+};
+
+static const u16 sStrengthSubs[] = {
+	MOVE_STRENGTH,
+	MOVE_JUMP_KICK,
+	MOVE_HI_JUMP_KICK,
+	MOVE_AEROBLAST,
+	MOVE_METAL_CLAW,
+	MOVE_VITAL_THROW,
+	MOVE_SKULL_BASH,
+	MOVE_SUPERPOWER,
+	MOVE_ARM_THRUST,
+	MOVE_BLAZE_KICK,
+	MOVE_PSYCHO_BOOST
+};
+
+static const u16 sWaterfallSubs[] = {
+	MOVE_WATERFALL,
+	MOVE_WHIRLWIND,
+	MOVE_BOUNCE,
+	MOVE_HYDRO_PUMP,
+	MOVE_HYDRO_CANNON
+};
+
+static const u16 sSurfSubs[] = {
+	MOVE_SURF,
+	MOVE_MUDDY_WATER
+};
+
+static const u16 sFlashSubs[][2] = {
+	{MOVE_FLASH, 0},
+	{MOVE_TAIL_GLOW, 0},
+	{MOVE_FLAMETHROWER, 1},
+	{MOVE_FIRE_SPIN, 1},
+	{MOVE_SACRED_FIRE, 1},
+	{MOVE_DRAGON_BREATH, 2},
+	{MOVE_LUSTER_PURGE, 3},
+	{MOVE_ODOR_SLEUTH, 4}
+};
+
 bool8 ScrCmd_nop(struct ScriptContext *ctx)
 {
     return FALSE;
@@ -114,10 +202,7 @@ bool8 ScrCmd_textcolor(struct ScriptContext * ctx)
  {
      gSpecialVar_PrevTextColor = gSpecialVar_TextColor;
      gSpecialVar_TextColor = ScriptReadByte(ctx);
-	 if (gSpecialVar_TextColor > 15)
-		FlagSet(FLAG_SYS_TEXTCOLORS2);
-	 else
-		FlagClear(FLAG_SYS_TEXTCOLORS2);
+	 ChangeTextPalette();
      return FALSE;
  }
 
@@ -1832,20 +1917,111 @@ bool8 ScrCmd_setmonmove(struct ScriptContext *ctx)
 bool8 ScrCmd_checkpartymove(struct ScriptContext *ctx)
 {
     u8 i;
+	u8 j;
     u16 moveId = ScriptReadHalfword(ctx);
+	u16 move;
 
     gSpecialVar_Result = PARTY_SIZE;
+	FlagClear(FLAG_CAN_BURN_TREE);
     for (i = 0; i < PARTY_SIZE; i++)
     {
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
         if (!species)
             break;
-        if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) && MonKnowsMove(&gPlayerParty[i], moveId) == TRUE)
-        {
-            gSpecialVar_Result = i;
-            gSpecialVar_0x8004 = species;
-            break;
-        }
+		if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+		{
+			if (moveId == MOVE_ROCK_SMASH)
+			{
+				for (j = 0; j < ARRAY_COUNT(sRockSmashSubs); j++)
+				{
+					move = sRockSmashSubs[j];
+					if (MonKnowsMove(&gPlayerParty[i], move) == TRUE)
+					{
+						gSpecialVar_Result = i;
+						gSpecialVar_0x8004 = species;
+						gSpecialVar_0x8005 = move;
+						return FALSE;
+					}
+				}
+			}
+			else if (moveId == MOVE_CUT)
+			{
+				for (j = 0; j < ARRAY_COUNT(sCutSubs); j++)
+				{
+					move = sCutSubs[j];
+					if (MonKnowsMove(&gPlayerParty[i], move) == TRUE)
+					{
+						gSpecialVar_Result = i;
+						gSpecialVar_0x8004 = species;
+						gSpecialVar_0x8005 = move;
+						return FALSE;
+					}
+				}
+				
+				for (j = 0; j < ARRAY_COUNT(sBurnSubs); j++)
+				{
+					move = sBurnSubs[j];
+					if (MonKnowsMove(&gPlayerParty[i], move) == TRUE)
+					{
+						gSpecialVar_Result = i;
+						gSpecialVar_0x8004 = species;
+						gSpecialVar_0x8005 = move;
+						FlagSet(FLAG_CAN_BURN_TREE);
+						return FALSE;
+					}
+				}
+			}
+			else if (moveId == MOVE_STRENGTH)
+			{
+				if (CanMonLearnTMHM(&gPlayerParty[i], ITEM_HM04 - ITEM_TM01))
+				{
+					gSpecialVar_Result = i;
+					gSpecialVar_0x8004 = species;
+					return FALSE;
+				}
+				
+				for (j = 0; j < ARRAY_COUNT(sStrengthSubs); j++)
+				{
+					move = sStrengthSubs[j];
+					if (MonKnowsMove(&gPlayerParty[i], move) == TRUE)
+					{
+						gSpecialVar_Result = i;
+						gSpecialVar_0x8004 = species;
+						gSpecialVar_0x8005 = move;
+						return FALSE;
+					}
+				}
+			}
+			else if (moveId == MOVE_WATERFALL)
+			{
+				for (j = 0; j < ARRAY_COUNT(sWaterfallSubs); j++)
+				{
+					move = sWaterfallSubs[j];
+					if (MonKnowsMove(&gPlayerParty[i], move) == TRUE)
+					{
+						gSpecialVar_Result = i;
+						gSpecialVar_0x8004 = species;
+						gSpecialVar_0x8005 = move;
+						return FALSE;
+					}
+				}
+			}
+			else if (moveId == MOVE_DIVE)
+			{
+				if (CanMonLearnTMHM(&gPlayerParty[i], ITEM_HM08 - ITEM_TM01))
+				{
+					gSpecialVar_Result = i;
+					gSpecialVar_0x8004 = species;
+					return FALSE;
+				}
+			}
+			else if (MonKnowsMove(&gPlayerParty[i], moveId) == TRUE)
+			{
+				gSpecialVar_Result = i;
+				gSpecialVar_0x8004 = species;
+				break;
+			}
+		}
     }
     return FALSE;
 }

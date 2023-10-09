@@ -91,6 +91,14 @@ const struct TilesPal *GetWindowFrameTilesPal(u8 id)
         return &sWindowFrames[id];
 }
 
+void ChangeTextPalette(void)
+{
+	if (gSpecialVar_TextColor > 15)
+		VarSet(VAR_SYS_TEXTCOLORS, 1);
+	 else
+		VarSet(VAR_SYS_TEXTCOLORS, 0);
+}
+
 void LoadMessageBoxGfx(u8 windowId, u16 destOffset, u8 palOffset)
 {
     LoadBgTiles(GetWindowAttribute(windowId, WINDOW_BG), gMessageBox_Gfx, 0x1C0, destOffset);
@@ -187,7 +195,7 @@ const u16 *GetTextWindowPalette(u8 id)
 
 const u16 *GetOverworldTextboxPalettePtr(void)
 {
-	if (FlagGet(FLAG_SYS_TEXTCOLORS2))
+	if (VarGet(VAR_SYS_TEXTCOLORS) == 1)
 		return sTextWindowPalettes[4];
 	else
 		return gMessageBox_Pal;

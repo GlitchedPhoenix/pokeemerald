@@ -860,6 +860,9 @@ static const struct SpriteFrameImage sPicTable_CuttableTree[] = {
     overworld_frame(gObjectEventPic_CuttableTree, 2, 2, 1),
     overworld_frame(gObjectEventPic_CuttableTree, 2, 2, 2),
     overworld_frame(gObjectEventPic_CuttableTree, 2, 2, 3),
+	overworld_frame(gObjectEventPic_CuttableTree, 2, 2, 4),
+	overworld_frame(gObjectEventPic_CuttableTree, 2, 2, 5),
+	overworld_frame(gObjectEventPic_CuttableTree, 2, 2, 6),
 };
 
 static const struct SpriteFrameImage sPicTable_MartEmployee[] = {

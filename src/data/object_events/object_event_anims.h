@@ -625,6 +625,15 @@ static const union AnimCmd sAnim_TreeCut[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sAnim_TreeBurn[] =
+{
+    ANIMCMD_FRAME(0, 6),
+    ANIMCMD_FRAME(4, 6),
+    ANIMCMD_FRAME(5, 6),
+    ANIMCMD_FRAME(6, 6),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd sAnim_TakeOutRodSouth[] =
 {
     ANIMCMD_FRAME(8, 4),
@@ -1117,6 +1126,7 @@ static const union AnimCmd *const sAnimTable_BreakableRock[] = {
 static const union AnimCmd *const sAnimTable_CuttableTree[] = {
     [ANIM_STAY_STILL] = sAnim_StayStill,
     [ANIM_REMOVE_OBSTACLE] = sAnim_TreeCut,
+	[ANIM_REMOVE_OBSTACLE2] = sAnim_TreeBurn,
 };
 
 static const union AnimCmd *const sAnimTable_Fishing[] = {

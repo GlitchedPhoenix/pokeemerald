@@ -13,6 +13,10 @@ Mechanical Changes
 - Most Marts now change their stock according to your badge count.
 - The bag's items pocket can now hold 99 items instead of 30, with a storeable quantity of up to 999 of each.
 - Healing items and vitamins have been moved to their own pocket.
+- The Mach and Acro bikes have been merged together.
+- Several normal moves can now be used as substitutes for HMs.
+- If a Pokemon can learn Strength or Dive by HM, then they can use it in the field even without knowing the attack.
+- HMs can now be forgotten normally.
 
 Map Changes
 - Trees stay Cut permanently.
@@ -20,7 +24,7 @@ Map Changes
 - After catching or defeating Deoxys, 4 meteors will appear around the region that will change its forme.
 - Encounter rate on ocean routes has been halved, while underwater encounter rates have been doubled.
 - Cut and Rock Smash now skip the prompt after their first use, similar to Strength.
-- Mirage Island is now 256x more likely to appear.
+- Mirage Island now has a (1*party size)/256 chance to appear.
 
 Pokemon Changes
 - Chinchou and Lanturn now have a 5% chance of holding a Deep Sea Scale.

@@ -116,17 +116,22 @@ enum {
     ACTIONS_TAKEITEM_TOSS,
 };
 
-// In CursorCb_FieldMove, field moves <= FIELD_MOVE_WATERFALL are assumed to line up with the badge flags.
-// Badge flag names are commented here for people searching for references to remove the badge requirement.
 enum {
-    FIELD_MOVE_CUT,         // FLAG_BADGE01_GET
-    FIELD_MOVE_FLASH,       // FLAG_BADGE02_GET
-    FIELD_MOVE_ROCK_SMASH,  // FLAG_BADGE03_GET
-    FIELD_MOVE_STRENGTH,    // FLAG_BADGE04_GET
-    FIELD_MOVE_SURF,        // FLAG_BADGE05_GET
-    FIELD_MOVE_FLY,         // FLAG_BADGE06_GET
-    FIELD_MOVE_DIVE,        // FLAG_BADGE07_GET
-    FIELD_MOVE_WATERFALL,   // FLAG_BADGE08_GET
+    FIELD_MOVE_CUT,
+    FIELD_MOVE_FLASH,
+	FIELD_MOVE_FLAMETHROWER,
+	FIELD_MOVE_FIRE_SPIN,
+	FIELD_MOVE_TAIL_GLOW,
+	FIELD_MOVE_SACRED_FIRE,
+	FIELD_MOVE_DRAGON_BREATH,
+	FIELD_MOVE_LUSTER_PURGE,
+	FIELD_MOVE_ODOR_SLEUTH,
+    FIELD_MOVE_ROCK_SMASH,
+    FIELD_MOVE_STRENGTH,
+    FIELD_MOVE_SURF,
+    FIELD_MOVE_FLY,
+    FIELD_MOVE_DIVE,
+    FIELD_MOVE_WATERFALL,
     FIELD_MOVE_TELEPORT,
     FIELD_MOVE_DIG,
     FIELD_MOVE_SECRET_POWER,
@@ -162,13 +167,6 @@ enum {
 #define MENU_DIR_UP      -1
 #define MENU_DIR_RIGHT    2
 #define MENU_DIR_LEFT    -2
-
-enum {
-    CAN_LEARN_MOVE,
-    CANNOT_LEARN_MOVE,
-    ALREADY_KNOWS_MOVE,
-    CANNOT_LEARN_MOVE_IS_EGG
-};
 
 enum {
     // Window ids 0-5 are implicitly assigned to each party pokemon in InitPartyMenuBoxes
@@ -272,7 +270,7 @@ static void DisplayPartyPokemonHPBarCheck(struct Pokemon *, struct PartyMenuBox 
 static void DisplayPartyPokemonDescriptionText(u8, struct PartyMenuBox *, u8);
 static bool8 IsMonAllowedInMinigame(u8);
 static void DisplayPartyPokemonDataToTeachMove(u8, u16, u8);
-static u8 CanMonLearnTMTutor(struct Pokemon *, u16, u8);
+u8 CanMonLearnTMTutor(struct Pokemon *, u16, u8);
 static void DisplayPartyPokemonBarDetail(u8, const u8 *, u8, const u8 *);
 static void DisplayPartyPokemonLevel(u8, struct PartyMenuBox *);
 static void DisplayPartyPokemonGender(u8, u16, u8 *, struct PartyMenuBox *);
@@ -2033,7 +2031,7 @@ static void Task_HandleCancelParticipationYesNoInput(u8 taskId)
     }
 }
 
-static u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor)
+u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor)
 {
     u16 move;
 
@@ -3724,13 +3722,7 @@ static void CursorCb_FieldMove(u8 taskId)
     }
     else
     {
-        // All field moves before WATERFALL are HMs.
-        if (fieldMove <= FIELD_MOVE_WATERFALL && FlagGet(FLAG_BADGE01_GET + fieldMove) != TRUE)
-        {
-            DisplayPartyMenuMessage(gText_CantUseUntilNewBadge, TRUE);
-            gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
-        }
-        else if (sFieldMoveCursorCallbacks[fieldMove].fieldMoveFunc() == TRUE)
+        if (sFieldMoveCursorCallbacks[fieldMove].fieldMoveFunc() == TRUE)
         {
             switch (fieldMove)
             {
@@ -3771,6 +3763,13 @@ static void CursorCb_FieldMove(u8 taskId)
                 DisplayCantUseSurfMessage();
                 break;
             case FIELD_MOVE_FLASH:
+			case FIELD_MOVE_FLAMETHROWER:
+			case FIELD_MOVE_FIRE_SPIN:
+			case FIELD_MOVE_SACRED_FIRE:
+			case FIELD_MOVE_TAIL_GLOW:
+			case FIELD_MOVE_DRAGON_BREATH:
+			case FIELD_MOVE_LUSTER_PURGE:
+			case FIELD_MOVE_ODOR_SLEUTH:
                 DisplayCantUseFlashMessage();
                 break;
             default:

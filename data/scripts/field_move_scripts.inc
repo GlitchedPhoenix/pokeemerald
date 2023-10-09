@@ -1,13 +1,17 @@
 @ Interact with cuttable tree
 EventScript_CutTree::
 	lockall
-	goto_if_unset FLAG_BADGE01_GET, EventScript_CheckTreeCantCut
 	checkpartymove MOVE_CUT
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CheckTreeCantCut
 	setfieldeffectargument 0, VAR_RESULT
 	goto_if_set FLAG_SYS_USE_CUT, EventScript_CutTreeDown
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
-	buffermovename STR_VAR_2, MOVE_CUT
+	buffermovename STR_VAR_2, VAR_0x8005
+	goto_if_set FLAG_CAN_BURN_TREE, EventScript_BurnTree2
+	goto_if_unset FLAG_CAN_BURN_TREE, EventScript_CutTree2
+	end
+
+EventScript_CutTree2::
 	msgbox Text_WantToCut, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_CancelCut
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
@@ -16,6 +20,17 @@ EventScript_CutTree::
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
 	goto EventScript_CutTreeDown
+	end
+
+EventScript_BurnTree2::
+	msgbox Text_WantToBurn, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_CancelCut
+	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
+	setflag FLAG_SYS_USE_CUT
+	closemessage
+	dofieldeffect FLDEFF_USE_CUT_ON_TREE
+	waitstate
+	goto EventScript_BurnTreeDown
 	end
 
 @ Use cut from party menu
@@ -27,6 +42,7 @@ EventScript_UseCut::
 	end
 
 EventScript_CutTreeDown::
+	goto_if_set FLAG_CAN_BURN_TREE, EventScript_BurnTreeDown
 	PlaySE(SE_M_CUT);
 	applymovement VAR_LAST_TALKED, Movement_CutTreeDown
 	waitmovement 0
@@ -34,8 +50,20 @@ EventScript_CutTreeDown::
 	releaseall
 	end
 
+EventScript_BurnTreeDown::
+	PlaySE(SE_M_FLAME_WHEEL2);
+	applymovement VAR_LAST_TALKED, Movement_BurnTreeDown
+	waitmovement 0
+	removeobject VAR_LAST_TALKED
+	releaseall
+	end
+
 Movement_CutTreeDown:
 	cut_tree
+	step_end
+
+Movement_BurnTreeDown:
+	burn_tree
 	step_end
 
 EventScript_CheckTreeCantCut::
@@ -49,9 +77,12 @@ EventScript_CancelCut::
 	end
 
 Text_WantToCut:
-	.string "This tree looks like it can be\n"
-	.string "CUT down!\p"
-	.string "Would you like to CUT it?$"
+	.string "A small tree is in the way.\n"
+	.string "Would you like to cut it down?$"
+
+Text_WantToBurn:
+	.string "A small tree is in the way.\n"
+	.string "Would you like to burn it down?$"
 
 Text_MonUsedFieldMove:
 	.string "{STR_VAR_1} used {STR_VAR_2}!$"
@@ -63,7 +94,6 @@ Text_CantCut:
 @ Interact with smashable rock
 EventScript_RockSmash::
 	lockall
-	goto_if_unset FLAG_BADGE03_GET, EventScript_CantSmashRock
 	checkpartymove MOVE_ROCK_SMASH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
 	setfieldeffectargument 0, VAR_RESULT
@@ -73,7 +103,7 @@ EventScript_RockSmash::
 
 EventScript_RockSmashFirstTime::
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
-	buffermovename STR_VAR_2, MOVE_ROCK_SMASH
+	buffermovename STR_VAR_2, VAR_0x8005
 	msgbox Text_WantToSmash, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_CancelSmash
 	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
@@ -124,8 +154,8 @@ EventScript_CancelSmash::
 	end
 
 Text_WantToSmash:
-	.string "This rock appears to be breakable.\n"
-	.string "Would you like to use ROCK SMASH?$"
+	.string "This rock looks rather fragile.\n"
+	.string "Would you like to break it?$"
 
 Text_CantSmash:
 	.string "It's a rugged rock, but a POKéMON\n"
@@ -133,17 +163,39 @@ Text_CantSmash:
 
 EventScript_StrengthBoulder::
 	lockall
-	goto_if_unset FLAG_BADGE04_GET, EventScript_CantStrength
 	goto_if_set FLAG_SYS_USE_STRENGTH, EventScript_CheckActivatedBoulder
+	setvar VAR_0x8005, 0
 	checkpartymove MOVE_STRENGTH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantStrength
+	goto_if_ne VAR_0x8005, 0, EventScript_StrengthMove
+	goto EventScript_StrengthMight
+	end
+
+EventScript_StrengthMove::
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	buffermovename STR_VAR_2, VAR_0x8005
 	setfieldeffectargument 0, VAR_RESULT
-	msgbox Text_WantToStrength, MSGBOX_YESNO
+	msgbox Text_WantToStrengthMove, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_CancelStrength
 	closemessage
 	dofieldeffect FLDEFF_USE_STRENGTH
 	waitstate
-	goto EventScript_ActivateStrength
+	setflag FLAG_SYS_USE_STRENGTH
+	msgbox Text_MonUsedStrengthMove, MSGBOX_DEFAULT
+	releaseall
+	end
+
+EventScript_StrengthMight::
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	setfieldeffectargument 0, VAR_RESULT
+	msgbox Text_WantToStrengthMight, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_CancelStrength
+	closemessage
+	dofieldeffect FLDEFF_USE_STRENGTH
+	waitstate
+	setflag FLAG_SYS_USE_STRENGTH
+	msgbox Text_MonUsedStrengthMight, MSGBOX_DEFAULT
+	releaseall
 	end
 
 EventScript_UseStrength::
@@ -155,7 +207,7 @@ EventScript_UseStrength::
 
 EventScript_ActivateStrength::
 	setflag FLAG_SYS_USE_STRENGTH
-	msgbox Text_MonUsedStrength, MSGBOX_DEFAULT
+	msgbox Text_MonUsedStrengthMight, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -174,22 +226,31 @@ EventScript_CancelStrength::
 	releaseall
 	end
 
-Text_WantToStrength:
-	.string "It's a big boulder, but a POKéMON\n"
-	.string "may be able to push it aside.\p"
-	.string "Would you like to use STRENGTH?$"
+Text_WantToStrengthMove:
+	.string "It's a heavy boulder. {STR_VAR_1} might\n"
+	.string "have a move to help push it.\p"
+	.string "Get help from {STR_VAR_1}?$"
 
-Text_MonUsedStrength:
-	.string "{STR_VAR_1} used STRENGTH!\p"
-	.string "{STR_VAR_1}'s STRENGTH made it\n"
-	.string "possible to move boulders around!$"
+Text_WantToStrengthMight:
+	.string "It's a heavy boulder. You feel that\n"
+	.string "{STR_VAR_1} might be able to push it.\p"
+	.string "Get help from {STR_VAR_1}?$"
+
+Text_MonUsedStrengthMove:
+	.string "{STR_VAR_1} used {STR_VAR_2}!\p"
+	.string "{STR_VAR_2} made it possible\n"
+	.string "to move boulders around!$"
+
+Text_MonUsedStrengthMight:
+	.string "{STR_VAR_1} used its might to help\n"
+	.string "you move boulders around!$"
 
 Text_CantStrength:
-	.string "It's a big boulder, but a POKéMON\n"
-	.string "may be able to push it aside.$"
+	.string "It's a heavy boulder, but a strong\n"
+	.string "POKéMON could make it budge.$"
 
 Text_StrengthActivated:
-	.string "STRENGTH made it possible to move\n"
+	.string "You can already move heavy\n"
 	.string "boulders around.$"
 
 EventScript_UseWaterfall::
@@ -197,10 +258,11 @@ EventScript_UseWaterfall::
 	checkpartymove MOVE_WATERFALL
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantWaterfall
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	buffermovename STR_VAR_2, VAR_0x8005
 	setfieldeffectargument 0, VAR_RESULT
 	msgbox Text_WantToWaterfall, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_EndWaterfall
-	msgbox Text_MonUsedWaterfall, MSGBOX_DEFAULT
+	msgbox Text_MonUsedFieldMove, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_WATERFALL
 	goto EventScript_EndWaterfall
 
@@ -220,7 +282,7 @@ Text_CantWaterfall:
 
 Text_WantToWaterfall:
 	.string "It's a large waterfall.\n"
-	.string "Would you like to use WATERFALL?$"
+	.string "Would you like to scale it?$"
 
 Text_MonUsedWaterfall:
 	.string "{STR_VAR_1} used WATERFALL.$"
@@ -257,7 +319,7 @@ EventScript_UseDiveUnderwater::
 	setfieldeffectargument 1, 1
 	msgbox Text_WantToSurface, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_EndSurface
-	msgbox Text_MonUsedDive, MSGBOX_DEFAULT
+	msgbox Text_MonEmerged, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_DIVE
 	goto EventScript_EndSurface
 	end
@@ -278,18 +340,21 @@ Text_CantDive:
 
 Text_WantToDive:
 	.string "The sea is deep here.\n"
-	.string "Would you like to use DIVE?$"
+	.string "Would you like to dive?$"
 
 Text_MonUsedDive:
-	.string "{STR_VAR_1} used DIVE.$"
+	.string "{STR_VAR_1} dived down.$"
+
+Text_MonEmerged:
+	.string "{STR_VAR_1} started swimming up.$"
 
 Text_CantSurface:
-	.string "Light is filtering down from above.\n"
-	.string "A POKéMON may be able to surface.$"
+	.string "How on earth did you get yourself\n"
+	.string "in this situation?$"
 
 Text_WantToSurface:
 	.string "Light is filtering down from above.\n"
-	.string "Would you like to use DIVE?$"
+	.string "Return to the surface?$"
 
 EventScript_FailSweetScent::
 	msgbox Text_FailSweetScent, MSGBOX_SIGN

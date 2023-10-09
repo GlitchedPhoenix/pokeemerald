@@ -20,6 +20,13 @@ struct PartyMenu
     s16 learnMoveState;  // data2, used only as a learn move state
 };
 
+enum {
+    CAN_LEARN_MOVE,
+    CANNOT_LEARN_MOVE,
+    ALREADY_KNOWS_MOVE,
+    CANNOT_LEARN_MOVE_IS_EGG
+};
+
 #define TMHM_COUNT 58
 extern const u16 gTMHMMoves[TMHM_COUNT];
 
@@ -44,6 +51,7 @@ u8 DisplayPartyMenuMessage(const u8 *str, bool8 keepOpen);
 bool8 IsPartyMenuTextPrinterActive(void);
 void PartyMenuModifyHP(u8 taskId, u8 slot, s8 hpIncrement, s16 HPDifference, TaskFunc task);
 u8 GetAilmentFromStatus(u32 status);
+u8 CanMonLearnTMTutor(struct Pokemon *, u16, u8);
 u8 GetMonAilment(struct Pokemon *mon);
 void DisplayPartyMenuStdMessage(u32 stringId);
 bool8 FieldCallback_PrepareFadeInFromMenu(void);
