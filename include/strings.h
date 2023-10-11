@@ -1262,6 +1262,8 @@ extern const u8 gText_10BP[];
 extern const u8 gText_15BP[];
 extern const u8 gText_ClawFossil[];
 extern const u8 gText_RootFossil[];
+extern const u8 gText_HelixFossil[];
+extern const u8 gText_DomeFossil[];
 extern const u8 gText_No4[];
 extern const u8 gText_TwoStyles[];
 extern const u8 gText_Lv50_3[];

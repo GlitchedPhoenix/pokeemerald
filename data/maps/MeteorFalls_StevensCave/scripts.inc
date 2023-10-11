@@ -5,7 +5,6 @@ MeteorFalls_StevensCave_MapScripts::
 
 MeteorFalls_StevensCave_EventScript_Steven::
 	lock
-	goto_if_set FLAG_DEFEATED_METEOR_FALLS_STEVEN, MeteorFalls_StevensCave_EventScript_Defeated
 	waitse
 	playse SE_PIN
 	applymovement LOCALID_STEVEN, Common_Movement_ExclamationMark
@@ -17,7 +16,15 @@ MeteorFalls_StevensCave_EventScript_Steven::
 	msgbox MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_STEVEN, MeteorFalls_StevensCave_Text_StevenDefeat
 	msgbox MeteorFalls_StevensCave_Text_MyPredictionCameTrue, MSGBOX_DEFAULT
+	msgbox MeteorFalls_StevensCave_Text_MeetMeInMossdeep
+	closemessage
+	delay 30
+	fadescreen FADE_TO_BLACK
+	playse SE_EXIT
 	setflag FLAG_DEFEATED_METEOR_FALLS_STEVEN
+	clearflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN
+	removeobject LOCALID_STEVEN
+	fadescreen FADE_FROM_BLACK
 	release
 	end
 
@@ -35,7 +42,7 @@ MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst:
 	.string "just a rock maniac?\p"
 	.string "No, that can't be right.\p"
 	.string "We battled alongside each other at\n"
-	.string "the SOOTOPOLIS SPACE CENTER.\p"
+	.string "the MOSSDEEP SPACE CENTER.\p"
 	.string "You should have a very good idea\n"
 	.string "about how good I am.\p"
 	.string "Okay, {PLAYER}{KUN}, if you're going to mount\n"
@@ -57,3 +64,8 @@ MeteorFalls_StevensCave_Text_MyPredictionCameTrue:
 	.string "… … … … … …\p"
 	.string "Fufufu, even I couldn't tell you that.$"
 
+MeteorFalls_StevensCave_Text_MeetMeInMossdeep::
+	.string "Say, I've about wrapped up in here.\n"
+	.string "When you find the time, come by my\l"
+	.string "place in MOSSDEEP. I've got something\l"
+	.string "for you.$"

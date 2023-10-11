@@ -37,8 +37,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_NINJA_BOY",
-      "x": 66,
-      "y": 12,
+      "x": 67,
+      "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
       "movement_range_x": 1,

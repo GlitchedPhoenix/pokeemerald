@@ -6,47 +6,6 @@ Eevee line
 
 
 
-FireRed area:
-Grass:
-- Pidgey
-- Pidgeotto
-- Growlithe
-- Tauros
-- Kanghaskhan
-- Electabuzz
-- Cubone
-- Hitmonchan
-
-Rock Smash:
-- Onix
-
-
-LeafGreen area
-Grass:
-- Rattata
-- Raticate
-- Ponyta
-- Chansey
-- Kanghaskhan
-- Magmar
-- Drowzee
-- Hitmonlee
-
-Water:
-- Tentacool
-- Tentacruel
-- Slowpoke
-- Slowbro
-- Lapras
-
-Fishing:
-- Magikarp
-- Gyarados
-- Poliwag
-- Dratini
-
-
-
 Safari Zone mons
 
 Hoothoot line

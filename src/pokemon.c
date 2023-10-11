@@ -2352,7 +2352,9 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     value = GetCurrentRegionMapSectionId();
     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
-	if (value == MAPSEC_ASHEN_RANGE)
+	if ((value == MAPSEC_ASHEN_RANGE) ||
+		(species == SPECIES_OMANYTE) ||
+		(species == SPECIES_KABUTO))
 		version = VERSION_FIRE_RED;
 	else if (value == MAPSEC_GREENLEAF_RESERVE)
 		version = VERSION_LEAF_GREEN;
@@ -2457,11 +2459,18 @@ void CreateMaleMon(struct Pokemon *mon, u16 species, u8 level)
 {
     u32 personality;
     u32 otId;
+	u16 shiny;
 
     do
     {
-        otId = Random32();
-        personality = Random32();
+		shiny = Random();
+		personality = Random32();
+		otId = Random32();
+		if (shiny <= 3328) // hee hee
+		{
+			personality = ((((Random() % SHINY_ODDS) ^ (HIHALF(otId) ^ LOHALF(otId))) ^ LOHALF(personality)) << 16) | LOHALF(personality);
+			FlagSet(FLAG_WALLY_DIFFERENT);
+		}
     }
     while (GetGenderFromSpeciesAndPersonality(species, personality) != MON_MALE);
     CreateMon(mon, species, level, USE_RANDOM_IVS, TRUE, personality, OT_ID_PRESET, otId);

@@ -44,6 +44,53 @@ Route118_EventScript_DeclineGoodRod::
 	release
 	end
 
+Route118_EventScript_AquaGrunt1::
+	applymovement 24, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox Route118_Text_ArmWrestle, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_Text_ArmWrestle:
+	.string "Come on, man! You realy gonna let\n"
+	.string "yourself get beat by a girl?$"
+
+Route118_EventScript_AquaGrunt2::
+	faceplayer
+	goto_if_set FLAG_MET_ROUTE118_GRUNT, Route118_EventScript_AquaGrunt2_TalkedTo
+	msgbox Route118_Text_CantGoThrough, MSGBOX_DEFAULT
+	setflag FLAG_MET_ROUTE118_GRUNT
+	release
+	end
+
+Route118_EventScript_AquaGrunt2_TalkedTo::
+	msgbox Route118_Text_CantGoThrough2, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_Text_CantGoThrough:
+	.string "Eh? Whaddya need?\p"
+	.string "...\p"
+	.string "...\p"
+	.string "You want to get through?\n"
+	.string "Sorry, kid. Still waiting for the rest\l"
+	.string "of our crew to show up. Orders are\l"
+	.string "to let no one through till the BOSS\l"
+	.string "shows up.$"
+
+Route118_Text_CantGoThrough2:
+	.string "I already told ya, kid. No getting\n"
+	.string "through. Come back later.$"
+
+Route118_EventScript_AquaGrunt3::
+	textcolor 2
+	msgbox Route118_Text_Snore, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_Text_Snore:
+	.string "She's snoring.$"
+
 Route118_EventScript_ReceivedGoodRod::
 	msgbox Route118_Text_TryCatchingMonWithGoodRod, MSGBOX_DEFAULT
 	release

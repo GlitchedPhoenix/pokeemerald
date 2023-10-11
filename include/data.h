@@ -37,6 +37,8 @@ struct TrainerMonNoItemDefaultMoves
     u16 iv;
     u8 lvl;
     u16 species;
+	u32 personality;
+	bool8 wally;
 };
 
 struct TrainerMonItemDefaultMoves
@@ -45,6 +47,8 @@ struct TrainerMonItemDefaultMoves
     u8 lvl;
     u16 species;
     u16 heldItem;
+	u32 personality;
+	bool8 wally;
 };
 
 struct TrainerMonNoItemCustomMoves
@@ -53,6 +57,8 @@ struct TrainerMonNoItemCustomMoves
     u8 lvl;
     u16 species;
     u16 moves[MAX_MON_MOVES];
+	u32 personality;
+	bool8 wally;
 };
 
 struct TrainerMonItemCustomMoves
@@ -62,6 +68,8 @@ struct TrainerMonItemCustomMoves
     u16 species;
     u16 heldItem;
     u16 moves[MAX_MON_MOVES];
+	u32 personality;
+	bool8 wally;
 };
 
 #define NO_ITEM_DEFAULT_MOVES(party) { .NoItemDefaultMoves = party }, .partySize = ARRAY_COUNT(party), .partyFlags = 0

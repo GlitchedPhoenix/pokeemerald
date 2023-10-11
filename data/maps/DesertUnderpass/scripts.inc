@@ -11,6 +11,7 @@ DesertUnderpass_OnTransition:
 DesertUnderpass_EventScript_Fossil::
 	lock
 	faceplayer
+	addvar VAR_FOSSIL_COUNT, 1
 	goto_if_set FLAG_CHOSE_ROOT_FOSSIL, DesertUnderpass_EventScript_GiveClawFossil
 	goto_if_set FLAG_CHOSE_CLAW_FOSSIL, DesertUnderpass_EventScript_GiveRootFossil
 	release

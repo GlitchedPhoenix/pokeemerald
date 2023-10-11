@@ -135,8 +135,208 @@ MossdeepCity_StevensHouse_EventScript_RockDisplay::
 	end
 
 MossdeepCity_StevensHouse_EventScript_Steven::
+	goto_if_set FLAG_DEFEATED_METEOR_FALLS_STEVEN, MossdeepCity_StevensHouse_EventScript_StevenGiveEonTicket
 	msgbox MossdeepCity_StevensHouse_Text_UnderwateCavernBetweenMossdeepSootopolis, MSGBOX_NPC
 	end
+
+MossdeepCity_StevensHouse_EventScript_StevenGiveEonTicket::
+	faceplayer
+	goto_if_set FLAG_SHOWED_STEVEN_SOUL_DEW, MossdeepCity_StevensHouse_EventScript_ThankYou
+	call MossdeepCity_StevensHouse_EventScript_CheckForSoulDew
+	goto_if_set FLAG_CAUGHT_LATIAS_OR_LATIOS, MossdeepCity_StevensHouse_EventScript_StevenCaughtTheLati
+	goto_if_set FLAG_DEFEATED_LATIAS_OR_LATIOS, MossdeepCity_StevensHouse_EventScript_StevenDefeatedTheLati
+	goto_if_set FLAG_STEVEN_SOUTHERN_ISLAND, MossdeepCity_StevensHouse_EventScript_StevenLetMeKnow
+	msgbox MossdeepCity_StevensHouse_Text_GushingAboutSoulDew, MSGBOX_DEFAULT
+	closemessage
+	playse SE_PIN
+	applymovement LOCALID_STEVEN, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_STEVEN, Common_Movement_Delay48
+	waitmovement 0
+	msgbox MossdeepCity_StevensHouse_Text_MyApologies, MSGBOX_DEFAULT
+	call_if_eq VAR_ROAMER_POKEMON, 0, MossdeepCity_StevensHouse_EventScript_StevenMentionLatios
+	call_if_eq VAR_ROAMER_POKEMON, 1, MossdeepCity_StevensHouse_EventScript_StevenMentionLatias
+	msgbox MossdeepCity_StevensHouse_Text_ItWentSouth, MSGBOX_DEFAULT
+	giveitem ITEM_EON_TICKET
+	setflag FLAG_ENABLE_SHIP_SOUTHERN_ISLAND
+	msgbox MossdeepCity_StevensHouse_Text_IfYouFindSomething, MSGBOX_DEFAULT
+	setflag FLAG_STEVEN_SOUTHERN_ISLAND
+	release
+	end
+
+MossdeepCity_StevensHouse_EventScript_ThankYou::
+	msgbox MossdeepCity_StevensHouse_Text_ThankYou
+	release
+	end
+
+MossdeepCity_StevensHouse_EventScript_CheckForSoulDew::
+	checkitem ITEM_SOUL_DEW
+	goto_if_eq VAR_RESULT, TRUE, MossdeepCity_StevensHouse_EventScript_LookAtSoulDew
+	return
+
+MossdeepCity_StevensHouse_EventScript_LookAtSoulDew::
+	playse SE_PIN
+	applymovement LOCALID_STEVEN, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_STEVEN, Common_Movement_Delay48
+	waitmovement 0
+	msgbox MossdeepCity_StevensHouse_Text_SoThisIsIt
+	closemessage
+	applymovement LOCALID_STEVEN, Common_Movement_FaceAwayPlayer
+	waitmovement 0
+	applymovement LOCALID_STEVEN, Common_Movement_Delay48
+	waitmovement 0
+	msgbox MossdeepCity_StevensHouse_Text_ThisIsIt
+	closemessage
+	applymovement LOCALID_STEVEN, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox MossdeepCity_StevensHouse_Text_HaveThisBack
+	textcolor 2
+	giveitem ITEM_CHOICE_BAND
+	textcolor 8
+	msgbox MossdeepCity_StevensHouse_Text_ChoiceBand
+	msgbox MossdeepCity_StevensHouse_Text_ThankYou
+	setflag FLAG_SHOWED_STEVEN_SOUL_DEW
+	release
+	end
+
+MossdeepCity_StevensHouse_Text_SoThisIsIt:
+	.string "What? You found what I was describing?\n"
+	.string "Please, may I have a look at it?$"
+
+MossdeepCity_StevensHouse_Text_ThisIsIt:
+	.string "...\p"
+	.string "...\p"
+	.string "Ah, yes... this is what I found that day.\n"
+	.string "Stunning. Absolutely stunning.$"
+
+MossdeepCity_StevensHouse_Text_HaveThisBack:
+	.string "Here, you can have this back, {PLAYER}.\n"
+	.string "As much as I would love to study it more,\l"
+	.string "it's not mine to keep.\l"
+	.string "Thank you, {PLAYER}.\p"
+	.string "Here, I want you to have this.$"
+
+MossdeepCity_StevensHouse_Text_ChoiceBand:
+	.string "Back in my days as CHAMPION, that was\n"
+	.string "something I used to give myself a bit\l"
+	.string "of an edge. These days, I don't have\l"
+	.string "much use for it.$"
+
+MossdeepCity_StevensHouse_Text_ThankYou:
+	.string "Thank you again, {PLAYER}, and I wish\n"
+	.string "you the best of luck to the next step\l"
+	.string "in your journey, wherever that may be.$"
+
+MossdeepCity_StevensHouse_EventScript_StevenCaughtTheLati::
+	call_if_eq VAR_ROAMER_POKEMON, 0, MossdeepCity_StevensHouse_EventScript_StevenCaughtLatios
+	call_if_eq VAR_ROAMER_POKEMON, 1, MossdeepCity_StevensHouse_EventScript_StevenCaughtLatias
+	msgbox MossdeepCity_StevensHouse_Text_CaughtItToo, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_StevensHouse_EventScript_StevenDefeatedTheLati::
+	call_if_eq VAR_ROAMER_POKEMON, 0, MossdeepCity_StevensHouse_EventScript_StevenCaughtLatios
+	call_if_eq VAR_ROAMER_POKEMON, 1, MossdeepCity_StevensHouse_EventScript_StevenCaughtLatias
+	msgbox MossdeepCity_StevensHouse_Text_ImGladYouLearnedSomething, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_StevensHouse_EventScript_StevenCaughtLatios::
+	msgbox MossdeepCity_StevensHouse_Text_SoItsNameWasLatios, MSGBOX_DEFAULT
+	return
+
+MossdeepCity_StevensHouse_EventScript_StevenCaughtLatias::
+	msgbox MossdeepCity_StevensHouse_Text_SoItsNameWasLatias, MSGBOX_DEFAULT
+	return
+
+MossdeepCity_StevensHouse_Text_CaughtItToo:
+	.string "And you even managed to catch it too?\p"
+	.string "...\p"
+	.string "Truly magnificent work, {PLAYER}.\p"
+	.string "Did you learn anything about that gem?$"
+
+MossdeepCity_StevensHouse_Text_ImGladYouLearnedSomething:
+	.string "I'm happy you found something out there,\n"
+	.string "{PLAYER}. Did you learn anything about\l"
+	.string "that gem while you were there?$"
+
+MossdeepCity_StevensHouse_Text_SoItsNameWasLatios:
+	.string "So, the POKéMON's name was LATIOS...$"
+
+MossdeepCity_StevensHouse_Text_SoItsNameWasLatias:
+	.string "So, the POKéMON's name was LATIAS...$"
+
+MossdeepCity_StevensHouse_EventScript_StevenLetMeKnow::
+	msgbox MossdeepCity_StevensHouse_Text_LetMeKnow
+	release
+	end
+
+MossdeepCity_StevensHouse_Text_LetMeKnow:
+	.string "Let me know if you find anything\n"
+	.string "interesting out there!$"
+
+MossdeepCity_StevensHouse_EventScript_StevenMentionLatios::
+	msgbox MossdeepCity_StevensHouse_Text_GoodToSeeYouLatios, MSGBOX_DEFAULT
+	return
+
+MossdeepCity_StevensHouse_EventScript_StevenMentionLatias::
+	msgbox MossdeepCity_StevensHouse_Text_GoodToSeeYouLatias, MSGBOX_DEFAULT
+	return
+
+MossdeepCity_StevensHouse_Text_GushingAboutSoulDew::
+	.string "Ah, {PLAYER}! Good to see you.\n"
+	.string "I told you I had a gift for you, yes?\p"
+	.string "A while back, I was travelling when\n"
+	.string "I happened across a strange gem.\p"
+	.string "It was a beautiful blue and white\n"
+	.string "gem. The cut was immaculately well\l"
+	.string "done, and I could spy no cracks,\l"
+	.string "scratches, or imperfections of any\l"
+	.string "variety, and I could have sworn it\l"
+	.string "had a glow. It was warm to the touch,\l"
+	.string "and not just because of the heat, mind\l"
+	.string "you, and it...$"
+
+MossdeepCity_StevensHouse_Text_MyApologies::
+	.string "Ah, my apologies. I got a little\n"
+	.string "carried away...\p"
+	.string "I picked up the gem and got a good\n"
+	.string "look at it, when I heard the wind\l"
+	.string "whistling, getting louder and louder.$"
+
+MossdeepCity_StevensHouse_Text_GoodToSeeYouLatios::
+	.string "Suddenly, I was face to face with a\n"
+	.string "blue plane-like POKéMON, gazing at me.\p"
+	.string "I held out the orb, when it and\n"
+	.string "that POKéMON had already\l"
+	.string "disappeared, leaving only a contrail\l"
+	.string "and a gust of wind.\p"
+	.string "Nevertheless, my interest was piqued.$"
+
+MossdeepCity_StevensHouse_Text_GoodToSeeYouLatias::
+	.string "Suddenly, I was face to face with a\n"
+	.string "red plane-like POKéMON, gazing at me.\p"
+	.string "I held out the orb, when it and\n"
+	.string "that POKéMON had already\l"
+	.string "disappeared, leaving only a contrail\l"
+	.string "and a gust of wind.\p"
+	.string "Nevertheless, my interest was piqued.$"
+
+MossdeepCity_StevensHouse_Text_ItWentSouth::
+	.string "While it isn't much, it seemed like\n"
+	.string "they were travelling southwards, down\l"
+	.string "towards a mostly uninhabited island.\p"
+	.string "I'd like you to go there and see what\n"
+	.string "you can find.\p"
+	.string "Here, this ticket can take you there.$"
+
+MossdeepCity_StevensHouse_Text_IfYouFindSomething::
+	.string "There's no guarantee, but you may\n"
+	.string "find something for your POKéDEX\l"
+	.string "out there.\p"
+	.string "If you do find something, however,\n"
+	.string "I would love to hear about it.$"
 
 MossdeepCity_StevensHouse_EventScript_Letter::
 	lockall

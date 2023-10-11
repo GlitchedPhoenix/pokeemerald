@@ -133,6 +133,14 @@
 #define SSTIDAL_SELECTION_EXIT             6
 #define SSTIDAL_SELECTION_COUNT            7
 
+// Fossil Selection Multichoice Selections
+#define FOSSIL_SELECTION_ROOT             0
+#define FOSSIL_SELECTION_CLAW             1
+#define FOSSIL_SELECTION_HELIX            2
+#define FOSSIL_SELECTION_DOME             3
+#define FOSSIL_SELECTION_EXIT             4
+#define FOSSIL_SELECTION_COUNT            5
+
 // Std String Ids
 #define STDSTRING_COOL             0
 #define STDSTRING_BEAUTY           1

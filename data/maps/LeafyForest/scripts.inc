@@ -2,6 +2,7 @@ LeafyForest_MapScripts::
 	.byte 0
 
 VerdantGrove_EventScript_DomeFossil::
+	addvar VAR_FOSSIL_COUNT, 1
 	finditem ITEM_DOME_FOSSIL
 	end
 

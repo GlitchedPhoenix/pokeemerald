@@ -536,3 +536,5 @@ gSpecials::
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
 	def_special Special_LeadMonIsDeoxys
+	def_special ScriptMenu_CreateFossilMultichoice
+	def_special GetFossilSelection

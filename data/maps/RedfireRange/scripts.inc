@@ -7,6 +7,7 @@ AshenRange_OnResume:
 	end
 
 AshenRange_EventScript_HelixFossil::
+	addvar VAR_FOSSIL_COUNT, 1
 	finditem ITEM_HELIX_FOSSIL
 	end
 

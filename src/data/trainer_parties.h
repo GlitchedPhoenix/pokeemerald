@@ -6777,13 +6777,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR1[] = {
     .iv = 250,
     .lvl = 45,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
-    },
-	{
-    .iv = 150,
-    .lvl = 43,
-    .species = SPECIES_EEVEE,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_WISH, MOVE_TOXIC, MOVE_PROTECT}
+    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT},
+	.wally = TRUE,
     }
 };
 
@@ -8754,6 +8749,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_WallyMauville[] = {
     .iv = 30,
     .lvl = 16,
     .species = SPECIES_RALTS,
+	.wally = TRUE,
     }
 };
 
@@ -8786,7 +8782,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR2[] = {
     .iv = 250,
     .lvl = 48,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT},
+	.wally = TRUE,
     },
 	{
     .iv = 150,
@@ -8825,7 +8822,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR3[] = {
     .iv = 250,
     .lvl = 51,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT},
+	.wally = TRUE,
     },
 	{
     .iv = 150,
@@ -8864,7 +8862,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR4[] = {
     .iv = 250,
     .lvl = 54,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT},
+	.wally = TRUE,
     },
 	{
     .iv = 150,
@@ -8903,7 +8902,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR5[] = {
     .iv = 250,
     .lvl = 57,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT},
+	.wally = TRUE,
     },
 	{
     .iv = 150,
