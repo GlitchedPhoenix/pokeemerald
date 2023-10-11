@@ -6,6 +6,8 @@ BattleFrontier_ScottsHouse_MapScripts::
 BattleFrontier_ScottsHouse_EventScript_Scott::
 	lock
 	faceplayer
+	call_if_unset FLAG_SCOTT_MEW, BattleFrontier_ScottsHouse_EventScript_CheckMew
+	goto_if_set FLAG_TEMP_5, BattleFrontier_ScottsHouse_EventScript_NoHardFeelings
 	goto_if_set FLAG_TEMP_4, BattleFrontier_ScottsHouse_EventScript_GivenBerry
 	goto_if_set FLAG_TEMP_3, BattleFrontier_ScottsHouse_EventScript_GivenShield
 	goto_if_set FLAG_TEMP_2, BattleFrontier_ScottsHouse_EventScript_GivenBattlePoints
@@ -25,6 +27,41 @@ BattleFrontier_ScottsHouse_EventScript_CheckGiveShield::
 	goto BattleFrontier_ScottsHouse_EventScript_RandomComment
 	end
 
+BattleFrontier_ScottsHouse_EventScript_CheckMew::
+	goto_if_set FLAG_DEFEATED_MEW, BattleFrontier_ScottsHouse_EventScript_TalkAboutMew
+	goto_if_set FLAG_CAUGHT_MEW, BattleFrontier_ScottsHouse_EventScript_TalkAboutMew
+	return
+
+BattleFrontier_ScottsHouse_EventScript_TalkAboutMew::
+	msgbox BattleFrontier_ScottsHouse_Text_FoundMew
+	setflag FLAG_SCOTT_MEW
+	setflag FLAG_TEMP_5
+	release
+	end
+
+BattleFrontier_ScottsHouse_Text_FoundMew:
+	.string "Eh?\p"
+	.string "What, you actually deciphered that\n"
+	.string "thing?\p"
+	.string "Well, you never fail to impress, kid.\p"
+	.string "I hope you weren't digging too long,\n"
+	.string "because, uh...\l"
+	.string "That whole ‘buried gold' thing was a\l"
+	.string "bunch of bologna.\p"
+	.string "But hey, come on, seeing the grandaddy\n"
+	.string "of all POKéMON has gotta be worth\l"
+	.string "something, yeah?\p"
+	.string "Now get back out there and earn your\n"
+	.string "real gold!$"
+
+BattleFrontier_ScottsHouse_EventScript_NoHardFeelings::
+	msgbox BattleFrontier_ScottsHouse_Text_NoHardFeelings
+	release
+	end
+
+BattleFrontier_ScottsHouse_Text_NoHardFeelings:
+	.string "No hard feelings, right kiddo?$"
+
 BattleFrontier_ScottsHouse_EventScript_CheckSilverSymbols::
 	goto_if_unset FLAG_SYS_TOWER_SILVER, BattleFrontier_ScottsHouse_EventScript_CheckGiveShield
 	goto_if_unset FLAG_SYS_DOME_SILVER, BattleFrontier_ScottsHouse_EventScript_CheckGiveShield
@@ -36,6 +73,12 @@ BattleFrontier_ScottsHouse_EventScript_CheckSilverSymbols::
 	msgbox BattleFrontier_ScottsHouse_Text_YouveCollectedAllSilverSymbols, MSGBOX_DEFAULT
 	giveitem ITEM_LANSAT_BERRY
 	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_ScottsHouse_EventScript_BerryPocketFull
+	msgbox BattleFrontier_ScottsHouse_Text_NotGoodEnough, MSGBOX_DEFAULT
+	textcolor 2
+	giveitem ITEM_OLD_SEA_MAP
+	setflag FLAG_ENABLE_SHIP_FARAWAY_ISLAND
+	textcolor 8
+	msgbox BattleFrontier_ScottsHouse_Text_ThatsAMap, MSGBOX_DEFAULT
 	setflag FLAG_COLLECTED_ALL_SILVER_SYMBOLS
 	setflag FLAG_TEMP_4
 	release
@@ -56,6 +99,32 @@ BattleFrontier_ScottsHouse_EventScript_CheckGoldSymbols::
 	setflag FLAG_TEMP_4
 	release
 	end
+
+BattleFrontier_ScottsHouse_Text_NotGoodEnough:
+	.string "...\p"
+	.string "...What, what's that look for?\p"
+	.string "Oh, I get it. That berry wasn't good\n"
+	.string "enough for you, yeah?\l"
+	.string "Fine, fine. I got something else you\l"
+	.string "might like.$"
+
+BattleFrontier_ScottsHouse_Text_ThatsAMap:
+	.string "An acquaintance of mine back on the\n"
+	.string "SEVII ISLANDS gave me that map some\l"
+	.string "time ago. Not sure why, guess she\l"
+	.string "just needed it off her hands.\p"
+	.string "She did tell me one neat little\n"
+	.string "tidbit, though.\l"
+	.string "Apparently, that island has some gold\l"
+	.string "buried somewhere on it!\p"
+	.string "Yeah, I know! Crazy, right?\n"
+	.string "But hey, you never know. Maybe some\l"
+	.string "brave advenurer can decipher that\l"
+	.string "chicken scratch and walk away with\l"
+	.string "a handsome reward!\p"
+	.string "Well, best of luck kid.\p"
+	.string "And when you're done treasure hunting,\n"
+	.string "come back here and go for the real gold!$"
 
 BattleFrontier_ScottsHouse_EventScript_BerryPocketFull::
 	msgbox BattleFrontier_ScottsHouse_Text_BerryPocketStuffed, MSGBOX_DEFAULT
@@ -316,10 +385,8 @@ BattleFrontier_ScottsHouse_Text_YouveCollectedAllGoldSymbols:
 	.string "appreciate the value of my gift!$"
 
 BattleFrontier_ScottsHouse_Text_SoGladIBroughtYouHere:
-	.string "I must say I have the gift of knowing\n"
-	.string "a good TRAINER when I see one.\p"
-	.string "I'm so glad I had the foresight to\n"
-	.string "bring you here!$"
+	.string "Well, get after it then. Make me\n"
+	.string "proud, kid!$"
 
 BattleFrontier_ScottsHouse_Text_BerryPocketStuffed:
 	.string "Your BERRY POCKET seems to\n"

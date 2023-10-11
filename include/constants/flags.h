@@ -456,7 +456,7 @@
 #define FLAG_REMATCH_DRAKE                   0x1A8
 #define FLAG_REMATCH_WALLACE                 0x1A9
 
-#define FLAG_UNUSED_0x1AA                    0x1AA // Unused Flag
+#define FLAG_SCOTT_MEW                       0x1AA
 #define FLAG_SHOWED_STEVEN_SOUL_DEW          0x1AB
 
 #define FLAG_DEFEATED_DEOXYS                 0x1AC
