@@ -1025,6 +1025,8 @@ static const struct MatchCallText *const sMatchCallGeneralTopics[] =
 extern const u8 gBirchDexRatingText_AreYouCurious[];
 extern const u8 gBirchDexRatingText_SoYouveSeenAndCaught[];
 extern const u8 gBirchDexRatingText_OnANationwideBasis[];
+extern const u8 ProfBirch_Text_PleaseComeToLab[];
+extern const u8 ProfBirch_Text_CompletedStandardHoennDex[];
 
 void InitMatchCallCounters(void)
 {
@@ -1983,53 +1985,48 @@ static u16 GetFrontierStreakInfo(u16 facilityId, u32 *topicTextId)
 
 static u8 GetPokedexRatingLevel(u16 numSeen)
 {
-    if (numSeen < 10)
+    if (numSeen < 15)
         return 0;
-    if (numSeen < 20)
-        return 1;
     if (numSeen < 30)
+        return 1;
+    if (numSeen < 45)
         return 2;
-    if (numSeen < 40)
-        return 3;
-    if (numSeen < 50)
-        return 4;
     if (numSeen < 60)
-        return 5;
-    if (numSeen < 70)
-        return 6;
-    if (numSeen < 80)
-        return 7;
+        return 3;
+    if (numSeen < 75)
+        return 4;
     if (numSeen < 90)
-        return 8;
-    if (numSeen < 100)
-        return 9;
-    if (numSeen < 110)
-        return 10;
+        return 5;
+    if (numSeen < 105)
+        return 6;
     if (numSeen < 120)
-        return 11;
-    if (numSeen < 130)
-        return 12;
-    if (numSeen < 140)
-        return 13;
+        return 7;
+    if (numSeen < 135)
+        return 8;
     if (numSeen < 150)
-        return 14;
-    if (numSeen < 160)
-        return 15;
-    if (numSeen < 170)
-        return 16;
+        return 9;
+    if (numSeen < 165)
+        return 10;
     if (numSeen < 180)
+        return 11;
+    if (numSeen < 195)
+        return 12;
+    if (numSeen < 210)
+        return 13;
+    if (numSeen < 225)
+        return 14;
+    if (numSeen < 240)
+        return 15;
+    if (numSeen < 255)
+        return 16;
+    if (numSeen < 270)
         return 17;
-    if (numSeen < 190)
+    if (numSeen < 285)
         return 18;
-    if (numSeen < 200)
+    if (numSeen < 300)
         return 19;
 
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT))
-        numSeen--;
-    if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT))
-        numSeen--;
-
-    if (numSeen < 200)
+    if (numSeen < 300)
         return 19;
     else
         return 20;
@@ -2062,7 +2059,7 @@ static const u8 *const sBirchDexRatingTexts[] =
 
 void BufferPokedexRatingForMatchCall(u8 *destStr)
 {
-    int numSeen, numCaught;
+    int numSeen, numCaught, numCaughtHoenn;
     u8 *str;
     u8 dexRatingLevel;
 
@@ -2073,8 +2070,9 @@ void BufferPokedexRatingForMatchCall(u8 *destStr)
         return;
     }
 
-    numSeen = GetHoennPokedexCount(FLAG_GET_SEEN);
-    numCaught = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+    numSeen = GetExtendedPokedexCount(FLAG_GET_SEEN);
+    numCaught = GetExtendedPokedexCount(FLAG_GET_CAUGHT);
+	numCaughtHoenn = GetHoennPokedexCount(FLAG_GET_CAUGHT);
     ConvertIntToDecimalStringN(gStringVar1, numSeen, STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar2, numCaught, STR_CONV_MODE_LEFT_ALIGN, 3);
     dexRatingLevel = GetPokedexRatingLevel(numCaught);
@@ -2083,9 +2081,19 @@ void BufferPokedexRatingForMatchCall(u8 *destStr)
     str = StringCopy(str, gBirchDexRatingText_SoYouveSeenAndCaught);
     *(str++) = CHAR_PROMPT_CLEAR;
     StringCopy(str, sBirchDexRatingTexts[dexRatingLevel]);
+	if (!FlagGet(FLAG_RECEIVED_AURORA_TICKET) && ((numCaughtHoenn == 202) || ((numCaughtHoenn == 201) && (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT) == FALSE))))
+	{
+		if (!FlagGet(FLAG_BIRCH_SEEN_COMPLETE_HOENN_DEX))
+		{
+			str = StringCopy(str, ProfBirch_Text_CompletedStandardHoennDex);
+			*(str++) = CHAR_PROMPT_CLEAR;
+			FlagSet(FLAG_BIRCH_SEEN_COMPLETE_HOENN_DEX);
+		}
+		StringCopy(str, ProfBirch_Text_PleaseComeToLab);
+	}
     str = StringExpandPlaceholders(destStr, buffer);
 
-    if (IsNationalPokedexEnabled())
+    if (IsNationalPokedexEnabled() && (FlagGet(FLAG_RECEIVED_AURORA_TICKET) || !FlagGet(FLAG_BIRCH_SEEN_COMPLETE_HOENN_DEX)))
     {
         *(str++) = CHAR_PROMPT_CLEAR;
         numSeen = GetNationalPokedexCount(FLAG_GET_SEEN);

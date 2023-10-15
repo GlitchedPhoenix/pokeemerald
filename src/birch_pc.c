@@ -8,8 +8,12 @@ bool16 ScriptGetPokedexInfo(void)
 {
     if (gSpecialVar_0x8004 == 0) // is national dex not present?
     {
-        gSpecialVar_0x8005 = GetHoennPokedexCount(FLAG_GET_SEEN);
-        gSpecialVar_0x8006 = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+        gSpecialVar_0x8005 = GetExtendedPokedexCount(FLAG_GET_SEEN);
+        gSpecialVar_0x8006 = GetExtendedPokedexCount(FLAG_GET_CAUGHT);
+		gSpecialVar_0x8007 = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+		
+		if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT) && !FlagGet(FLAG_RECEIVED_AURORA_TICKET))
+			gSpecialVar_0x8007 -= 1;
     }
     else
     {
@@ -22,63 +26,51 @@ bool16 ScriptGetPokedexInfo(void)
 
 // This shows your Hoenn Pokedex rating and not your National Dex.
 const u8 *GetPokedexRatingText(u16 count)
-{
-    if (count < 10)
+{	
+    if (count < 15)
         return gBirchDexRatingText_LessThan10;
-    if (count < 20)
+    else if (count < 30)
         return gBirchDexRatingText_LessThan20;
-    if (count < 30)
+    else if (count < 45)
         return gBirchDexRatingText_LessThan30;
-    if (count < 40)
+    else if (count < 60)
         return gBirchDexRatingText_LessThan40;
-    if (count < 50)
+    else if (count < 75)
         return gBirchDexRatingText_LessThan50;
-    if (count < 60)
+    else if (count < 90)
         return gBirchDexRatingText_LessThan60;
-    if (count < 70)
+    else if (count < 105)
         return gBirchDexRatingText_LessThan70;
-    if (count < 80)
+    else if (count < 120)
         return gBirchDexRatingText_LessThan80;
-    if (count < 90)
+    else if (count < 135)
         return gBirchDexRatingText_LessThan90;
-    if (count < 100)
+    else if (count < 150)
         return gBirchDexRatingText_LessThan100;
-    if (count < 110)
+    else if (count < 165)
         return gBirchDexRatingText_LessThan110;
-    if (count < 120)
+    else if (count < 180)
         return gBirchDexRatingText_LessThan120;
-    if (count < 130)
+    else if (count < 195)
         return gBirchDexRatingText_LessThan130;
-    if (count < 140)
+    else if (count < 210)
         return gBirchDexRatingText_LessThan140;
-    if (count < 150)
+    else if (count < 225)
         return gBirchDexRatingText_LessThan150;
-    if (count < 160)
+    else if (count < 240)
         return gBirchDexRatingText_LessThan160;
-    if (count < 170)
+    else if (count < 255)
         return gBirchDexRatingText_LessThan170;
-    if (count < 180)
+    else if (count < 270)
         return gBirchDexRatingText_LessThan180;
-    if (count < 190)
+    else if (count < 285)
         return gBirchDexRatingText_LessThan190;
-    if (count < 200)
+    else if (count < 300)
         return gBirchDexRatingText_LessThan200;
-    if (count == 200)
+    else if (count == 300)
     {
-        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
-         || GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT)) // Jirachi or Deoxys is not counted towards the dex completion. If either of these flags are enabled, it means the actual count is less than 200.
-            return gBirchDexRatingText_LessThan200;
         return gBirchDexRatingText_DexCompleted;
     }
-    if (count == HOENN_DEX_COUNT - 1)
-    {
-        if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_JIRACHI), FLAG_GET_CAUGHT)
-         && GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_DEOXYS), FLAG_GET_CAUGHT)) // If both of these flags are enabled, it means the actual count is less than 200.
-            return gBirchDexRatingText_LessThan200;
-        return gBirchDexRatingText_DexCompleted;
-    }
-    if (count == HOENN_DEX_COUNT)
-        return gBirchDexRatingText_DexCompleted;
     return gBirchDexRatingText_LessThan10;
 }
 

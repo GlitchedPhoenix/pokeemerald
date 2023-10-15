@@ -38,7 +38,6 @@ Pokemon Changes
 - Stat EVS now cap at 252 instead of 255.
 - Feebas is now found at a 20% chance with a Good or Super Rod on non-Feebas tiles.
 - The Helix and Dome fossils can be found and revived in Rustboro.
-- The Egg received in Lavaridge now contains an Eevee.
 
 Wild Encounters
 - Lunatone can now be found at night in Meteor Falls, replacing Solrock.

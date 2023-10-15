@@ -102,6 +102,8 @@ extern const u8 Roulette_Text_ItsAHit[];
 extern const u8 Roulette_Text_NothingDoing[];
 extern const u8 Roulette_Text_YouveWonXCoins[];
 extern const u8 Roulette_Text_BoardWillBeCleared[];
+extern const u8 gText_DexExtendedDescription[];
+extern const u8 gText_DexExtendedTitle[];
 extern const u8 gText_ThrowInPremierBalls[];
 extern const u8 gText_YouAlreadyHaveThis[];
 extern const u8 Roulette_Text_CoinCaseIsFull[];

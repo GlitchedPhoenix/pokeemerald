@@ -24,8 +24,9 @@
 #include "constants/songs.h"
 
 #define VERSION_BANNER_RIGHT_TILEOFFSET 64
-#define VERSION_BANNER_LEFT_X 98
-#define VERSION_BANNER_RIGHT_X 162
+#define VERSION_BANNER_LEFT_X 93
+#define VERSION_BANNER_RIGHT_X 157
+#define VERSION_BANNER_END_X 221
 #define VERSION_BANNER_Y 2
 #define VERSION_BANNER_Y_GOAL 66
 #define START_BANNER_X 128
@@ -48,6 +49,7 @@ static void UpdateLegendaryMarkingColor(u8);
 
 static void SpriteCB_VersionBannerLeft(struct Sprite *sprite);
 static void SpriteCB_VersionBannerRight(struct Sprite *sprite);
+static void SpriteCB_VersionBannerEnd(struct Sprite *sprite);
 static void SpriteCB_PressStartCopyrightBanner(struct Sprite *sprite);
 static void SpriteCB_PokemonLogoShine(struct Sprite *sprite);
 
@@ -134,6 +136,23 @@ static const struct OamData sVersionBannerRightOamData =
     .affineParam = 0,
 };
 
+static const struct OamData sVersionBannerEndOamData =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_8BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
 static const union AnimCmd sVersionBannerLeftAnimSequence[] =
 {
     ANIMCMD_FRAME(0, 30),
@@ -146,6 +165,12 @@ static const union AnimCmd sVersionBannerRightAnimSequence[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sVersionBannerEndAnimSequence[] =
+{
+    ANIMCMD_FRAME(VERSION_BANNER_RIGHT_TILEOFFSET*2, 30),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd *const sVersionBannerLeftAnimTable[] =
 {
     sVersionBannerLeftAnimSequence,
@@ -154,6 +179,11 @@ static const union AnimCmd *const sVersionBannerLeftAnimTable[] =
 static const union AnimCmd *const sVersionBannerRightAnimTable[] =
 {
     sVersionBannerRightAnimSequence,
+};
+
+static const union AnimCmd *const sVersionBannerEndAnimTable[] =
+{
+    sVersionBannerEndAnimSequence,
 };
 
 static const struct SpriteTemplate sVersionBannerLeftSpriteTemplate =
@@ -178,11 +208,22 @@ static const struct SpriteTemplate sVersionBannerRightSpriteTemplate =
     .callback = SpriteCB_VersionBannerRight,
 };
 
+static const struct SpriteTemplate sVersionBannerEndSpriteTemplate =
+{
+    .tileTag = 1000,
+    .paletteTag = 1000,
+    .oam = &sVersionBannerEndOamData,
+    .anims = sVersionBannerEndAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_VersionBannerEnd,
+};
+
 static const struct CompressedSpriteSheet sSpriteSheet_EmeraldVersion[] =
 {
     {
         .data = gTitleScreenEmeraldVersionGfx,
-        .size = 0x1000,
+        .size = 0x1800,
         .tag = 1000
     },
     {},
@@ -368,6 +409,20 @@ static void SpriteCB_VersionBannerLeft(struct Sprite *sprite)
 }
 
 static void SpriteCB_VersionBannerRight(struct Sprite *sprite)
+{
+    if (gTasks[sprite->data[1]].data[1] != 0)
+    {
+        sprite->oam.objMode = ST_OAM_OBJ_NORMAL;
+        sprite->y = VERSION_BANNER_Y_GOAL;
+    }
+    else
+    {
+        if (sprite->y != VERSION_BANNER_Y_GOAL)
+            sprite->y++;
+    }
+}
+
+static void SpriteCB_VersionBannerEnd(struct Sprite *sprite)
 {
     if (gTasks[sprite->data[1]].data[1] != 0)
     {
@@ -669,6 +724,10 @@ static void Task_TitleScreenPhase1(u8 taskId)
         // Create right side of version banner
         spriteId = CreateSprite(&sVersionBannerRightSpriteTemplate, VERSION_BANNER_RIGHT_X, VERSION_BANNER_Y, 0);
         gSprites[spriteId].data[1] = taskId;
+		
+		// Create right side of version banner
+        spriteId = CreateSprite(&sVersionBannerEndSpriteTemplate, VERSION_BANNER_END_X, VERSION_BANNER_Y, 0);
+        gSprites[spriteId].data[1] = taskId;
 
         gTasks[taskId].tCounter = 144;
         gTasks[taskId].func = Task_TitleScreenPhase2;
@@ -807,9 +866,9 @@ static void UpdateLegendaryMarkingColor(u8 frameNum)
     if ((frameNum % 4) == 0) // Change color every 4th frame
     {
         s32 intensity = Cos(frameNum, 128) + 128;
-        s32 r = 31 - ((intensity * 32 - intensity) / 256);
-        s32 g = 31 - (intensity * 22 / 256);
-        s32 b = 12;
+        s32 r = 3 + (intensity * 8 / 256);
+        s32 g = 24 - (intensity * 24 / 256);
+        s32 b = 16 - (intensity * 8 / 256);
 
         u16 color = RGB(r, g, b);
         LoadPalette(&color, BG_PLTT_ID(14) + 15, sizeof(color));

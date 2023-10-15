@@ -12,6 +12,15 @@ gBirchDexRatingText_SoYouveSeenAndCaught::
 	.string "So, you've seen {STR_VAR_1} POKéMON,\n"
 	.string "and you've caught {STR_VAR_2} POKéMON…$"
 
+ProfBirch_Text_CompletedStandardHoennDex::
+	.string "Oh? Is this what I think it is!?\p"
+	.string "{PLAYER}! You've caught every POKéMON\n"
+	.string "native to HOENN!$"
+
+ProfBirch_Text_PleaseComeToLab::
+	.string "{PLAYER}! Please come to the lab,\n"
+	.string "I have something for you!$"
+
 gBirchDexRatingText_LessThan10::
 	.string "Go into grassy areas more and look\n"
 	.string "for POKéMON more carefully.$"

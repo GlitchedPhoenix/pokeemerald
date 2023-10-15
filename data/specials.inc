@@ -538,3 +538,4 @@ gSpecials::
 	def_special Special_LeadMonIsDeoxys
 	def_special ScriptMenu_CreateFossilMultichoice
 	def_special GetFossilSelection
+	def_special HasAllExtendedMons

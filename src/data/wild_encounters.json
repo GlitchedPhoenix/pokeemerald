@@ -12209,9 +12209,9 @@
                 "species": "SPECIES_PONYTA"
               },
               {
-                "min_level": 40,
-                "max_level": 50,
-                "species": "SPECIES_DROWZEE"
+                "min_level": 30,
+                "max_level": 40,
+                "species": "SPECIES_BELLSPROUT"
               },
               {
                 "min_level": 45,
@@ -12363,9 +12363,9 @@
                 "species": "SPECIES_GROWLITHE"
               },
               {
-                "min_level": 40,
-                "max_level": 50,
-                "species": "SPECIES_CUBONE"
+                "min_level": 30,
+                "max_level": 40,
+                "species": "SPECIES_EKANS"
               },
               {
                 "min_level": 45,
