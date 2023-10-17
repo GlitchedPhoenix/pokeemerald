@@ -43,6 +43,7 @@ Debug_CheatStart::
 	end
 
 Debug_Script_1::
+	call EverGrandeCity_HallOfFame_EventScript_ResetDefeatedEventLegendaries
 	end
 
 Debug_Script_2::

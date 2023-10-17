@@ -98,6 +98,10 @@ Route114_EventScript_ItemProtein::
 	finditem ITEM_PROTEIN
 	end
 
+Route114_EventScript_ItemReturn::
+	finditem ITEM_TM_RETURN
+	end
+
 Route114_EventScript_ItemEnergyPowder::
 	finditem ITEM_ENERGY_POWDER
 	end
@@ -656,4 +660,8 @@ MagmaHideout_4F_EventScript_ItemMaxRevive::
 
 MagmaHideout_3F_3R_EventScript_ItemEscapeRope::
 	finditem ITEM_ESCAPE_ROPE
+	end
+
+CometValley_EventScript_ItemLuckyEgg::
+	finditem ITEM_LUCKY_EGG
 	end

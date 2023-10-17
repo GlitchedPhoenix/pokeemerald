@@ -514,8 +514,8 @@
 
 #define FLAG_RECEIVED_STARTER_EGG            0x1DE
 #define FLAG_RECEIVED_WALLY_STARTER          0x1DF
-#define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
-#define FLAG_UNUSED_0x1E1                    0x1E1 // Unused Flag
+#define FLAG_CAUGHT_JIRACHI                  0x1E0
+#define FLAG_DEFEATED_JIRACHI                0x1E1
 #define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
 #define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
 
@@ -1079,7 +1079,7 @@
 #define FLAG_ITEM_ROUTE_120_NUGGET                                  0x406
 #define FLAG_ITEM_ROUTE_120_FULL_HEAL                               0x407
 #define FLAG_ITEM_ROUTE_123_CALCIUM                                 0x408
-#define FLAG_ITEM_ROUTE_123_RARE_CANDY                              0x409 // Unused Flag, leftover from R/S. In Emerald this is a hidden item and uses a different flag
+#define FLAG_COMET_VALLEY_LUCKY_EGG                                 0x409
 #define FLAG_ITEM_ROUTE_127_ZINC                                    0x40A
 #define FLAG_ITEM_ROUTE_127_CARBOS                                  0x40B
 #define FLAG_ITEM_ROUTE_132_RARE_CANDY                              0x40C
@@ -1171,8 +1171,8 @@
 #define FLAG_ITEM_NEW_MAUVILLE_FULL_HEAL                            0x462
 #define FLAG_ITEM_NEW_MAUVILLE_PARALYZE_HEAL                        0x463
 #define FLAG_ITEM_AQUA_HIDEOUT_B1F_MASTER_BALL                      0x464
-#define FLAG_ITEM_OLD_MAGMA_HIDEOUT_B1F_MASTER_BALL                 0x465 // Unused Flag, leftover from the Ruby Magma hideout
-#define FLAG_ITEM_OLD_MAGMA_HIDEOUT_B1F_MAX_ELIXIR                  0x466 // Unused Flag, leftover from the Ruby Magma hideout
+#define FLAG_PLACED_MYSTERY_DISC                                    0x465
+#define FLAG_ITEM_ROUTE_114_TM_RETURN                               0x466
 #define FLAG_ITEM_OLD_MAGMA_HIDEOUT_B2F_NEST_BALL                   0x467 // Unused Flag, leftover from the Ruby Magma hideout
 #define FLAG_UNUSED_0x468                                           0x468 // Unused Flag
 #define FLAG_ITEM_MT_PYRE_2F_ULTRA_BALL                             0x469
@@ -1256,7 +1256,7 @@
 #define FLAG_DEFEATED_SOOTOPOLIS_GYM                                0x4B5
 #define FLAG_DEFEATED_METEOR_FALLS_STEVEN                           0x4B6
 
-#define FLAG_UNUSED_0x4F9                                           0x4B7 // Unused Flag
+#define FLAG_HIDE_JIRACHI                                           0x4B7
 #define FLAG_UNUSED_0x4FA                                           0x4B8 // Unused Flag
 
 #define FLAG_DEFEATED_ELITE_4_SIDNEY                                0x4B9
@@ -1442,13 +1442,13 @@
 #define FLAG_UNUSED_0x920                           (DAILY_FLAGS_START + 0x0)  // Unused Flag
 #define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)
 #define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)
-#define FLAG_UNUSED_0x923                           (DAILY_FLAGS_START + 0x3)  // Unused Flag
-#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // Unused Flag
-#define FLAG_UNUSED_0x925                           (DAILY_FLAGS_START + 0x5)  // Unused Flag
-#define FLAG_UNUSED_0x926                           (DAILY_FLAGS_START + 0x6)  // Unused Flag
-#define FLAG_UNUSED_0x927                           (DAILY_FLAGS_START + 0x7)  // Unused Flag
-#define FLAG_UNUSED_0x928                           (DAILY_FLAGS_START + 0x8)  // Unused Flag
-#define FLAG_UNUSED_0x929                           (DAILY_FLAGS_START + 0x9)  // Unused Flag
+#define FLAG_DAILY_CV_STAR_PIECE_1                  (DAILY_FLAGS_START + 0x3)
+#define FLAG_DAILY_CV_STAR_PIECE_2                  (DAILY_FLAGS_START + 0x4)
+#define FLAG_DAILY_CV_STAR_PIECE_3                  (DAILY_FLAGS_START + 0x5)
+#define FLAG_DAILY_CV_STARDUST_1                    (DAILY_FLAGS_START + 0x6)
+#define FLAG_DAILY_CV_STARDUST_2                    (DAILY_FLAGS_START + 0x7)
+#define FLAG_DAILY_CV_STARDUST_3                    (DAILY_FLAGS_START + 0x8)
+#define FLAG_DAILY_CV_STARDUST_4                    (DAILY_FLAGS_START + 0x9)
 #define FLAG_DAILY_PICKED_LOTO_TICKET               (DAILY_FLAGS_START + 0xA)
 #define FLAG_DAILY_ROUTE_114_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xB)
 #define FLAG_DAILY_ROUTE_111_RECEIVED_BERRY         (DAILY_FLAGS_START + 0xC)

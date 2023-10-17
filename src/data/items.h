@@ -4222,13 +4222,14 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_EvolutionStone,
     },
 
-    [ITEM_15C] =
+    [ITEM_MYSTERY_DISC] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
+        .name = _("MYSTERY DISC"),
+        .itemId = ITEM_MYSTERY_DISC,
         .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
+        .description = sMysteryDiscDesc,
+		.importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },

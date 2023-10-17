@@ -276,6 +276,11 @@ static const u8 sWirelessCharmDesc[] = _(
     "WALLY. It evolves\n"
     "certain POKéMON.");
 
+static const u8 sMysteryDiscDesc[] = _(
+    "A strange black\n"
+    "disc. It doesn't\n"
+    "seem useable.");
+
 static const u8 sCalciumDesc[] = _(
     "Raises the base\n"
     "SP. ATK stat of one\n"

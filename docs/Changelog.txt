@@ -55,3 +55,4 @@ Wild Encounters
 Misc Changes
 - NPCs now have differently colored text depending on gender. Certain NPCs have their own text colors.
 - The Ganlon, Petaya, Apicot, Salac, and Enigma berries are now available in various post-game areas.
+- Regenerating Star Pieces and Stardust can be found in Comet Valley. They respawn once a day.

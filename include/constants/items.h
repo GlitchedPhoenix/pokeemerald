@@ -380,10 +380,8 @@
 #define ITEM_HM06 344
 #define ITEM_HM07 345
 #define ITEM_HM08 346
-
-// Unknown
 #define ITEM_WIRELESS_CHARM 347
-#define ITEM_15C 348
+#define ITEM_MYSTERY_DISC 348
 
 // FireRed/LeafGreen
 #define ITEM_OAKS_PARCEL 349

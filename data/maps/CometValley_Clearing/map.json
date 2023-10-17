@@ -6,7 +6,7 @@
   "region_map_section": "MAPSEC_COMET_VALLEY",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
-  "map_type": "MAP_TYPE_ROUTE",
+  "map_type": "MAP_TYPE_INDOOR",
   "allow_cycling": true,
   "allow_escaping": false,
   "allow_running": false,
@@ -14,7 +14,32 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": 0,
   "object_events": [
-
+    {
+      "graphics_id": "OBJ_EVENT_GFX_JIRACHI",
+      "x": 30,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CometValley_EventScript_JirachiTalkTo",
+      "flag": "FLAG_HIDE_JIRACHI"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 42,
+      "y": 32,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CometValley_EventScript_ItemLuckyEgg",
+      "flag": "FLAG_COMET_VALLEY_LUCKY_EGG"
+    }
   ],
   "warp_events": [
     {
@@ -40,9 +65,89 @@
     }
   ],
   "coord_events": [
-
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 18,
+      "elevation": 0,
+      "var": "VAR_JIRACHI_STATE",
+      "var_value": "1",
+      "script": "CometValley_EventScript_JirachiWarning"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_JIRACHI_STATE",
+      "var_value": "2",
+      "script": "CometValley_EventScript_JirachiFlyDown"
+    }
   ],
   "bg_events": [
-
+    {
+      "type": "sign",
+      "x": 30,
+      "y": 21,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "CometValley_EventScript_DiscImpression"
+    },
+    {
+      "type": "hidden_item",
+      "x": 41,
+      "y": 31,
+      "elevation": 0,
+      "item": "ITEM_STARDUST",
+      "flag": "FLAG_DAILY_CV_STARDUST_1"
+    },
+    {
+      "type": "hidden_item",
+      "x": 29,
+      "y": 26,
+      "elevation": 0,
+      "item": "ITEM_STARDUST",
+      "flag": "FLAG_DAILY_CV_STARDUST_2"
+    },
+    {
+      "type": "hidden_item",
+      "x": 20,
+      "y": 33,
+      "elevation": 0,
+      "item": "ITEM_STARDUST",
+      "flag": "FLAG_DAILY_CV_STARDUST_3"
+    },
+    {
+      "type": "hidden_item",
+      "x": 20,
+      "y": 27,
+      "elevation": 0,
+      "item": "ITEM_STARDUST",
+      "flag": "FLAG_DAILY_CV_STARDUST_4"
+    },
+    {
+      "type": "hidden_item",
+      "x": 28,
+      "y": 13,
+      "elevation": 0,
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_DAILY_CV_STAR_PIECE_1"
+    },
+    {
+      "type": "hidden_item",
+      "x": 37,
+      "y": 34,
+      "elevation": 0,
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_DAILY_CV_STAR_PIECE_2"
+    },
+    {
+      "type": "hidden_item",
+      "x": 34,
+      "y": 29,
+      "elevation": 0,
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_DAILY_CV_STAR_PIECE_3"
+    }
   ]
 }

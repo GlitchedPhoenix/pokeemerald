@@ -34,6 +34,7 @@ extern const u32 gOpenPokeballGfx[];
 
 extern const u32 gItemIcon_WirelessCharm[];
 extern const u32 gItemIconPalette_WirelessCharm[];
+extern const u32 gItemIconPalette_MysteryDisc[];
 
 // pokemon gfx
 extern const u32 gMonFrontPic_Bulbasaur[];
