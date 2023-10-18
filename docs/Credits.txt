@@ -13,3 +13,5 @@ devolov - Fishing improvements
 FieryMewtwo, ipatix - Improved sound mixer
 TheXaman - TM Case system
 grunt-lucas - Fixing the TM case system
+DizzyEgg - colored nature text
+MGriffin - BuildOamBuffer optimizations
