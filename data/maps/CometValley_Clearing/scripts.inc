@@ -34,11 +34,25 @@ CometValley_EventScript_TryRemoveJirachi::
 
 CometValley_EventScript_DiscImpression::
 	lock
+	goto_if_set FLAG_PLACED_MYSTERY_DISC, CometValley_EventScript_Inscription
 	msgbox CometValley_Text_DiscShapeHere, MSGBOX_DEFAULT
 	checkitem ITEM_MYSTERY_DISC
 	goto_if_eq VAR_RESULT, TRUE, CometValley_EventScript_AskPlaceDisc
 	release
 	end
+
+CometValley_EventScript_Inscription::
+	msgbox CometValley_Text_Inscription
+	release
+	end
+
+CometValley_Text_Inscription:
+	.string "With the disc in place, you can now make\n"
+	.string "out an inscription on the rock.\p"
+	.string "‘When all come together, and hardship\n"
+	.string "has been overcome, the tired\l"
+	.string "adventurer will find sanctuary\l"
+	.string "where all go to rest.'$"
 
 CometValley_EventScript_AskPlaceDisc::
 	msgbox CometValley_Text_TMMightFit, MSGBOX_YESNO

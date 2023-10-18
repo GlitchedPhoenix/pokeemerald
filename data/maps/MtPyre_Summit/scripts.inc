@@ -543,7 +543,8 @@ MtPyre_Summit_Text_ThoseTwoMenReturnedOrbs:
 	.string "The two men who took the ORBS came\n"
 	.string "back to return them on their own.\p"
 	.string "Those men…\n"
-	.string "Perhaps they are not so evil after all…$"
+	.string "Perhaps they may one day be able to\l"
+	.string "make amends for their actions…$"
 
 MtPyre_Summit_Text_SuperAncientPokemonTaughtUs:
 	.string "The embodiments of the land, sea,\n"
