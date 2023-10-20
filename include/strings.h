@@ -552,6 +552,8 @@ extern const u8 gText_SearchingPleaseWait[];
 extern const u8 gText_SearchCompleted[];
 extern const u8 gText_NoMatchingPkmnWereFound[];
 extern const u8 gText_SelectorArrow[];
+extern const u8 gText_IVEVSummary[];
+extern const u8 gText_TotalStat[];
 
 // birch dex rating text
 extern const u8 gBirchDexRatingText_LessThan10[];

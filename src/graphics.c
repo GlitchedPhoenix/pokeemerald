@@ -1130,6 +1130,7 @@ const u32 gSummaryPage_Info_Tilemap[]         = INCBIN_U32("graphics/summary_scr
 const u32 gSummaryPage_Skills_Tilemap[]       = INCBIN_U32("graphics/summary_screen/page_skills.bin.lz");
 const u32 gSummaryPage_BattleMoves_Tilemap[]  = INCBIN_U32("graphics/summary_screen/page_battle_moves.bin.lz");
 const u32 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_contest_moves.bin.lz");
+const u32 gSummaryPage_IV_EV_Tilemap[]        = INCBIN_U32("graphics/summary_screen/page_ivev.bin.lz");
 const u32 gSummaryPage_InfoEgg_Tilemap[]      = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.lz");
 
 const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/bag_male.4bpp.lz");

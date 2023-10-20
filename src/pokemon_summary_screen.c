@@ -52,6 +52,7 @@ enum {
     PSS_PAGE_SKILLS,
     PSS_PAGE_BATTLE_MOVES,
     PSS_PAGE_CONTEST_MOVES,
+	PSS_PAGE_IV_EV,
     PSS_PAGE_COUNT,
 };
 
@@ -86,7 +87,12 @@ enum {
 #define PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER 17
 #define PSS_LABEL_WINDOW_PORTRAIT_NICKNAME 18 // The upper name
 #define PSS_LABEL_WINDOW_PORTRAIT_SPECIES 19 // The lower name
-#define PSS_LABEL_WINDOW_END 20
+
+//IV/EV windows
+#define PSS_LABEL_WINDOW_IV_EV_STATS 20
+#define PSS_LABEL_WINDOW_IV_EV_TITLE 21
+
+#define PSS_LABEL_WINDOW_END 22
 
 // Dynamic fields for the Pokemon Info page
 #define PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER 0
@@ -106,6 +112,11 @@ enum {
 #define PSS_DATA_WINDOW_MOVE_PP 1
 #define PSS_DATA_WINDOW_MOVE_DESCRIPTION 2
 
+//Dynamic fields for IVs and EVs
+#define PSS_DATA_WINDOW_IV_TOP 0
+#define PSS_DATA_WINDOW_EV 1
+#define PSS_DATA_WINDOW_IV_BOTTOM 2
+
 #define MOVE_SELECTOR_SPRITES_COUNT 10
 #define TYPE_ICON_SPRITE_COUNT (MAX_MON_MOVES + 1)
 // for the spriteIds field in PokemonSummaryScreenData
@@ -124,6 +135,10 @@ enum
 #define TILE_FILLED_APPEAL_HEART 0x103A
 #define TILE_FILLED_JAM_HEART    0x103C
 #define TILE_EMPTY_JAM_HEART     0x103D
+#define TILE_FILLED_HAPPINESS_HEART_1 0x406F
+#define TILE_FILLED_HAPPINESS_HEART_2 0x407F
+#define TILE_EMPTY_HAPPINESS_HEART_1 0x405E
+#define TILE_EMPTY_HAPPINESS_HEART_2 0x406E
 
 static EWRAM_DATA struct PokemonSummaryScreenData
 {
@@ -269,8 +284,13 @@ static void PrintEggOTID(void);
 static void PrintEggState(void);
 static void PrintEggMemo(void);
 static void Task_PrintSkillsPage(u8);
+static void Task_PrintIVEVPage(u8);
 static void PrintHeldItemName(void);
 static void PrintSkillsPageText(void);
+static void PrintIVEVPageText(void);
+static void PrintIVEVStats(void);
+static void PrintIVs(void);
+static void PrintEVs(void);
 static void PrintRibbonCount(void);
 static void BufferLeftColumnStats(void);
 static void PrintLeftColumnStats(void);
@@ -567,6 +587,24 @@ static const struct WindowTemplate sSummaryTemplate[] =
         .paletteNum = 6,
         .baseBlock = 413,
     },
+	[PSS_LABEL_WINDOW_IV_EV_STATS] = {
+        .bg = 0,
+        .tilemapLeft = 11,
+        .tilemapTop = 4,
+        .width = 6,
+        .height = 15,
+        .paletteNum = 6,
+        .baseBlock = 680,
+    },
+	[PSS_LABEL_WINDOW_IV_EV_TITLE] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 6,
+        .baseBlock = 667,
+    },
     [PSS_LABEL_WINDOW_END] = DUMMY_WIN_TEMPLATE
 };
 static const struct WindowTemplate sPageInfoTemplate[] =
@@ -686,6 +724,36 @@ static const struct WindowTemplate sPageMovesTemplate[] = // This is used for bo
         .baseBlock = 599,
     },
 };
+static const struct WindowTemplate sPageIVsEVsTemplate[] =
+{
+    [PSS_DATA_WINDOW_IV_TOP] = {
+        .bg = 0,
+        .tilemapLeft = 18,
+        .tilemapTop = 4,
+        .width = 4,
+        .height = 6,
+        .paletteNum = 6,
+        .baseBlock = 770,
+    },
+    [PSS_DATA_WINDOW_EV] = {
+        .bg = 0,
+        .tilemapLeft = 24,
+        .tilemapTop = 4,
+        .width = 6,
+        .height = 15,
+        .paletteNum = 6,
+        .baseBlock = 850,
+    },
+	[PSS_DATA_WINDOW_IV_BOTTOM] = {
+        .bg = 0,
+        .tilemapLeft = 18,
+        .tilemapTop = 10,
+        .width = 4,
+        .height = 9,
+        .paletteNum = 6,
+        .baseBlock = 800,
+    },
+};
 static const u8 sTextColors[][3] =
 {
     {0, 1, 2},
@@ -711,7 +779,8 @@ static void (*const sTextPrinterFunctions[])(void) =
     [PSS_PAGE_INFO] = PrintInfoPageText,
     [PSS_PAGE_SKILLS] = PrintSkillsPageText,
     [PSS_PAGE_BATTLE_MOVES] = PrintBattleMoves,
-    [PSS_PAGE_CONTEST_MOVES] = PrintContestMoves
+    [PSS_PAGE_CONTEST_MOVES] = PrintContestMoves,
+	[PSS_PAGE_IV_EV] = PrintIVEVPageText
 };
 
 static void (*const sTextPrinterTasks[])(u8 taskId) =
@@ -719,13 +788,16 @@ static void (*const sTextPrinterTasks[])(u8 taskId) =
     [PSS_PAGE_INFO] = Task_PrintInfoPage,
     [PSS_PAGE_SKILLS] = Task_PrintSkillsPage,
     [PSS_PAGE_BATTLE_MOVES] = Task_PrintBattleMoves,
-    [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves
+    [PSS_PAGE_CONTEST_MOVES] = Task_PrintContestMoves,
+	[PSS_PAGE_IV_EV] = Task_PrintIVEVPage
 };
 
 static const u8 sMemoNatureTextColor[] = _("{COLOR LIGHT_RED}{SHADOW GREEN}");
 static const u8 sMemoMiscTextColor[] = _("{COLOR WHITE}{SHADOW DARK_GRAY}"); // This is also affected by palettes, apparently
 static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}\n{DYNAMIC 2}\n{DYNAMIC 3}");
 static const u8 sStatsRightColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
+static const u8 sStatsEVLayout[] = _("{DYNAMIC 0}/252");
+static const u8 sStatsEVTotalLayout[] = _("{DYNAMIC 0}/510");
 static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 
 #define TAG_MOVE_SELECTOR 30000
@@ -1347,32 +1419,36 @@ static bool8 DecompressGraphics(void)
         LZDecompressWram(gSummaryPage_ContestMoves_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_CONTEST_MOVES][1]);
         sMonSummaryScreen->switchCounter++;
         break;
-    case 6:
+	case 6:
+        LZDecompressWram(gSummaryPage_IV_EV_Tilemap, sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_IV_EV][1]);
+        sMonSummaryScreen->switchCounter++;
+        break;
+    case 7:
         LoadCompressedPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
         LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
         sMonSummaryScreen->switchCounter++;
         break;
-    case 7:
+    case 8:
         LoadCompressedSpriteSheet(&sSpriteSheet_MoveTypes);
         sMonSummaryScreen->switchCounter++;
         break;
-    case 8:
+    case 9:
         LoadCompressedSpriteSheet(&sMoveSelectorSpriteSheet);
         sMonSummaryScreen->switchCounter++;
         break;
-    case 9:
+    case 10:
         LoadCompressedSpriteSheet(&sStatusIconsSpriteSheet);
         sMonSummaryScreen->switchCounter++;
         break;
-    case 10:
+    case 11:
         LoadCompressedSpritePalette(&sStatusIconsSpritePalette);
         sMonSummaryScreen->switchCounter++;
         break;
-    case 11:
+    case 12:
         LoadCompressedSpritePalette(&sMoveSelectorSpritePal);
         sMonSummaryScreen->switchCounter++;
         break;
-    case 12:
+    case 13:
         LoadCompressedPalette(gMoveTypes_Pal, OBJ_PLTT_ID(13), 3 * PLTT_SIZE_4BPP);
         sMonSummaryScreen->switchCounter = 0;
         return TRUE;
@@ -1553,7 +1629,7 @@ static void Task_HandleInput(u8 taskId)
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            if (sMonSummaryScreen->currPageIndex != PSS_PAGE_SKILLS)
+            if (sMonSummaryScreen->currPageIndex != PSS_PAGE_SKILLS && sMonSummaryScreen->currPageIndex != PSS_PAGE_IV_EV)
             {
                 if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
                 {
@@ -2827,6 +2903,7 @@ static void PrintPageNamesAndStats(void)
     PrintTextOnWindow(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE, gText_PkmnSkills, 2, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE, gText_BattleMoves, 2, 1, 0, 1);
     PrintTextOnWindow(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE, gText_ContestMoves, 2, 1, 0, 1);
+	PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_TITLE, gText_IVEVSummary, 2, 1, 0, 1);
 
     stringXPos = GetStringRightAlignXOffset(FONT_NORMAL, gText_Cancel2, 62);
     iconXPos = stringXPos - 16;
@@ -2880,6 +2957,7 @@ static void PutPageWindowTilemaps(u8 page)
     ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_TITLE);
     ClearWindowTilemap(PSS_LABEL_WINDOW_BATTLE_MOVES_TITLE);
     ClearWindowTilemap(PSS_LABEL_WINDOW_CONTEST_MOVES_TITLE);
+	ClearWindowTilemap(PSS_LABEL_WINDOW_IV_EV_TITLE);
 
     switch (page)
     {
@@ -2920,6 +2998,10 @@ static void PutPageWindowTilemaps(u8 page)
             PutWindowTilemap(PSS_LABEL_WINDOW_PROMPT_INFO);
         }
         break;
+	case PSS_PAGE_IV_EV:
+		PutWindowTilemap(PSS_LABEL_WINDOW_IV_EV_TITLE);
+		PutWindowTilemap(PSS_LABEL_WINDOW_IV_EV_STATS);
+		break;
     }
 
     for (i = 0; i < ARRAY_COUNT(sMonSummaryScreen->windowIds); i++)
@@ -2966,6 +3048,11 @@ static void ClearPageWindowTilemaps(u8 page)
         {
             ClearWindowTilemap(PSS_LABEL_WINDOW_PROMPT_INFO);
         }
+        break;
+	case PSS_PAGE_IV_EV:
+        ClearWindowTilemap(PSS_LABEL_WINDOW_IV_EV_STATS);
+        //ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT);
+        //ClearWindowTilemap(PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP);
         break;
     }
 
@@ -3297,6 +3384,13 @@ static void PrintSkillsPageText(void)
     PrintExpPointsNextLevel();
 }
 
+static void PrintIVEVPageText(void)
+{
+    PrintIVEVStats();
+	PrintIVs();
+	PrintEVs();
+}
+
 static void Task_PrintSkillsPage(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
@@ -3331,6 +3425,28 @@ static void Task_PrintSkillsPage(u8 taskId)
     data[0]++;
 }
 
+static void Task_PrintIVEVPage(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    switch (data[0])
+    {
+    case 1:
+        PrintIVEVStats();
+        break;
+    case 2:
+        PrintIVs();
+        break;
+    case 3:
+        PrintEVs();
+        break;
+    case 4:
+        DestroyTask(taskId);
+        return;
+    }
+    data[0]++;
+}
+
 static void PrintHeldItemName(void)
 {
     const u8 *text;
@@ -3356,24 +3472,141 @@ static void PrintHeldItemName(void)
     PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_HELD_ITEM), text, x, 1, 0, 0);
 }
 
+static void PrintIVEVStats(void)
+{
+	int statsXPos;
+	
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_HP4, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_HP4, statsXPos, 0, 0, 1);
+    statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_Attack3, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_Attack3, statsXPos, 16, 0, 1);
+    statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_Defense3, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_Defense3, statsXPos, 32, 0, 1);
+    statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_SpAtk4, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_SpAtk4, statsXPos, 48, 0, 1);
+    statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_SpDef4, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_SpDef4, statsXPos, 64, 0, 1);
+    statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_Speed2, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_Speed2, statsXPos, 80, 0, 1);
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_TotalStat, 40);
+    PrintTextOnWindow(PSS_LABEL_WINDOW_IV_EV_STATS, gText_TotalStat, statsXPos, 104, 0, 1);
+}
+
+static void PrintIVs(void)
+{
+	u16 hp, atk, def, spA, spD, spe, total;
+	int statsXPos;
+	
+	hp = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV);
+	atk = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV);
+	def = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV);
+	spA = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV);
+	spD = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV);
+	spe = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV);
+	total = (hp + atk + def + spA + spD + spe);
+	
+    ConvertIntToDecimalStringN(gStringVar1, hp, STR_CONV_MODE_LEFT_ALIGN, 3);
+	ConvertIntToDecimalStringN(gStringVar2, atk, STR_CONV_MODE_LEFT_ALIGN, 3);
+	ConvertIntToDecimalStringN(gStringVar3, def, STR_CONV_MODE_LEFT_ALIGN, 3);
+	
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_TOP), gStringVar1, statsXPos, 0, 0, 0);
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar2, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_TOP), gStringVar2, statsXPos, 16, 0, 0);
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar3, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_TOP), gStringVar3, statsXPos, 32, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, spA, STR_CONV_MODE_LEFT_ALIGN, 3);
+	ConvertIntToDecimalStringN(gStringVar2, spD, STR_CONV_MODE_LEFT_ALIGN, 3);
+	ConvertIntToDecimalStringN(gStringVar3, spe, STR_CONV_MODE_LEFT_ALIGN, 3);
+	
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_BOTTOM), gStringVar1, statsXPos, 0, 0, 0);
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar2, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_BOTTOM), gStringVar2, statsXPos, 16, 0, 0);
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar3, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_BOTTOM), gStringVar3, statsXPos, 32, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, total, STR_CONV_MODE_LEFT_ALIGN, 3);
+	statsXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_IV_BOTTOM), gStringVar1, statsXPos, 56, 0, 0);
+}
+
+static void PrintEVs(void)
+{
+	u16 hp, atk, def, spA, spD, spe, total;
+	int statsXPos;
+	
+	hp = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_EV);
+	atk = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_EV);
+	def = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_EV);
+	spA = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_EV);
+	spD = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_EV);
+	spe = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_EV);
+	total = (hp + atk + def + spA + spD + spe);
+	
+    ConvertIntToDecimalStringN(gStringVar1, hp, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 0, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, atk, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 16, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, def, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 32, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, spA, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 48, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, spD, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 64, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, spe, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 80, 0, 0);
+	
+	ConvertIntToDecimalStringN(gStringVar1, total, STR_CONV_MODE_LEFT_ALIGN, 3);
+	DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar1, sStatsEVTotalLayout);
+	statsXPos = 3 + GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 40);
+	PrintTextOnWindow(AddWindowFromTemplateList(sPageIVsEVsTemplate, PSS_DATA_WINDOW_EV), gStringVar1, statsXPos, 104, 0, 0);
+}
+
+static const u8 HappinessThreshold[] = {32, 64, 96, 128, 160, 192, 220, 250};
+
 static void PrintRibbonCount(void)
 {
-    const u8 *text;
-    int x;
+	u16 *tilemap = sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1];
+	struct PokeSummary *sum = &sMonSummaryScreen->summary;
+	u8 i;
 
-    if (sMonSummaryScreen->summary.ribbonCount == 0)
-    {
-        text = gText_None;
-    }
-    else
-    {
-        ConvertIntToDecimalStringN(gStringVar1, sMonSummaryScreen->summary.ribbonCount, STR_CONV_MODE_RIGHT_ALIGN, 2);
-        StringExpandPlaceholders(gStringVar4, gText_RibbonsVar1);
-        text = gStringVar4;
-    }
+	for (i = 0; i < 8; i++)
+	{
+		if (sum->friendship >= HappinessThreshold[i])
+		{
+			tilemap[i + 0x95] = TILE_FILLED_HAPPINESS_HEART_1;
+			tilemap[i + 0xB5] = TILE_FILLED_HAPPINESS_HEART_2;
+		}
+		else
+		{
+			tilemap[i + 0x95] = TILE_EMPTY_HAPPINESS_HEART_1;
+			tilemap[i + 0xB5] = TILE_EMPTY_HAPPINESS_HEART_2;
+		}
+	}
+}
 
-    x = GetStringCenterAlignXOffset(FONT_NORMAL, text, 70) + 6;
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_RIBBON_COUNT), text, x, 1, 0, 0);
+static void PrintLeftColumnStats(void)
+{
+    PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_STATS_LEFT), gStringVar4, 4, 1, 0, 0);
 }
 
 static void BufferLeftColumnStats(void)
@@ -3395,11 +3628,6 @@ static void BufferLeftColumnStats(void)
     Free(maxHPString);
     Free(attackString);
     Free(defenseString);
-}
-
-static void PrintLeftColumnStats(void)
-{
-    PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_STATS_LEFT), gStringVar4, 4, 1, 0, 0);
 }
 
 static void BufferRightColumnStats(void)
