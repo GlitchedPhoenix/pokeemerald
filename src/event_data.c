@@ -199,7 +199,7 @@ u16 VarGetIfExist(u16 id)
     return *ptr;
 }
 
-u8 VarGetObjectEventGraphicsId(u8 id)
+u16 VarGetObjectEventGraphicsId(u8 id)
 {
     return VarGet(VAR_OBJ_GFX_ID_0 + id);
 }
