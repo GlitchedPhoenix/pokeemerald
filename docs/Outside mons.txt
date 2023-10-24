@@ -1,0 +1,97 @@
+Misc:
+Ditto
+Meowth line
+Eevee line
+Chikorita line
+Cyndaquil line
+Totodile line
+Smeargle
+Sudowoodo
+
+Ashen Range:
+Grass:
+- Pidgey line
+- Growlithe line
+- Cubone line
+- Ekans line
+- Electabuzz line
+- Tyrogue line
+- Omanyte line
+- Tauros
+- Kanghaskhan
+
+Rock Smash:
+- Onix line
+
+
+LeafGreen area
+Grass:
+- Rattata line
+- Ponyta line
+- Bellsprout line
+- Magmar line
+- Drowzee line
+- Chansey line
+- Kabuto line
+
+Water:
+- Tentacool line
+- Slowpoke line
+- Lapras
+
+Fishing:
+- Magikarp line
+- Poliwag line
+- Dratini line
+
+
+
+Safari Zone mons
+
+Hoothoot line
+Ledyba line
+Spinarak line
+Mareep line
+Aipom
+Sunkern line
+Wooper
+Pineco line
+Gligar
+Snubbull line
+Shuckle
+Teddiursa line
+Remoraid line
+Houndour line
+Stantler
+Miltank
+
+
+Difficulty level mods
+Normal = Nothing
+Easy = Level - (1*badges) - Difficulty-adjusted trainers
+       Level * 0.9 - Standard trainers
+Challenge = Level + (1*(badges/2))
+Brutal = Level + (1 * badges), difficulty-adjusted trainers over badge 7 use their next set
+Unfair = Level + floor(1.5 * badges), difficulty-adjusted trainers over badge 7 use their next set, and after becoming Champion, use their next set after that
+
+
+Badge levels
+1 - 12-15, 3 mons
+2 - 16-20, 3 mons
+3 - 20-24, 4 mons
+4 - 24-29, 4 mons
+5 - 27-31, 4 mons, start countering weaknesses
+6 - 29-33, 5 mons
+7 - 39-43, 5 mons
+8 - 43-46, 5 mons
+
+9 - 47-51, 5 mons, Elite Four, standard run
+10 - 50-54, 6 mons, Elite Four, 4 badge gauntlet run
+11 - 54-58, 6 mons, Elite Four, 8 badge gauntlet run
+12 - 58-61, 6 mons Champion, standard run
+13 - 62-65, 6 mons Champion, 4 badge gauntlet run
+14 - 67-70, 6 mons Champion, 8 badge gauntlet run
+15 - 76-79, 6 mons, Steven
+
+16 - 82-85, 6 mons, Brutal only
+17 - 87-90, 6 mons, Unfair only, Legendary gets added to team.

@@ -19,6 +19,7 @@
 #include "main.h"
 #include "palette.h"
 #include "money.h"
+#include "gym_leader_rematch.h"
 #include "bg.h"
 #include "string_util.h"
 #include "pokemon_icon.h"
@@ -5559,6 +5560,7 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
     u32 i = 0;
     u32 lastMonLevel = 0;
     u32 moneyReward;
+	u8 index;
 
     if (trainerId == TRAINER_SECRET_BASE)
     {
@@ -5566,33 +5568,68 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
     }
     else
     {
-        switch (gTrainers[trainerId].partyFlags)
-        {
-        case 0:
-            {
-                const struct TrainerMonNoItemDefaultMoves *party = gTrainers[trainerId].party.NoItemDefaultMoves;
-                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
-            }
-            break;
-        case F_TRAINER_PARTY_CUSTOM_MOVESET:
-            {
-                const struct TrainerMonNoItemCustomMoves *party = gTrainers[trainerId].party.NoItemCustomMoves;
-                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
-            }
-            break;
-        case F_TRAINER_PARTY_HELD_ITEM:
-            {
-                const struct TrainerMonItemDefaultMoves *party = gTrainers[trainerId].party.ItemDefaultMoves;
-                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
-            }
-            break;
-        case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
-            {
-                const struct TrainerMonItemCustomMoves *party = gTrainers[trainerId].party.ItemCustomMoves;
-                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
-            }
-            break;
-        }
+		if (gTrainers[trainerId].variable)
+		{
+			index = GetDifficulty();
+			
+			switch (gDifficultyTrainers[trainerId][index].partyFlags)
+			{
+			case 0:
+				{
+					const struct TrainerMonNoItemDefaultMoves *party = gDifficultyTrainers[trainerId][index].party.NoItemDefaultMoves;
+					lastMonLevel = party[gDifficultyTrainers[trainerId][index].partySize - 1].lvl;
+				}
+				break;
+			case F_TRAINER_PARTY_CUSTOM_MOVESET:
+				{
+					const struct TrainerMonNoItemCustomMoves *party = gDifficultyTrainers[trainerId][index].party.NoItemCustomMoves;
+					lastMonLevel = party[gDifficultyTrainers[trainerId][index].partySize - 1].lvl;
+				}
+				break;
+			case F_TRAINER_PARTY_HELD_ITEM:
+				{
+					const struct TrainerMonItemDefaultMoves *party = gDifficultyTrainers[trainerId][index].party.ItemDefaultMoves;
+					lastMonLevel = party[gDifficultyTrainers[trainerId][index].partySize - 1].lvl;
+				}
+				break;
+			case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
+				{
+					const struct TrainerMonItemCustomMoves *party = gDifficultyTrainers[trainerId][index].party.ItemCustomMoves;
+					lastMonLevel = party[gDifficultyTrainers[trainerId][index].partySize - 1].lvl;
+				}
+				break;
+			}
+		}
+		else
+		{
+			switch (gTrainers[trainerId].partyFlags)
+			{
+			case 0:
+				{
+					const struct TrainerMonNoItemDefaultMoves *party = gTrainers[trainerId].party.NoItemDefaultMoves;
+					lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+				}
+				break;
+			case F_TRAINER_PARTY_CUSTOM_MOVESET:
+				{
+					const struct TrainerMonNoItemCustomMoves *party = gTrainers[trainerId].party.NoItemCustomMoves;
+					lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+				}
+				break;
+			case F_TRAINER_PARTY_HELD_ITEM:
+				{
+					const struct TrainerMonItemDefaultMoves *party = gTrainers[trainerId].party.ItemDefaultMoves;
+					lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+				}
+				break;
+			case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
+				{
+					const struct TrainerMonItemCustomMoves *party = gTrainers[trainerId].party.ItemCustomMoves;
+					lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+				}
+				break;
+			}
+		}
 
         for (; gTrainerMoneyTable[i].classId != 0xFF; i++)
         {

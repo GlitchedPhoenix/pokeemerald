@@ -546,7 +546,7 @@ static void SetShopMenuCallback(void (* callback)(void))
     sMartInfo.callback = callback;
 }
 
-static u8 GetNumberOfBadges(void)
+u8 GetNumberOfBadges(void)
 {
     u16 badgeFlag;
     u8 count = 0;

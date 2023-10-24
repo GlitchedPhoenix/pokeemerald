@@ -22,6 +22,7 @@ MeteorFalls_StevensCave_EventScript_Steven::
 	fadescreen FADE_TO_BLACK
 	playse SE_EXIT
 	setflag FLAG_DEFEATED_METEOR_FALLS_STEVEN
+	addvar VAR_SYS_PROGRESSION, 1
 	clearflag FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN
 	removeobject LOCALID_STEVEN
 	fadescreen FADE_FROM_BLACK

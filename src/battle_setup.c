@@ -10,6 +10,7 @@
 #include "metatile_behavior.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
+#include "gym_leader_rematch.h"
 #include "random.h"
 #include "starter_choose.h"
 #include "script_pokemon_util.h"
@@ -78,8 +79,6 @@ static void CB2_EndWildBattle(void);
 static void CB2_EndScriptedWildBattle(void);
 static u8 GetWildBattleTransition(void);
 static u8 GetTrainerBattleTransition(void);
-static void TryUpdateGymLeaderRematchFromWild(void);
-static void TryUpdateGymLeaderRematchFromTrainer(void);
 static void CB2_GiveStarter(void);
 static void CB2_StartFirstBattle(void);
 static void CB2_EndFirstBattle(void);
@@ -323,9 +322,6 @@ const struct RematchTrainer gRematchTable[REMATCH_TABLE_ENTRIES] =
     [REMATCH_SAWYER] = REMATCH(TRAINER_SAWYER_1, TRAINER_SAWYER_2, TRAINER_SAWYER_3, TRAINER_SAWYER_4, TRAINER_SAWYER_5, MT_CHIMNEY),
     [REMATCH_KIRA_AND_DAN] = REMATCH(TRAINER_KIRA_AND_DAN_1, TRAINER_KIRA_AND_DAN_2, TRAINER_KIRA_AND_DAN_3, TRAINER_KIRA_AND_DAN_4, TRAINER_KIRA_AND_DAN_5, ABANDONED_SHIP_ROOMS2_1F),
     [REMATCH_WALLY_VR] = REMATCH(TRAINER_WALLY_VR_2, TRAINER_WALLY_VR_3, TRAINER_WALLY_VR_4, TRAINER_WALLY_VR_5, TRAINER_WALLY_VR_5, VICTORY_ROAD_1F),
-    [REMATCH_ROXANNE] = REMATCH(TRAINER_ROXANNE_1, TRAINER_ROXANNE_2, TRAINER_ROXANNE_3, TRAINER_ROXANNE_4, TRAINER_ROXANNE_5, RUSTBORO_CITY),
-    [REMATCH_BRAWLY] = REMATCH(TRAINER_BRAWLY_1, TRAINER_BRAWLY_2, TRAINER_BRAWLY_3, TRAINER_BRAWLY_4, TRAINER_BRAWLY_5, DEWFORD_TOWN),
-    [REMATCH_WATTSON] = REMATCH(TRAINER_WATTSON_1, TRAINER_WATTSON_2, TRAINER_WATTSON_3, TRAINER_WATTSON_4, TRAINER_WATTSON_5, MAUVILLE_CITY),
     [REMATCH_FLANNERY] = REMATCH(TRAINER_FLANNERY_1, TRAINER_FLANNERY_2, TRAINER_FLANNERY_3, TRAINER_FLANNERY_4, TRAINER_FLANNERY_5, LAVARIDGE_TOWN),
     [REMATCH_NORMAN] = REMATCH(TRAINER_NORMAN_1, TRAINER_NORMAN_2, TRAINER_NORMAN_3, TRAINER_NORMAN_4, TRAINER_NORMAN_5, PETALBURG_CITY),
     [REMATCH_WINONA] = REMATCH(TRAINER_WINONA_1, TRAINER_WINONA_2, TRAINER_WINONA_3, TRAINER_WINONA_4, TRAINER_WINONA_5, FORTREE_CITY),
@@ -449,7 +445,6 @@ static void DoStandardWildBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 void BattleSetup_StartRoamerBattle(void)
@@ -463,7 +458,6 @@ void BattleSetup_StartRoamerBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 void DoStandardWildBattle_Debug(void)
@@ -482,7 +476,6 @@ void DoStandardWildBattle_Debug(void)
     //IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     //IncrementGameStat(GAME_STAT_WILD_BATTLES);
     //IncrementDailyWildBattles();
-    //TryUpdateGymLeaderRematchFromWild();
 }
 
 static void DoSafariBattle(void)
@@ -506,7 +499,6 @@ static void DoBattlePikeWildBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 static void DoTrainerBattle(void)
@@ -514,7 +506,6 @@ static void DoTrainerBattle(void)
     CreateBattleStartTask(GetTrainerBattleTransition(), 0);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_TRAINER_BATTLES);
-    TryUpdateGymLeaderRematchFromTrainer();
 }
 
 static void DoBattlePyramidTrainerHillBattle(void)
@@ -526,7 +517,6 @@ static void DoBattlePyramidTrainerHillBattle(void)
 
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_TRAINER_BATTLES);
-    TryUpdateGymLeaderRematchFromTrainer();
 }
 
 // Initiates battle where Wally catches Ralts
@@ -548,7 +538,6 @@ void BattleSetup_StartScriptedWildBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 void BattleSetup_StartLatiBattle(void)
@@ -560,7 +549,6 @@ void BattleSetup_StartLatiBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 void BattleSetup_StartLegendaryBattle(void)
@@ -602,7 +590,6 @@ void BattleSetup_StartLegendaryBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 void StartGroudonKyogreBattle(void)
@@ -619,7 +606,6 @@ void StartGroudonKyogreBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 void StartRegiBattle(void)
@@ -652,7 +638,6 @@ void StartRegiBattle(void)
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
-    TryUpdateGymLeaderRematchFromWild();
 }
 
 static void CB2_EndWildBattle(void)
@@ -798,47 +783,96 @@ static u8 GetSumOfEnemyPartyLevel(u16 opponentId, u8 numMons)
     u8 i;
     u8 sum;
     u32 count = numMons;
+	u8 index;
 
-    if (gTrainers[opponentId].partySize < count)
-        count = gTrainers[opponentId].partySize;
+	if (gTrainers[opponentId].variable)
+	{
+		index = GetDifficulty();
+		
+		if (gDifficultyTrainers[opponentId][index].partySize < count)
+			count = gDifficultyTrainers[opponentId][index].partySize;
 
-    sum = 0;
+		sum = 0;
 
-    switch (gTrainers[opponentId].partyFlags)
-    {
-    case 0:
-        {
-            const struct TrainerMonNoItemDefaultMoves *party;
-            party = gTrainers[opponentId].party.NoItemDefaultMoves;
-            for (i = 0; i < count; i++)
-                sum += party[i].lvl;
-        }
-        break;
-    case F_TRAINER_PARTY_CUSTOM_MOVESET:
-        {
-            const struct TrainerMonNoItemCustomMoves *party;
-            party = gTrainers[opponentId].party.NoItemCustomMoves;
-            for (i = 0; i < count; i++)
-                sum += party[i].lvl;
-        }
-        break;
-    case F_TRAINER_PARTY_HELD_ITEM:
-        {
-            const struct TrainerMonItemDefaultMoves *party;
-            party = gTrainers[opponentId].party.ItemDefaultMoves;
-            for (i = 0; i < count; i++)
-                sum += party[i].lvl;
-        }
-        break;
-    case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
-        {
-            const struct TrainerMonItemCustomMoves *party;
-            party = gTrainers[opponentId].party.ItemCustomMoves;
-            for (i = 0; i < count; i++)
-                sum += party[i].lvl;
-        }
-        break;
-    }
+		switch (gDifficultyTrainers[opponentId][index].partyFlags)
+		{
+		case 0:
+			{
+				const struct TrainerMonNoItemDefaultMoves *party;
+				party = gDifficultyTrainers[opponentId][index].party.NoItemDefaultMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		case F_TRAINER_PARTY_CUSTOM_MOVESET:
+			{
+				const struct TrainerMonNoItemCustomMoves *party;
+				party = gDifficultyTrainers[opponentId][index].party.NoItemCustomMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		case F_TRAINER_PARTY_HELD_ITEM:
+			{
+				const struct TrainerMonItemDefaultMoves *party;
+				party = gDifficultyTrainers[opponentId][index].party.ItemDefaultMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
+			{
+				const struct TrainerMonItemCustomMoves *party;
+				party = gDifficultyTrainers[opponentId][index].party.ItemCustomMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		}
+	}
+	else
+	{
+		if (gTrainers[opponentId].partySize < count)
+			count = gTrainers[opponentId].partySize;
+
+		sum = 0;
+
+		switch (gTrainers[opponentId].partyFlags)
+		{
+		case 0:
+			{
+				const struct TrainerMonNoItemDefaultMoves *party;
+				party = gTrainers[opponentId].party.NoItemDefaultMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		case F_TRAINER_PARTY_CUSTOM_MOVESET:
+			{
+				const struct TrainerMonNoItemCustomMoves *party;
+				party = gTrainers[opponentId].party.NoItemCustomMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		case F_TRAINER_PARTY_HELD_ITEM:
+			{
+				const struct TrainerMonItemDefaultMoves *party;
+				party = gTrainers[opponentId].party.ItemDefaultMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
+			{
+				const struct TrainerMonItemCustomMoves *party;
+				party = gTrainers[opponentId].party.ItemCustomMoves;
+				for (i = 0; i < count; i++)
+					sum += party[i].lvl;
+			}
+			break;
+		}
+	}
 
     return sum;
 }
@@ -871,6 +905,10 @@ static u8 GetTrainerBattleTransition(void)
     u8 transitionType;
     u8 enemyLevel;
     u8 playerLevel;
+	u8 index;
+	
+	if (gTrainers[gTrainerBattleOpponent_A].variable)
+		index = GetDifficulty();
 
     if (gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
         return B_TRANSITION_CHAMPION;
@@ -901,10 +939,20 @@ static u8 GetTrainerBattleTransition(void)
         || gTrainers[gTrainerBattleOpponent_A].trainerClass == TRAINER_CLASS_AQUA_ADMIN)
         return B_TRANSITION_AQUA;
 
-    if (gTrainers[gTrainerBattleOpponent_A].doubleBattle == TRUE)
-        minPartyCount = 2; // double battles always at least have 2 pokemon.
-    else
-        minPartyCount = 1;
+	if (gTrainers[gTrainerBattleOpponent_A].variable)
+	{
+		if (gDifficultyTrainers[gTrainerBattleOpponent_A][index].doubleBattle == TRUE)
+			minPartyCount = 2; // double battles always at least have 2 pokemon.
+		else
+			minPartyCount = 1;
+	}
+	else
+	{
+		if (gTrainers[gTrainerBattleOpponent_A].doubleBattle == TRUE)
+			minPartyCount = 2; // double battles always at least have 2 pokemon.
+		else
+			minPartyCount = 1;
+	}
 
     transitionType = GetBattleTransitionTypeByMap();
     enemyLevel = GetSumOfEnemyPartyLevel(gTrainerBattleOpponent_A, minPartyCount);
@@ -999,7 +1047,6 @@ static void CB2_StartFirstBattle(void)
         IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
         IncrementGameStat(GAME_STAT_WILD_BATTLES);
         IncrementDailyWildBattles();
-        TryUpdateGymLeaderRematchFromWild();
     }
 }
 
@@ -1007,18 +1054,6 @@ static void CB2_EndFirstBattle(void)
 {
     Overworld_ClearSavedMusic();
     SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-}
-
-static void TryUpdateGymLeaderRematchFromWild(void)
-{
-    if (GetGameStat(GAME_STAT_WILD_BATTLES) % 60 == 0)
-        UpdateGymLeaderRematch();
-}
-
-static void TryUpdateGymLeaderRematchFromTrainer(void)
-{
-    if (GetGameStat(GAME_STAT_TRAINER_BATTLES) % 20 == 0)
-        UpdateGymLeaderRematch();
 }
 
 // why not just use the macros? maybe its because they didnt want to uncast const every time?

@@ -67,7 +67,6 @@ enum {
     REMATCH_SAWYER,
     REMATCH_KIRA_AND_DAN,
     REMATCH_WALLY_VR,  // Entries above WALLY are considered normal trainers, from Wally below are special trainers
-    REMATCH_ROXANNE,
     REMATCH_BRAWLY,
     REMATCH_WATTSON,
     REMATCH_FLANNERY,
@@ -87,5 +86,6 @@ enum {
 #define REMATCH_ELITE_FOUR_ENTRIES      REMATCH_SIDNEY
 
 void UpdateGymLeaderRematch(void);
+extern const u8 GetDifficulty(void);
 
 #endif //GUARD_TRAINER_REMATCH_H

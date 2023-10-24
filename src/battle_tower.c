@@ -1970,8 +1970,6 @@ static void HandleSpecialTrainerBattleEnd(void)
         if (gSaveBlock2Ptr->frontier.battlesCount < 0xFFFFFF)
         {
             gSaveBlock2Ptr->frontier.battlesCount++;
-            if (gSaveBlock2Ptr->frontier.battlesCount % 20 == 0)
-                UpdateGymLeaderRematch();
         }
         else
         {

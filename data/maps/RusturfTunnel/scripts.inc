@@ -6,8 +6,19 @@
 
 RusturfTunnel_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, RusturfTunnel_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, RusturfTunnel_OnLoad
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, RusturfTunnel_OnFrame
 	.byte 0
+
+RusturfTunnel_OnLoad::
+	call_if_ne VAR_ROUTE110_STATE, 0, RusturfTunnel_EventScript_UnblockPassage
+	end
+
+RusturfTunnel_EventScript_UnblockPassage::
+	setmetatile 29, 5, METATILE_Cave_Floor, FALSE
+	setmetatile 29, 6, METATILE_Cave_Floor, FALSE
+	setmetatile 28, 7, METATILE_Cave_Floor, FALSE
+	return
 
 RusturfTunnel_OnFrame:
 	map_script_2 VAR_RUSTURF_TUNNEL_STATE, 4, RusturfTunnel_EventScript_ClearTunnelScene

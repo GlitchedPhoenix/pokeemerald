@@ -79,6 +79,7 @@ Route119_WeatherInstitute_2F_EventScript_ShellyDefeated::
 	removeobject LOCALID_GRUNT_3
 	applymovement OBJ_EVENT_ID_PLAYER, Route119_WeatherInstitute_2F_Movement_PlayerReturnToPosition
 	waitmovement 0
+	addvar VAR_SYS_PROGRESSION, 1
 	fadescreen FADE_FROM_BLACK
 	applymovement LOCALID_SCIENTIST, Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer
 	waitmovement 0

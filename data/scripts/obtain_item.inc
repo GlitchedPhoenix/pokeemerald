@@ -4,6 +4,8 @@
 Std_ObtainItem::
 	additem ITEMID, AMOUNT
 	copyvar VAR_0x8007, VAR_RESULT
+	copyvar VAR_0x8008, VAR_TEXT_COLOR
+	textcolor 2
 	call EventScript_ObtainItemMessage
 	return
 
@@ -69,10 +71,12 @@ EventScript_ObtainedItem::
 	call_if_eq VAR_RESULT, POCKET_TM_HM, EventScript_TMObtainMessage
 	call_if_ne VAR_RESULT, POCKET_TM_HM, EventScript_NormalObtainMessage
 	setvar VAR_RESULT, TRUE
+	copyvar VAR_TEXT_COLOR, VAR_0x8008
 	return
 
 EventScript_NoRoomForItem::
 	setvar VAR_RESULT, FALSE
+	copyvar VAR_TEXT_COLOR, VAR_0x8008
 	return
 
 EventScript_PlayFanfareObtainedItem::

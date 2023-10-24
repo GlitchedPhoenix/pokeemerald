@@ -5,6 +5,7 @@
 #include "battle_factory.h"
 #include "battle_setup.h"
 #include "data.h"
+#include "gym_leader_rematch.h"
 #include "item.h"
 #include "pokemon.h"
 #include "random.h"
@@ -284,6 +285,7 @@ void BattleAI_HandleItemUseBeforeAISetup(u8 defaultScoreMoves)
 {
     s32 i;
     u8 *data = (u8 *)BATTLE_HISTORY;
+	u8 index;
 
     for (i = 0; i < sizeof(struct BattleHistory); i++)
         data[i] = 0;
@@ -296,14 +298,30 @@ void BattleAI_HandleItemUseBeforeAISetup(u8 defaultScoreMoves)
             )
        )
     {
-        for (i = 0; i < MAX_TRAINER_ITEMS; i++)
-        {
-            if (gTrainers[gTrainerBattleOpponent_A].items[i] != ITEM_NONE)
-            {
-                BATTLE_HISTORY->trainerItems[BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent_A].items[i];
-                BATTLE_HISTORY->itemsNo++;
-            }
-        }
+		if (gTrainers[gTrainerBattleOpponent_A].variable)
+		{
+			index = GetDifficulty();
+			
+			for (i = 0; i < MAX_TRAINER_ITEMS; i++)
+			{
+				if (gDifficultyTrainers[gTrainerBattleOpponent_A][index].items[i] != ITEM_NONE)
+				{
+					BATTLE_HISTORY->trainerItems[BATTLE_HISTORY->itemsNo] = gDifficultyTrainers[gTrainerBattleOpponent_A][index].items[i];
+					BATTLE_HISTORY->itemsNo++;
+				}
+			}
+		}
+		else
+		{
+			for (i = 0; i < MAX_TRAINER_ITEMS; i++)
+			{
+				if (gTrainers[gTrainerBattleOpponent_A].items[i] != ITEM_NONE)
+				{
+					BATTLE_HISTORY->trainerItems[BATTLE_HISTORY->itemsNo] = gTrainers[gTrainerBattleOpponent_A].items[i];
+					BATTLE_HISTORY->itemsNo++;
+				}
+			}
+		}
     }
 
     BattleAI_SetupAIData(defaultScoreMoves);
@@ -314,6 +332,7 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
     s32 i;
     u8 *data = (u8 *)AI_THINKING_STRUCT;
     u8 moveLimitations;
+	u8 index;
 
     // Clear AI data.
     for (i = 0; i < sizeof(struct AI_ThinkingStruct); i++)
@@ -361,6 +380,9 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
     {
         gBattlerTarget = BATTLE_OPPOSITE(sBattler_AI);
     }
+	
+	if (gTrainers[gTrainerBattleOpponent_A].variable)
+		index = GetDifficulty();
 
     // Choose proper trainer ai scripts.
     if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
@@ -376,9 +398,15 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
     else if (gBattleTypeFlags & (BATTLE_TYPE_FRONTIER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_SECRET_BASE))
         AI_THINKING_STRUCT->aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_TRY_TO_FAINT;
     else if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
-        AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags | gTrainers[gTrainerBattleOpponent_B].aiFlags;
+		if (gTrainers[gTrainerBattleOpponent_A].variable)
+			AI_THINKING_STRUCT->aiFlags = gDifficultyTrainers[gTrainerBattleOpponent_A][index].aiFlags | gDifficultyTrainers[gTrainerBattleOpponent_B][index].aiFlags;
+		else
+			AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags | gTrainers[gTrainerBattleOpponent_B].aiFlags;
     else
-       AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
+		if (gTrainers[gTrainerBattleOpponent_A].variable)
+			AI_THINKING_STRUCT->aiFlags = gDifficultyTrainers[gTrainerBattleOpponent_A][index].aiFlags;
+		else
+			AI_THINKING_STRUCT->aiFlags = gTrainers[gTrainerBattleOpponent_A].aiFlags;
 
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
         AI_THINKING_STRUCT->aiFlags |= AI_SCRIPT_DOUBLE_BATTLE; // act smart in doubles and don't attack your partner

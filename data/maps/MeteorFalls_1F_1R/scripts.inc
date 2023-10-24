@@ -26,6 +26,9 @@ MeteorFalls_1F_1R_EventScript_MagmaStealsMeteoriteScene::
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_FaceDown
 	waitmovement 0
 	delay 30
+	special SpawnCameraObject
+	applymovement OBJ_EVENT_ID_CAMERA, MeteorFalls_Movement_CameraPanDown
+	waitmovement 0
 	textcolor 8
 	msgbox MeteorFalls_1F_1R_Text_WithThisMeteorite, MSGBOX_DEFAULT
 	textcolor 6
@@ -48,6 +51,7 @@ MeteorFalls_1F_1R_EventScript_MagmaStealsMeteoriteScene::
 	call_if_eq VAR_RESULT, MALE, MeteorFalls_1F_1R_EventScript_YouBrendan
 	call_if_eq VAR_RESULT, FEMALE, MeteorFalls_1F_1R_EventScript_YouMay
 	closemessage
+	applymovement LOCALID_MAGMA_GRUNT_1, Common_Movement_FaceRight
 	applymovement LOCALID_WALLY, Common_Movement_FaceUp
 	waitmovement 0
 	playse SE_PIN
@@ -127,6 +131,9 @@ MeteorFalls_1F_1R_EventScript_MagmaStealsMeteoriteScene::
 	removeobject LOCALID_ARCHIE
 	removeobject LOCALID_AQUA_GRUNT_1
 	removeobject LOCALID_AQUA_GRUNT_2
+	applymovement OBJ_EVENT_ID_CAMERA, MeteorFalls_Movement_CameraPanUp
+	waitmovement 0
+	special RemoveCameraObject
 	applymovement LOCALID_WALLY, MeteorFalls_1F_1R_Movement_WallyApproachPlayer
 	waitmovement 0
 	textcolor 6
@@ -153,6 +160,19 @@ MeteorFalls_1F_1R_EventScript_MagmaStealsMeteoriteScene::
 	setvar VAR_METEOR_FALLS_STATE, 1
 	releaseall
 	end
+
+MeteorFalls_Movement_CameraPanDown::
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MeteorFalls_Movement_CameraPanUp::
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	step_end
 
 Common_Movement_WalkInPlaceFasterRightThenLeft::
 	walk_in_place_faster_right
@@ -319,6 +339,8 @@ MeteorFalls_1F_1R_Movement_ArchieExit:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
 	step_end
 
 MeteorFalls_1F_1R_Movement_ArchieApproachPlayer:
@@ -344,6 +366,8 @@ MeteorFalls_1F_1R_Movement_AquaGrunt1Exit:
 	walk_right
 	walk_right
 	walk_right
+	walk_right
+	walk_right
 	step_end
 
 MeteorFalls_1F_1R_Movement_AquaGrunt1ApproachArchie:
@@ -358,6 +382,8 @@ MeteorFalls_1F_1R_Movement_AquaGrunt1ApproachArchie:
 MeteorFalls_1F_1R_Movement_AquaGrunt2Exit:
 	walk_up
 	walk_up
+	walk_right
+	walk_right
 	walk_right
 	walk_right
 	walk_right
@@ -399,27 +425,28 @@ MeteorFalls_1F_1R_EventScript_MetCozmo::
 	end
 
 MeteorFalls_1F_1R_Text_WithThisMeteorite:
-	.string "Hehehe!\p"
+	.string "???: Ha!\p"
 	.string "You're a tenacious little punk,\n"
 	.string "aren't you?\p"
-	.string "What made you think that you and\n"
-	.string "your pet ballerina would be enough\l"
-	.string "to beat me?$"
+	.string "What exactly were you expecting to\n"
+	.string "happen here, eh?$"
 
 MeteorFalls_1F_1R_Text_YouThink::
-	.string "What, are you also here for the\n"
-	.string "professor? You kids need to learn\l"
-	.string "how to keep your nose out of\l"
-	.string "other people's business!$"
+	.string "What, here for the same reason? You\n"
+	.string "kids need to learn how to not stick\l"
+	.string "your noses where they don't belong.$"
 
 MeteorFalls_1F_1R_Text_Wally1:
-	.string "WALLY: I-It's KIRLIA...$"
+	.string "WALLY: I-I heard the professor was\n"
+	.string "taken here and-$"
 
 MeteorFalls_1F_1R_Text_WhoCares:
-	.string "Oh, it's a KIRLIA, is it? Hehe...\n"
-	.string "Let me give you some advice, kid.\p"
-	.string "It's gonna take you a bit more than\n"
-	.string "that if you're shooting to win.$"
+	.string "Alright, alright. Pull the cotton\n"
+	.string "outta your ears, kid, and listen.\p"
+	.string "Us and him are just discussing some\n"
+	.string "business. Some adult business.\l"
+	.string "So take your pet ballerina, turn your\l"
+	.string "little face around, and buzz off.$"
 
 MeteorFalls_1F_1R_Text_WhoAreYou:
 	.string "Eh?\p"
@@ -485,7 +512,7 @@ MeteorFalls_1F_1R_Text_MeetProfCozmo:
 	.string "to METEOR FALLS…\p"
 	.string "But they tricked me and took my\n"
 	.string "METEORITE away. Then that boy\p"
-	.string "shows up to rescue me, but loses,\n"
+	.string "shows up to find me, then you do too,\n"
 	.string "and now there's another gang called\p"
 	.string "TEAM AQUA...\p"
 	.string "Yeesh, I need some coffee...\p"

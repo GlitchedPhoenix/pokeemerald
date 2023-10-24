@@ -8,9 +8,6 @@ static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 ma
 static s32 GetRematchIndex(u32 trainerIdx);
 
 static const u16 GymLeaderRematches_AfterNewMauville[] = {
-    REMATCH_ROXANNE,
-    REMATCH_BRAWLY,
-    REMATCH_WATTSON,
     REMATCH_FLANNERY,
     REMATCH_NORMAN,
     REMATCH_WINONA,
@@ -19,26 +16,12 @@ static const u16 GymLeaderRematches_AfterNewMauville[] = {
 };
 
 static const u16 GymLeaderRematches_BeforeNewMauville[] = {
-    REMATCH_ROXANNE,
-    REMATCH_BRAWLY,
-    // Wattson isn't available at this time
     REMATCH_FLANNERY,
     REMATCH_NORMAN,
     REMATCH_WINONA,
     REMATCH_TATE_AND_LIZA,
     REMATCH_JUAN
 };
-
-void UpdateGymLeaderRematch(void)
-{
-    if (FlagGet(FLAG_SYS_GAME_CLEAR) && (Random() % 100) <= 30)
-    {
-        if (FlagGet(FLAG_WATTSON_REMATCH_AVAILABLE))
-            UpdateGymLeaderRematchFromArray(GymLeaderRematches_AfterNewMauville, ARRAY_COUNT(GymLeaderRematches_AfterNewMauville), 5);
-        else
-            UpdateGymLeaderRematchFromArray(GymLeaderRematches_BeforeNewMauville, ARRAY_COUNT(GymLeaderRematches_BeforeNewMauville), 1);
-    }
-}
 
 static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 maxRematch)
 {
@@ -89,6 +72,24 @@ static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 ma
             }
         }
     }
+}
+
+const u8 GetDifficulty(void)
+{
+	u8 difficulty = gSaveBlock2Ptr->difficulty;
+	u8 progression = VarGet(VAR_SYS_PROGRESSION);
+	u8 diffBonus = 0;
+	
+	if ((difficulty >= 3) && (progression > 7))
+	{
+		diffBonus += 1;
+	}
+	if ((difficulty == 4) && (progression >= 12))
+	{
+		diffBonus += 1;
+	}
+	
+	return (progression + diffBonus);
 }
 
 static s32 GetRematchIndex(u32 trainerIdx)

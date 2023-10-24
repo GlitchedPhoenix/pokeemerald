@@ -136,6 +136,7 @@ MauvilleCity_EventScript_WallyAndUncleExitNorth::
 	closemessage
 	giveitem ITEM_WIRELESS_CHARM
 	closemessage
+	addvar VAR_SYS_PROGRESSION, 1
 	applymovement OBJ_EVENT_ID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitNorth2
 	applymovement LOCALID_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitNorth2
 	applymovement LOCALID_WALLY, MauvilleCity_Movement_WallyExitNorth2

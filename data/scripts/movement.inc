@@ -24,6 +24,22 @@ Common_Movement_FaceOriginalDirection:
 	face_original_direction
 	step_end
 
+Common_Movement_WalkInPlaceFastLeft:
+	walk_in_place_fast_left
+	step_end
+
+Common_Movement_WalkInPlaceFastUp:
+	walk_in_place_fast_up
+	step_end
+
+Common_Movement_WalkInPlaceFastRight:
+	walk_in_place_fast_right
+	step_end
+
+Common_Movement_WalkInPlaceFastDown:
+	walk_in_place_fast_down
+	step_end
+
 Common_Movement_WalkInPlaceFasterLeft:
 	walk_in_place_faster_left
 	step_end

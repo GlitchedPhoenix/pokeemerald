@@ -82,6 +82,84 @@ Route111_EventScript_SetSandstorm::
 Route111_EventScript_EndCheckSetSandstorm::
 	return
 
+Route111_EventScript_GabbyInterview::
+	goto_if_set FLAG_TEMP_1, Route111_EventScript_GabbyInterview2
+	applymovement 47, Common_Movement_WalkInPlaceFastUp
+	waitmovement 0
+	msgbox Route111_Text_GabbyInterview1
+	closemessage
+	textcolor 8
+	msgbox Route111_Text_Brandon
+	closemessage
+	textcolor 4
+	msgbox Route111_Text_GabbyInterview2
+	setflag FLAG_TEMP_1
+	release
+	end
+
+Route111_EventScript_GabbyInterview2::
+	textcolor 2
+	msgbox Route111_Text_GabbyInterview3
+	release
+	end
+
+Route111_Text_GabbyInterview1:
+	.string "BRANDON, sir! We understand you've taken\n"
+	.string "a leave of absence from the BATTLE\l"
+	.string "FRONTIER to lead an expedition across\l"
+	.string "the region, and our viewers at home are\l"
+	.string "dying to know what you've discovered!$"
+
+Route111_Text_Brandon:
+	.string "BRANDON: Hahaha! Is that so?\p"
+	.string "Well, if you venture a little farther\n"
+	.string "north into the desert, you may just\l"
+	.string "catch yourself a glimpse of a tower\l"
+	.string "that comes and goes as it pleases!\p"
+	.string "Me and the crew just barely managed\n"
+	.string "to get ourselves an eyeful before\l"
+	.string "it vanished once more.\p"
+	.string "However, do remember that it should\n"
+	.string "be seen, not entered! If it were to\l"
+	.string "collapse wih you inside, you could\l"
+	.string "really hurt yourself!\p"
+	.string "And for goodness sake, do not forget\n"
+	.string "your GO-GOGGLES!$"
+
+Route111_Text_GabbyInterview2:
+	.string "GABBY: Remember, folks. Courage may\n"
+	.string "be the adventurer's greatest resource,\l"
+	.string "but safety is their greatest tool!\p"
+	.string "Now, for our next question...$"
+
+Route111_Text_GabbyInterview3:
+	.string "Her gauntlet of questions seems to\n"
+	.string "never end...$"
+
+Route111_EventScript_Ty::
+	textcolor 2
+	msgbox Route111_Text_TyFocused
+	closemessage
+	applymovement 54, Route111_Movement_Photobomb
+	waitmovement 0
+	msgbox Route111_Text_TyWaveKid
+	release
+	end
+
+Route111_Movement_Photobomb:
+	walk_in_place_fast_right
+	walk_in_place_fast_right
+	walk_in_place_fast_right
+	step_end
+
+Route111_Text_TyFocused:
+	.string "He seems to be focused on standing as\n"
+	.string "still as possible...$"
+
+Route111_Text_TyWaveKid:
+	.string "...while also waving at the kid doing\n"
+	.string "weird faces to move out of frame.$"
+
 Route111_EventScript_SetWinstratesNotDefeated::
 	clearflag FLAG_HIDE_ROUTE_111_VICTOR_WINSTRATE
 	setflag FLAG_HIDE_ROUTE_111_VICTORIA_WINSTRATE

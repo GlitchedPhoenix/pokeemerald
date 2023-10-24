@@ -46,6 +46,8 @@ VictoryRoad_1F_EventScript_WallyEntranceBattle::
 	clearflag FLAG_HIDE_VICTORY_ROAD_ENTRANCE_WALLY
 	copyobjectxytoperm LOCALID_WALLY_ENTRANCE
 	setflag FLAG_DEFEATED_WALLY_VICTORY_ROAD
+	setflag FLAG_CLEARED_VICTORY_ROAD
+	addvar VAR_SYS_PROGRESSION, 1
 	copyvar VAR_VICTORY_ROAD_1F_STATE, VAR_0x8008
 	releaseall
 	end
