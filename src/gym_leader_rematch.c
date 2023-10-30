@@ -7,22 +7,6 @@
 static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 maxRematch);
 static s32 GetRematchIndex(u32 trainerIdx);
 
-static const u16 GymLeaderRematches_AfterNewMauville[] = {
-    REMATCH_FLANNERY,
-    REMATCH_NORMAN,
-    REMATCH_WINONA,
-    REMATCH_TATE_AND_LIZA,
-    REMATCH_JUAN
-};
-
-static const u16 GymLeaderRematches_BeforeNewMauville[] = {
-    REMATCH_FLANNERY,
-    REMATCH_NORMAN,
-    REMATCH_WINONA,
-    REMATCH_TATE_AND_LIZA,
-    REMATCH_JUAN
-};
-
 static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 maxRematch)
 {
     s32 whichLeader = 0;
@@ -76,7 +60,7 @@ static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 ma
 
 const u8 GetDifficulty(void)
 {
-	u8 difficulty = gSaveBlock2Ptr->difficulty;
+	u8 difficulty = VarGet(VAR_UNUSED_0x409D);//gSaveBlock2Ptr->difficulty;
 	u8 progression = VarGet(VAR_SYS_PROGRESSION);
 	u8 diffBonus = 0;
 	

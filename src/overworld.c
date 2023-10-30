@@ -834,6 +834,11 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
         ShowMapNamePopup();
 }
 
+void ReloadPrimaryTileset(void)
+{
+	CopyPrimaryTilesetToVram(gMapHeader.mapLayout);
+}
+
 static void LoadMapFromWarp(bool32 a1)
 {
     bool8 isOutdoors;

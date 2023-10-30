@@ -80,8 +80,8 @@ Badge levels
 2 - 16-20, 3 mons
 3 - 20-24, 4 mons
 4 - 24-29, 4 mons
-5 - 27-31, 4 mons, start countering weaknesses
-6 - 29-33, 5 mons
+5 - 28-32, 4 mons, start countering weaknesses
+6 - 31-35, 5 mons
 7 - 39-43, 5 mons
 8 - 43-46, 5 mons
 
@@ -95,3 +95,5 @@ Badge levels
 
 16 - 82-85, 6 mons, Brutal only
 17 - 87-90, 6 mons, Unfair only, Legendary gets added to team.
+
+**DO NOT EXCEED LEVEL 88! If it's over, the level will overflow on brutal and roll around to a low level.

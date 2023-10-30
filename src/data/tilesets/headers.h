@@ -836,3 +836,14 @@ const struct Tileset gTileset_CometValley =
     .metatileAttributes = gMetatileAttributes_CometValley,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_GeneralWest =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_GeneralWest,
+    .palettes = gTilesetPalettes_GeneralWest,
+    .metatiles = gMetatiles_GeneralWest,
+    .metatileAttributes = gMetatileAttributes_GeneralWest,
+    .callback = InitTilesetAnim_General,
+};

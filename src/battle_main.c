@@ -1985,7 +1985,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     s32 i, j;
     u8 monsCount;
 	u8 index;
-	u8 difficulty = gSaveBlock2Ptr->difficulty;
+	u8 difficulty = VarGet(VAR_UNUSED_0x409D);//gSaveBlock2Ptr->difficulty;
 	s8 levelmod = 0;
 	u8 badgeCount;
 	u8 level;

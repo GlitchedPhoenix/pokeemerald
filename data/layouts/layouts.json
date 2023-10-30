@@ -334,7 +334,7 @@
     {
       "id": "LAYOUT_ROUTE118",
       "name": "Route118_Layout",
-      "width": 80,
+      "width": 62,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
@@ -1356,7 +1356,7 @@
       "name": "MtChimney_Layout",
       "width": 40,
       "height": 47,
-      "primary_tileset": "gTileset_General",
+      "primary_tileset": "gTileset_GeneralWest",
       "secondary_tileset": "gTileset_Lavaridge",
       "border_filepath": "data/layouts/MtChimney/border.bin",
       "blockdata_filepath": "data/layouts/MtChimney/map.bin"
@@ -4446,7 +4446,7 @@
       "name": "CometValley_Main_Layout",
       "width": 58,
       "height": 90,
-      "primary_tileset": "gTileset_General",
+      "primary_tileset": "gTileset_GeneralWest",
       "secondary_tileset": "gTileset_CometValley",
       "border_filepath": "data/layouts/CometValley_Main/border.bin",
       "blockdata_filepath": "data/layouts/CometValley_Main/map.bin"
@@ -4456,10 +4456,20 @@
       "name": "CometValley_Clearing_Layout",
       "width": 50,
       "height": 50,
-      "primary_tileset": "gTileset_General",
+      "primary_tileset": "gTileset_GeneralWest",
       "secondary_tileset": "gTileset_CometValley",
       "border_filepath": "data/layouts/CometValley_Clearing/border.bin",
       "blockdata_filepath": "data/layouts/CometValley_Clearing/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE118_MAUVILLE_SIDE",
+      "name": "Route118_MauvilleSide_Layout",
+      "width": 30,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Mauville",
+      "border_filepath": "data/layouts/Route118_MauvilleSide/border.bin",
+      "blockdata_filepath": "data/layouts/Route118_MauvilleSide/map.bin"
     }
   ]
 }

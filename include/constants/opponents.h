@@ -269,11 +269,11 @@
 #define TRAINER_ROXANNE                     265
 #define TRAINER_BRAWLY                      266
 #define TRAINER_WATTSON                     267
-#define TRAINER_FLANNERY_1                  268
-#define TRAINER_NORMAN_1                    269
-#define TRAINER_WINONA_1                    270
-#define TRAINER_TATE_AND_LIZA_1             271
-#define TRAINER_JUAN_1                      272
+#define TRAINER_FLANNERY                    268
+#define TRAINER_NORMAN                      269
+#define TRAINER_WINONA                      270
+#define TRAINER_TATE_AND_LIZA               271
+#define TRAINER_JUAN                        272
 #define TRAINER_JERRY_1                     273
 #define TRAINER_TED                         274
 #define TRAINER_PAUL                        275
@@ -824,28 +824,8 @@
 #define TRAINER_LEAF                        820
 #define TRAINER_BRENDAN_PLACEHOLDER         821
 #define TRAINER_MAY_PLACEHOLDER             822
-#define TRAINER_FLANNERY_2                  823
-#define TRAINER_FLANNERY_3                  824
-#define TRAINER_FLANNERY_4                  825
-#define TRAINER_FLANNERY_5                  826
-#define TRAINER_NORMAN_2                    827
-#define TRAINER_NORMAN_3                    828
-#define TRAINER_NORMAN_4                    829
-#define TRAINER_NORMAN_5                    830
-#define TRAINER_WINONA_2                    831
-#define TRAINER_WINONA_3                    832
-#define TRAINER_WINONA_4                    833
-#define TRAINER_WINONA_5                    834
-#define TRAINER_TATE_AND_LIZA_2             835
-#define TRAINER_TATE_AND_LIZA_3             836
-#define TRAINER_TATE_AND_LIZA_4             837
-#define TRAINER_TATE_AND_LIZA_5             838
-#define TRAINER_JUAN_2                      839
-#define TRAINER_JUAN_3                      840
-#define TRAINER_JUAN_4                      841
-#define TRAINER_JUAN_5                      842
 
-#define TRAINERS_COUNT                      843
+#define TRAINERS_COUNT                      823
 #define MAX_TRAINERS_COUNT                  989
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

@@ -29,8 +29,8 @@ AbnormalWeather_EventScript_PlaceTilesRoute116South::
 	return
 
 AbnormalWeather_EventScript_PlaceTilesRoute118East::
-	setmetatile 42, 5, METATILE_General_CaveEntrance_Top, TRUE
-	setmetatile 42, 6, METATILE_General_CaveEntrance_Bottom, FALSE
+	setmetatile 24, 5, METATILE_General_CaveEntrance_Top, TRUE
+	setmetatile 24, 6, METATILE_General_CaveEntrance_Bottom, FALSE
 	return
 
 AbnormalWeather_EventScript_PlaceTilesRoute118West::

@@ -279,7 +279,7 @@ static const u8 sWirelessCharmDesc[] = _(
 static const u8 sMysteryDiscDesc[] = _(
     "A strange black\n"
     "disc. It doesn't\n"
-    "seem useable.");
+    "seem usable.");
 
 static const u8 sCalciumDesc[] = _(
     "Raises the base\n"

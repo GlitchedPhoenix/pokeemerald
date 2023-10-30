@@ -10,16 +10,16 @@
   "allow_cycling": true,
   "allow_escaping": false,
   "allow_running": true,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
       "map": "MAP_ROUTE119",
-      "offset": 40,
+      "offset": 22,
       "direction": "up"
     },
     {
-      "map": "MAP_MAUVILLE_CITY",
+      "map": "MAP_ROUTE118_MAUVILLE_SIDE",
       "offset": 0,
       "direction": "left"
     },
@@ -32,7 +32,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
-      "x": 35,
+      "x": 17,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
@@ -45,7 +45,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
-      "x": 36,
+      "x": 18,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
@@ -58,7 +58,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
-      "x": 37,
+      "x": 19,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
@@ -71,7 +71,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 64,
+      "x": 46,
       "y": 10,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -84,7 +84,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_REPORTER_F",
-      "x": 33,
+      "x": 15,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -97,7 +97,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMERAMAN",
-      "x": 34,
+      "x": 16,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -109,21 +109,8 @@
       "flag": "FLAG_HIDE_ROUTE_118_GABBY_AND_TY_1"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_GIRL_2",
-      "x": 12,
-      "y": 10,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route118_EventScript_Girl",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_REPORTER_F",
-      "x": 33,
+      "x": 15,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -136,7 +123,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMERAMAN",
-      "x": 34,
+      "x": 16,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -149,7 +136,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_REPORTER_F",
-      "x": 33,
+      "x": 15,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -162,7 +149,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMERAMAN",
-      "x": 34,
+      "x": 16,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -175,7 +162,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_CUTTABLE_TREE",
-      "x": 38,
+      "x": 20,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -188,7 +175,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
-      "x": 28,
+      "x": 10,
       "y": 8,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -200,34 +187,8 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_AROMA_LADY",
-      "x": 7,
-      "y": 12,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "4",
-      "script": "Route118_EventScript_Rose",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
-      "x": 14,
-      "y": 14,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route118_EventScript_Wade",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 56,
+      "x": 38,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP_AND_RIGHT",
@@ -240,7 +201,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
-      "x": 39,
+      "x": 21,
       "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -252,21 +213,8 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
-      "x": 17,
-      "y": 11,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP_AND_LEFT",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route118_EventScript_Dalton",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_STEVEN",
-      "x": 44,
+      "x": 26,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -279,7 +227,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 69,
+      "x": 51,
       "y": 7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -291,21 +239,8 @@
       "flag": "FLAG_ITEM_ROUTE_118_HYPER_POTION"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
-      "x": 7,
-      "y": 7,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "4",
-      "script": "Route118_EventScript_Deandre",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_F",
-      "x": 59,
+      "x": 41,
       "y": 1,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -318,7 +253,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SHELLY",
-      "x": 58,
+      "x": 40,
       "y": 0,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_LEFT",
@@ -331,7 +266,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 57,
+      "x": 39,
       "y": 1,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
@@ -344,7 +279,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 58,
+      "x": 40,
       "y": 2,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -357,7 +292,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 57,
+      "x": 39,
       "y": 0,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_RUN_IN_PLACE_RIGHT",
@@ -371,14 +306,7 @@
   ],
   "warp_events": [
     {
-      "x": 42,
-      "y": 6,
-      "elevation": 0,
-      "dest_map": "MAP_TERRA_CAVE_ENTRANCE",
-      "dest_warp_id": "0"
-    },
-    {
-      "x": 9,
+      "x": 24,
       "y": 6,
       "elevation": 0,
       "dest_map": "MAP_TERRA_CAVE_ENTRANCE",
@@ -388,7 +316,7 @@
   "coord_events": [
     {
       "type": "trigger",
-      "x": 43,
+      "x": 25,
       "y": 11,
       "elevation": 3,
       "var": "VAR_ROUTE118_STATE",
@@ -397,7 +325,7 @@
     },
     {
       "type": "trigger",
-      "x": 44,
+      "x": 26,
       "y": 11,
       "elevation": 3,
       "var": "VAR_ROUTE118_STATE",
@@ -406,7 +334,7 @@
     },
     {
       "type": "trigger",
-      "x": 45,
+      "x": 27,
       "y": 11,
       "elevation": 3,
       "var": "VAR_ROUTE118_STATE",
@@ -417,22 +345,14 @@
   "bg_events": [
     {
       "type": "secret_base",
-      "x": 47,
+      "x": 29,
       "y": 14,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_RED_CAVE1_1"
     },
     {
       "type": "sign",
-      "x": 13,
-      "y": 6,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route118_EventScript_RouteSignMauville"
-    },
-    {
-      "type": "sign",
-      "x": 56,
+      "x": 38,
       "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -440,47 +360,39 @@
     },
     {
       "type": "secret_base",
-      "x": 67,
+      "x": 49,
       "y": 6,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_RED_CAVE2_1"
     },
     {
       "type": "secret_base",
-      "x": 29,
+      "x": 11,
       "y": 5,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_YELLOW_CAVE1_2"
     },
     {
       "type": "secret_base",
-      "x": 47,
+      "x": 29,
       "y": 5,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_TREE1_3"
     },
     {
       "type": "secret_base",
-      "x": 46,
+      "x": 28,
       "y": 5,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_TREE2_1"
     },
     {
       "type": "hidden_item",
-      "x": 31,
+      "x": 13,
       "y": 13,
       "elevation": 3,
       "item": "ITEM_IRON",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_118_IRON"
-    },
-    {
-      "type": "hidden_item",
-      "x": 12,
-      "y": 14,
-      "elevation": 3,
-      "item": "ITEM_HEART_SCALE",
-      "flag": "FLAG_HIDDEN_ITEM_ROUTE_118_HEART_SCALE"
     }
   ]
 }

@@ -1066,3 +1066,5 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/maps/CometValley_Main/scripts.inc"
 
 	.include "data/maps/CometValley_Clearing/scripts.inc"
+
+	.include "data/maps/Route118_MauvilleSide/scripts.inc"

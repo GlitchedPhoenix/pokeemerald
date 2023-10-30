@@ -210,3 +210,6 @@ const u16 gMetatileAttributes_UnionRoom[] = INCBIN_U16("data/tilesets/secondary/
 
 const u16 gMetatiles_CometValley[] = INCBIN_U16("data/tilesets/secondary/comet_valley/metatiles.bin");
 const u16 gMetatileAttributes_CometValley[] = INCBIN_U16("data/tilesets/secondary/comet_valley/metatile_attributes.bin");
+
+const u16 gMetatiles_GeneralWest[] = INCBIN_U16("data/tilesets/primary/general_west/metatiles.bin");
+const u16 gMetatileAttributes_GeneralWest[] = INCBIN_U16("data/tilesets/primary/general_west/metatile_attributes.bin");
