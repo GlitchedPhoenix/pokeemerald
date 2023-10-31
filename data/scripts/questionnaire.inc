@@ -15,7 +15,6 @@ EventScript_Questionnaire::
 
 Questionnaire_EventScript_PlayerInputMysteryEventPhrase::
 	goto_if_unset FLAG_SYS_POKEDEX_GET, Questionnaire_EventScript_ThankYou
-	goto_if_set FLAG_SYS_MYSTERY_EVENT_ENABLE, Questionnaire_EventScript_ThankYou
 	applymovement VAR_0x8008, Common_Movement_FaceDown
 	waitmovement 0
 	playse SE_PIN
@@ -24,14 +23,12 @@ Questionnaire_EventScript_PlayerInputMysteryEventPhrase::
 	applymovement VAR_0x8008, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Questionnaire_Text_YouKnowThoseWordsEvent, MSGBOX_DEFAULT
-	setflag FLAG_SYS_MYSTERY_EVENT_ENABLE
 	msgbox Questionnaire_Text_YouCanAccessMysteryEvent, MSGBOX_DEFAULT
 	releaseall
 	end
 
 Questionnaire_EventScript_PlayerInputMysteryGiftPhrase::
 	goto_if_unset FLAG_SYS_POKEDEX_GET, Questionnaire_EventScript_ThankYou
-	goto_if_set FLAG_SYS_MYSTERY_GIFT_ENABLE, Questionnaire_EventScript_ThankYou
 	applymovement VAR_0x8008, Common_Movement_FaceDown
 	waitmovement 0
 	playse SE_PIN
@@ -40,7 +37,6 @@ Questionnaire_EventScript_PlayerInputMysteryGiftPhrase::
 	applymovement VAR_0x8008, Common_Movement_Delay48
 	waitmovement 0
 	msgbox Questionnaire_Text_YouKnowThoseWordsGift, MSGBOX_DEFAULT
-	setflag FLAG_SYS_MYSTERY_GIFT_ENABLE
 	msgbox Questionnaire_Text_YouCanAccessMysteryGift, MSGBOX_DEFAULT
 	releaseall
 	end

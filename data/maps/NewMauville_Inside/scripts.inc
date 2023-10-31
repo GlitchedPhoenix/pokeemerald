@@ -251,6 +251,15 @@ NewMauville_Inside_Text_GeneratorRadiatingHeat:
 	.string "It looks like it should be turned off\n"
 	.string "as soon as possible.$"
 
+@ Unused
+NewMauville_Inside_Text_Someone:
+	.string "Grandma, can you hear me?\p"
+	.string "My fingers are cold...\p"
+	.string "My legs won't move...\p"
+	.string "I can't open my eyes...\p"
+	.string "This game isn't fun anymore.\n"
+	.string "I wanna go home...$"
+
 NewMauville_Inside_Text_GeneratorQuietedDown:
 	.string "The generator quieted down.$"
 

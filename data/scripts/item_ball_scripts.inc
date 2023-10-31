@@ -406,6 +406,10 @@ NewMauville_Inside_EventScript_ItemUltraBall::
 	finditem ITEM_ULTRA_BALL
 	end
 
+NewMauville_Inside_EventScript_ItemMaxRepel::
+	finditem ITEM_MAX_REPEL
+	end
+
 NewMauville_Inside_EventScript_ItemEscapeRope::
 	finditem ITEM_ESCAPE_ROPE
 	end
