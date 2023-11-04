@@ -5058,6 +5058,37 @@ static const struct TrainerMonItemCustomMoves sParty_Norman10[] = {
 static const struct TrainerMonItemCustomMoves sParty_Winona1[] = {
     {
     .iv = 220,
+    .lvl = 28,
+    .species = SPECIES_PIDGEOTTO,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_SAND_ATTACK, MOVE_STEEL_WING, MOVE_DOUBLE_EDGE, MOVE_AERIAL_ACE}
+    },
+    {
+    .iv = 220,
+    .lvl = 28,
+    .species = SPECIES_TROPIUS,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_SUNNY_DAY, MOVE_AERIAL_ACE, MOVE_SOLAR_BEAM, MOVE_SYNTHESIS}
+    },
+    {
+    .iv = 220,
+    .lvl = 30,
+    .species = SPECIES_SKARMORY,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_SAND_ATTACK, MOVE_FURY_ATTACK, MOVE_STEEL_WING, MOVE_AERIAL_ACE}
+    },
+    {
+    .iv = 250,
+    .lvl = 32,
+    .species = SPECIES_ALTARIA,
+    .heldItem = ITEM_ORAN_BERRY,
+    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_BREATH, MOVE_DRAGON_DANCE, MOVE_AERIAL_ACE}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_Winona6[] = {
+    {
+    .iv = 220,
     .lvl = 31,
     .species = SPECIES_PIDGEOT,
     .heldItem = ITEM_NONE,
@@ -5088,7 +5119,7 @@ static const struct TrainerMonItemCustomMoves sParty_Winona1[] = {
     .iv = 250,
     .lvl = 35,
     .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_ORAN_BERRY,
+    .heldItem = ITEM_SITRUS_BERRY,
     .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_BREATH, MOVE_DRAGON_DANCE, MOVE_AERIAL_ACE}
     }
 };
@@ -5133,28 +5164,28 @@ static const struct TrainerMonItemCustomMoves sParty_Winona7[] = {
 
 static const struct TrainerMonItemCustomMoves sParty_Winona8[] = {
     {
-    .iv = 250,
+    .iv = 255,
     .lvl = 43,
     .species = SPECIES_PIDGEOT,
     .heldItem = ITEM_NONE,
     .moves = {MOVE_SAND_ATTACK, MOVE_STEEL_WING, MOVE_DOUBLE_EDGE, MOVE_AERIAL_ACE}
     },
     {
-    .iv = 250,
+    .iv = 255,
     .lvl = 42,
     .species = SPECIES_GYARADOS,
     .heldItem = ITEM_NONE,
     .moves = {MOVE_SUNNY_DAY, MOVE_AERIAL_ACE, MOVE_SOLAR_BEAM, MOVE_SYNTHESIS}
     },
     {
-    .iv = 250,
+    .iv = 255,
     .lvl = 43,
     .species = SPECIES_DONPHAN,
     .heldItem = ITEM_NONE,
     .moves = {MOVE_ROLLOUT, MOVE_EARTHQUAKE, MOVE_PROTECT, MOVE_TOXIC}
     },
     {
-    .iv = 250,
+    .iv = 255,
     .lvl = 44,
     .species = SPECIES_SKARMORY,
     .heldItem = ITEM_NONE,
@@ -5164,7 +5195,7 @@ static const struct TrainerMonItemCustomMoves sParty_Winona8[] = {
     .iv = 255,
     .lvl = 46,
     .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_ORAN_BERRY,
+    .heldItem = ITEM_LIECHI_BERRY,
     .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_DRAGON_DANCE, MOVE_FLY}
     }
 };

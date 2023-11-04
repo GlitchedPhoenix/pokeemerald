@@ -1265,14 +1265,15 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
     default:
         if (gApproachingTrainerId == 0)
         {
-            TrainerBattleLoadArgs(sOrdinaryBattleParams, data);
+			TrainerBattleLoadArgs(sOrdinaryBattleParams, data);
             SetMapVarsToTrainer();
         }
         else
         {
             TrainerBattleLoadArgs(sTrainerBOrdinaryBattleParams, data);
         }
-        return EventScript_TryDoNormalTrainerBattle;
+		
+		return EventScript_TryDoNormalTrainerBattle;
     }
 }
 

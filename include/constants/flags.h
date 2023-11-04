@@ -12,7 +12,7 @@
 #define FLAG_TEMP_2      (TEMP_FLAGS_START + 0x2)
 #define FLAG_TEMP_3      (TEMP_FLAGS_START + 0x3)
 #define FLAG_TEMP_4      (TEMP_FLAGS_START + 0x4)
-#define FLAG_TEMP_5      (TEMP_FLAGS_START + 0x5)  // Unused Flag
+#define FLAG_TEMP_5      (TEMP_FLAGS_START + 0x5)
 #define FLAG_TEMP_6      (TEMP_FLAGS_START + 0x6)  // Unused Flag
 #define FLAG_TEMP_7      (TEMP_FLAGS_START + 0x7)  // Unused Flag
 #define FLAG_TEMP_8      (TEMP_FLAGS_START + 0x8)  // Unused Flag
@@ -51,7 +51,7 @@
 #define FLAG_SYS_NO_BATTLE_DMG      0x26 // Unused Flag //DEBUG
 #define FLAG_SYS_TEXTCOLORS2        0x27 
 #define FLAG_BIRCH_SEEN_COMPLETE_HOENN_DEX    0x28
-#define FLAG_UNUSED_0x029    0x29 // Unused Flag
+#define FLAG_SHINY_BOOST     0x29
 #define FLAG_UNUSED_0x02A    0x2A // Unused Flag
 #define FLAG_UNUSED_0x02B    0x2B // Unused Flag
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag

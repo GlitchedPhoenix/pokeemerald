@@ -3134,6 +3134,10 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u32 value;
     u16 checksum;
 	u8 version;
+	u8 difficulty = gSaveBlock2Ptr->difficulty;
+	u16 i;
+	u16 tries = 0;
+	u32 shinyValue;
 
     ZeroBoxMonData(boxMon);
 
@@ -3163,6 +3167,31 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
               | (gSaveBlock2Ptr->playerTrainerId[1] << 8)
               | (gSaveBlock2Ptr->playerTrainerId[2] << 16)
               | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
+		
+		switch(difficulty)
+		{
+			case 1:
+				tries = 1;
+			case 2:
+				tries = 3;
+			case 3:
+				tries = 7;
+		}
+		
+		if (FlagGet(FLAG_SHINY_BOOST))
+			tries += 20;
+		
+		for (i = 0; i < tries; i++)
+		{
+			u8 nature = personality % NUM_NATURES;  // keep current nature
+			do {
+                personality = Random32();
+            } while (nature != GetNatureFromPersonality(personality));
+			
+			shinyValue = GET_SHINY_VALUE(value, personality);
+			if (shinyValue < SHINY_ODDS)
+				break;
+		}
 		
 		if (FlagGet(FLAG_SHINY_CREATION))
         {
@@ -3246,6 +3275,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     GiveBoxMonInitialMoveset(boxMon);
 	
 	FlagClear(FLAG_SHINY_CREATION);
+	FlagClear(FLAG_SHINY_BOOST);
 }
 
 void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)
@@ -4115,6 +4145,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     u8 defenderHoldEffectParam;
     u8 attackerHoldEffect;
     u8 attackerHoldEffectParam;
+	u8 badgeBoostMultiplier = 110;
 
     if (!powerOverride)
         gBattleMovePower = gBattleMoves[move].power;
@@ -4157,15 +4188,18 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     if (attacker->ability == ABILITY_HUGE_POWER || attacker->ability == ABILITY_PURE_POWER)
         attack *= 2;
+	
+	if (gSaveBlock2Ptr->difficulty == 4)
+		badgeBoostMultiplier = 120;
 
     if (ShouldGetStatBadgeBoost(FLAG_BADGE01_GET, battlerIdAtk))
-        attack = (110 * attack) / 100;
+        attack = (badgeBoostMultiplier * attack) / 100;
     if (ShouldGetStatBadgeBoost(FLAG_BADGE05_GET, battlerIdDef))
-        defense = (110 * defense) / 100;
+        defense = (badgeBoostMultiplier * defense) / 100;
     if (ShouldGetStatBadgeBoost(FLAG_BADGE07_GET, battlerIdAtk))
-        spAttack = (110 * spAttack) / 100;
+        spAttack = (badgeBoostMultiplier * spAttack) / 100;
     if (ShouldGetStatBadgeBoost(FLAG_BADGE07_GET, battlerIdDef))
-        spDefense = (110 * spDefense) / 100;
+        spDefense = (badgeBoostMultiplier * spDefense) / 100;
 
     // Apply type-bonus hold item
     for (i = 0; i < ARRAY_COUNT(sHoldEffectToType); i++)
@@ -4406,16 +4440,21 @@ u8 CountAliveMonsInBattle(u8 caseId)
 
 static bool8 ShouldGetStatBadgeBoost(u16 badgeFlag, u8 battlerId)
 {
-    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
-        return FALSE;
-    else if (GetBattlerSide(battlerId) != B_SIDE_PLAYER)
-        return FALSE;
-    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
-        return FALSE;
-    else if (FlagGet(badgeFlag))
-        return TRUE;
-    else
-        return FALSE;
+	if (!gSaveBlock2Ptr->badgeBoosts)
+	{
+		if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
+			return FALSE;
+		else if (GetBattlerSide(battlerId) != B_SIDE_PLAYER)
+			return FALSE;
+		else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && gTrainerBattleOpponent_A == TRAINER_SECRET_BASE)
+			return FALSE;
+		else if (FlagGet(badgeFlag))
+			return TRUE;
+		else
+			return FALSE;
+	}
+	else
+		return FALSE;
 }
 
 u8 GetDefaultMoveTarget(u8 battlerId)

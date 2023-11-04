@@ -1985,7 +1985,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     s32 i, j;
     u8 monsCount;
 	u8 index;
-	u8 difficulty = VarGet(VAR_UNUSED_0x409D);//gSaveBlock2Ptr->difficulty;
+	u8 difficulty = gSaveBlock2Ptr->difficulty;
 	s8 levelmod = 0;
 	u8 badgeCount;
 	u8 level;
@@ -2000,23 +2000,23 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 	{
 		case 1:
 		{
-			if (gTrainers[trainerNum].variable)
-				levelmod = (-1*badgeCount);
+			levelmod = (badgeCount/2);
 			break;
 		}
 		case 2:
 		{
-			levelmod = (badgeCount/2);
+			levelmod = (badgeCount);
 			break;
 		}
 		case 3:
 		{
-			levelmod = (badgeCount);
+			levelmod = (3*badgeCount/2);
 			break;
 		}
 		case 4:
 		{
-			levelmod = (3*badgeCount/2);
+			if (gTrainers[trainerNum].variable)
+				levelmod = (-1*badgeCount);
 			break;
 		}
 	}
@@ -2216,7 +2216,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 				{
 					const struct TrainerMonNoItemDefaultMoves *partyData = gTrainers[trainerNum].party.NoItemDefaultMoves;
 					
-					if (difficulty == 1)
+					if (difficulty == 4)
 						level = (9*(partyData[i].lvl)/10);
 					else
 						level = partyData[i].lvl;
@@ -2249,7 +2249,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 				{
 					const struct TrainerMonNoItemCustomMoves *partyData = gTrainers[trainerNum].party.NoItemCustomMoves;
 					
-					if (difficulty == 1)
+					if (difficulty == 4)
 						level = (9*(partyData[i].lvl)/10);
 					else
 						level = partyData[i].lvl;
@@ -2289,7 +2289,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 				{
 					const struct TrainerMonItemDefaultMoves *partyData = gTrainers[trainerNum].party.ItemDefaultMoves;
 					
-					if (difficulty == 1)
+					if (difficulty == 4)
 						level = (9*(partyData[i].lvl)/10);
 					else
 						level = partyData[i].lvl;
@@ -2325,7 +2325,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 				{
 					const struct TrainerMonItemCustomMoves *partyData = gTrainers[trainerNum].party.ItemCustomMoves;
 					
-					if (difficulty == 1)
+					if (difficulty == 4)
 						level = (9*(partyData[i].lvl)/10);
 					else
 						level = partyData[i].lvl;
@@ -2367,7 +2367,9 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 			}
         }
 		
-		if (gTrainers[trainerNum].variable)
+		if (gSaveBlock2Ptr->doublesMode && (gTrainers[trainerNum].partySize > 1) && (GetMonsStateToDoubles() == PLAYER_HAS_TWO_USABLE_MONS))
+			gBattleTypeFlags |= TRUE;
+		else if (gTrainers[trainerNum].variable)
 			gBattleTypeFlags |= gDifficultyTrainers[trainerNum][index].doubleBattle;
 		else
 			gBattleTypeFlags |= gTrainers[trainerNum].doubleBattle;
@@ -4898,6 +4900,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     u8 holdEffect = 0;
     u8 holdEffectParam = 0;
     u16 moveBattler1 = 0, moveBattler2 = 0;
+	u8 badgeBoostMultiplier = 110;
 
     if (WEATHER_HAS_EFFECT)
     {
@@ -4918,6 +4921,9 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
         speedMultiplierBattler1 = 1;
         speedMultiplierBattler2 = 1;
     }
+	
+	if (gSaveBlock2Ptr->difficulty == 4)
+		badgeBoostMultiplier = 120;
 
     speedBattler1 = (gBattleMons[battler1].speed * speedMultiplierBattler1)
                 * (gStatStageRatios[gBattleMons[battler1].statStages[STAT_SPEED]][0])
@@ -4937,9 +4943,10 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     // badge boost
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
         && FlagGet(FLAG_BADGE03_GET)
-        && GetBattlerSide(battler1) == B_SIDE_PLAYER)
+        && GetBattlerSide(battler1) == B_SIDE_PLAYER
+		&& !gSaveBlock2Ptr->badgeBoosts)
     {
-        speedBattler1 = (speedBattler1 * 110) / 100;
+        speedBattler1 = (speedBattler1 * badgeBoostMultiplier) / 100;
     }
 
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
@@ -4971,9 +4978,10 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     // badge boost
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
         && FlagGet(FLAG_BADGE03_GET)
-        && GetBattlerSide(battler2) == B_SIDE_PLAYER)
+        && GetBattlerSide(battler2) == B_SIDE_PLAYER
+		&& !gSaveBlock2Ptr->badgeBoosts)
     {
-        speedBattler2 = (speedBattler2 * 110) / 100;
+        speedBattler2 = (speedBattler2 * badgeBoostMultiplier) / 100;
     }
 
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
@@ -5339,6 +5347,9 @@ static void HandleEndTurn_BattleLost(void)
     {
         gBattlescriptCurrInstr = BattleScript_LocalBattleLost;
     }
+	
+	if (FlagGet(FLAG_TEMP_5))
+		RestorePartyHeldItems();
 
     gBattleMainFunc = HandleEndTurn_FinishBattle;
 }
@@ -5556,4 +5567,26 @@ void RunBattleScriptCommands(void)
 {
     if (gBattleControllerExecFlags == 0)
         gBattleScriptingCommandsTable[gBattlescriptCurrInstr[0]]();
+}
+
+void SavePartyHeldItems(void)
+{
+	u8 i;
+	
+	for (i = 0; i < PARTY_SIZE; i++)
+	{
+		u16 itemBefore = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+		SetMonData(&gSaveBlock1Ptr->playerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
+	}
+}
+
+void RestorePartyHeldItems(void)
+{
+	u8 i;
+	
+	for (i = 0; i < PARTY_SIZE; i++)
+	{
+		u16 itemBefore = GetMonData(&gSaveBlock1Ptr->playerParty[i], MON_DATA_HELD_ITEM);
+		SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &itemBefore);
+	}
 }

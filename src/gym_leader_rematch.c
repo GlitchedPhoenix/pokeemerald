@@ -60,18 +60,16 @@ static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 ma
 
 const u8 GetDifficulty(void)
 {
-	u8 difficulty = VarGet(VAR_UNUSED_0x409D);//gSaveBlock2Ptr->difficulty;
+	u8 difficulty = gSaveBlock2Ptr->difficulty;
 	u8 progression = VarGet(VAR_SYS_PROGRESSION);
 	u8 diffBonus = 0;
 	
-	if ((difficulty >= 3) && (progression > 7))
-	{
+	if ((difficulty >= 2) && (progression > 7))
 		diffBonus += 1;
-	}
-	if ((difficulty == 4) && (progression >= 12))
-	{
+	if ((difficulty == 3) && (progression >= 12))
 		diffBonus += 1;
-	}
+	else if (difficulty == 4)
+		diffBonus = 0;
 	
 	return (progression + diffBonus);
 }

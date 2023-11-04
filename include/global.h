@@ -517,8 +517,13 @@ struct SaveBlock2
              //u16 padding1:4;
              //u16 padding2;
     /*0x18*/ struct Pokedex pokedex;
-	/*0x90*/ u8 difficulty; // 0 = Normal, 1 = Easy, 2 = Challenge, 3 = Brutal, 4 = Unfair
-    /*0x91*/ u8 filler_90[0x7];
+	/*0x90*/ u8 difficulty; // 0 = Normal, 1 = Challenge, 2 = Brutal, 3 = Unfair, 4 = Easy
+	/*0x91*/ u8 badgeBoosts:1;
+	         u8 doublesMode:1;
+	         u8 inverseMode:1;
+	         u8 motherMode:1;
+			 u8 filler_89:4;
+    /*0x96*/ u8 filler_90[0x6];
     /*0x98*/ struct Time localTimeOffset;
     /*0xA0*/ struct Time lastBerryTreeUpdate;
     /*0xA8*/ u32 gcnLinkFlags; // Read by Pokemon Colosseum/XD

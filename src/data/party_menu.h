@@ -567,6 +567,7 @@ static const u8 sSlotTilemap_MainNoHP[]  = INCBIN_U8("graphics/party_menu/slot_m
 static const u8 sSlotTilemap_Wide[]      = INCBIN_U8("graphics/party_menu/slot_wide.bin");
 static const u8 sSlotTilemap_WideNoHP[]  = INCBIN_U8("graphics/party_menu/slot_wide_no_hp.bin");
 static const u8 sSlotTilemap_WideEmpty[] = INCBIN_U8("graphics/party_menu/slot_wide_empty.bin");
+static const u8 sSlotTilemap_MainEmpty[] = INCBIN_U8("graphics/party_menu/slot_main_empty.bin");
 
 // Palette offsets
 static const u8 sGenderPalOffsets[] = {11, 12};

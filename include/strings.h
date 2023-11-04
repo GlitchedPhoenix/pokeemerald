@@ -554,6 +554,29 @@ extern const u8 gText_NoMatchingPkmnWereFound[];
 extern const u8 gText_SelectorArrow[];
 extern const u8 gText_IVEVSummary[];
 extern const u8 gText_TotalStat[];
+extern const u8 gText_MainMenuExtraOptions[];
+
+extern const u8 gText_Difficulty[];
+extern const u8 gText_Nuzlocke[];
+extern const u8 gText_MotherMode[];
+extern const u8 gText_DoublesMode[];
+extern const u8 gText_MultiControl[];
+extern const u8 gText_InverseMode[];
+extern const u8 gText_BadgeBoosts[];
+
+extern const u8 gText_Easy[];
+extern const u8 gText_NormalDifficulty[];
+extern const u8 gText_ChallengeDifficulty[];
+extern const u8 gText_Brutal[];
+extern const u8 gText_Unfair[];
+
+extern const u8 gText_ExplainDifficulty[];
+extern const u8 gText_ExplainNuzlocke[];
+extern const u8 gText_ExplainMotherMode[];
+extern const u8 gText_ExplainDoublesMode[];
+extern const u8 gText_ExplainInverseMode[];
+extern const u8 gText_ExplainBadgeBoosts[];
+extern const u8 gText_ExtraOptions[];
 
 // birch dex rating text
 extern const u8 gBirchDexRatingText_LessThan10[];

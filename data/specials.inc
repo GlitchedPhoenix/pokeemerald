@@ -539,3 +539,5 @@ gSpecials::
 	def_special ScriptMenu_CreateFossilMultichoice
 	def_special GetFossilSelection
 	def_special HasAllExtendedMons
+	def_special SavePartyHeldItems
+	def_special RestorePartyHeldItems
