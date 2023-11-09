@@ -4146,6 +4146,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     u8 attackerHoldEffect;
     u8 attackerHoldEffectParam;
 	u8 badgeBoostMultiplier = 110;
+	u8 difficultyMultiplier = 100;
 
     if (!powerOverride)
         gBattleMovePower = gBattleMoves[move].power;
@@ -4189,8 +4190,17 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (attacker->ability == ABILITY_HUGE_POWER || attacker->ability == ABILITY_PURE_POWER)
         attack *= 2;
 	
-	if (gSaveBlock2Ptr->difficulty == 4)
-		badgeBoostMultiplier = 120;
+	switch(gSaveBlock2Ptr->difficulty)
+	{
+		case 1:
+			difficultyMultiplier = 95;
+		case 2:
+			difficultyMultiplier = 85;
+		case 3:
+			difficultyMultiplier = 70;
+		case 4:
+			badgeBoostMultiplier = 120;
+	}
 
     if (ShouldGetStatBadgeBoost(FLAG_BADGE01_GET, battlerIdAtk))
         attack = (badgeBoostMultiplier * attack) / 100;
@@ -4200,6 +4210,15 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         spAttack = (badgeBoostMultiplier * spAttack) / 100;
     if (ShouldGetStatBadgeBoost(FLAG_BADGE07_GET, battlerIdDef))
         spDefense = (badgeBoostMultiplier * spDefense) / 100;
+	
+	if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
+    && GetBattlerSide(battlerIdAtk) == B_SIDE_PLAYER)
+	{
+		attack = (difficultyMultiplier * attack) / 100;
+		defense = (difficultyMultiplier * defense) / 100;
+		spAttack = (difficultyMultiplier * spAttack) / 100;
+		spDefense = (difficultyMultiplier * spDefense) / 100;
+	}
 
     // Apply type-bonus hold item
     for (i = 0; i < ARRAY_COUNT(sHoldEffectToType); i++)

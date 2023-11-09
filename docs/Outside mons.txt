@@ -96,4 +96,4 @@ Badge levels
 16 - 82-85, 6 mons, Brutal only
 17 - 87-90, 6 mons, Unfair only, Legendary gets added to team.
 
-**DO NOT EXCEED LEVEL 88! If it's over, the level will overflow on brutal and roll around to a low level.
+**DO NOT EXCEED LEVEL 84! If it's over, the level will overflow on brutal and roll around to a low level.

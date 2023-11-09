@@ -344,7 +344,7 @@ static void Intro_WaitForShinyAnimAndHealthbox(void)
 
 static void CompleteOnHealthbarDone(void)
 {
-    s16 hpValue = MoveBattleBar(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], HEALTH_BAR, 0);
+    s16 hpValue = MoveBattleBar(gActiveBattler, gHealthboxSpriteIds[gActiveBattler], HEALTH_BAR, 32);
 
     SetHealthboxSpriteVisible(gHealthboxSpriteIds[gActiveBattler]);
 

@@ -1987,36 +1987,39 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 	u8 index;
 	u8 difficulty = gSaveBlock2Ptr->difficulty;
 	s8 levelmod = 0;
-	u8 badgeCount;
+	u8 progression;
 	u8 level;
 
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
 	
 	index = GetDifficulty();
-	badgeCount = GetNumberOfBadges();
+	progression = VarGet(VAR_SYS_PROGRESSION);
+	
+	if (progression > 8)
+		progression = 8;
 	
 	switch (difficulty)
 	{
 		case 1:
 		{
-			levelmod = (badgeCount/2);
+			levelmod = (progression/2 + 1);
 			break;
 		}
 		case 2:
 		{
-			levelmod = (badgeCount);
+			levelmod = (progression + 2);
 			break;
 		}
 		case 3:
 		{
-			levelmod = (3*badgeCount/2);
+			levelmod = (3*progression/2 + 4);
 			break;
 		}
 		case 4:
 		{
 			if (gTrainers[trainerNum].variable)
-				levelmod = (-1*badgeCount);
+				levelmod = (-1*progression/2);
 			break;
 		}
 	}
@@ -4901,6 +4904,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     u8 holdEffectParam = 0;
     u16 moveBattler1 = 0, moveBattler2 = 0;
 	u8 badgeBoostMultiplier = 110;
+	u8 difficultyMultiplier = 100;
 
     if (WEATHER_HAS_EFFECT)
     {
@@ -4922,8 +4926,17 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
         speedMultiplierBattler2 = 1;
     }
 	
-	if (gSaveBlock2Ptr->difficulty == 4)
-		badgeBoostMultiplier = 120;
+	switch(gSaveBlock2Ptr->difficulty)
+	{
+		case 1:
+			difficultyMultiplier = 95;
+		case 2:
+			difficultyMultiplier = 85;
+		case 3:
+			difficultyMultiplier = 70;
+		case 4:
+			badgeBoostMultiplier = 120;
+	}
 
     speedBattler1 = (gBattleMons[battler1].speed * speedMultiplierBattler1)
                 * (gStatStageRatios[gBattleMons[battler1].statStages[STAT_SPEED]][0])
@@ -4940,14 +4953,16 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
         holdEffectParam = ItemId_GetHoldEffectParam(gBattleMons[battler1].item);
     }
 
-    // badge boost
+    // badge boost/difficulty multiplier
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
-        && FlagGet(FLAG_BADGE03_GET)
-        && GetBattlerSide(battler1) == B_SIDE_PLAYER
-		&& !gSaveBlock2Ptr->badgeBoosts)
+        && GetBattlerSide(battler1) == B_SIDE_PLAYER)
     {
-        speedBattler1 = (speedBattler1 * badgeBoostMultiplier) / 100;
+		if (gSaveBlock2Ptr->badgeBoosts && FlagGet(FLAG_BADGE03_GET))
+			speedBattler1 = (speedBattler1 * badgeBoostMultiplier) / 100;
+		
+		speedBattler1 = (speedBattler1 * difficultyMultiplier) / 100;
     }
+	
 
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
         speedBattler1 /= 2;
@@ -4977,11 +4992,12 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
 
     // badge boost
     if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
-        && FlagGet(FLAG_BADGE03_GET)
-        && GetBattlerSide(battler2) == B_SIDE_PLAYER
-		&& !gSaveBlock2Ptr->badgeBoosts)
+        && GetBattlerSide(battler2) == B_SIDE_PLAYER)
     {
-        speedBattler2 = (speedBattler2 * badgeBoostMultiplier) / 100;
+		if (gSaveBlock2Ptr->badgeBoosts && FlagGet(FLAG_BADGE03_GET))
+			speedBattler2 = (speedBattler2 * badgeBoostMultiplier) / 100;
+		
+		speedBattler2 = (speedBattler2 * difficultyMultiplier) / 100;
     }
 
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)

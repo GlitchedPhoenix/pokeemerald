@@ -3,6 +3,7 @@
 #include "battle_message.h"
 #include "battle_anim.h"
 #include "battle_ai_script_commands.h"
+#include "battle_interface.h"
 #include "battle_scripts.h"
 #include "item.h"
 #include "util.h"
@@ -1915,8 +1916,12 @@ static void Cmd_healthbarupdate(void)
             BtlController_EmitHealthBarUpdate(BUFFER_A, healthValue);
             MarkBattlerForControllerExec(gActiveBattler);
 
-            if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER && gBattleMoveDamage > 0)
-                gBattleResults.playerMonWasDamaged = TRUE;
+            if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+				if (gSaveBlock2Ptr->motherMode)
+					gStoredDamage[gActiveBattler] += healthValue;
+				
+				if (gBattleMoveDamage > 0)
+					gBattleResults.playerMonWasDamaged = TRUE;
         }
     }
 

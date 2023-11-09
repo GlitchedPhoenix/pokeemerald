@@ -68,7 +68,7 @@ MtPyre_2F_Text_LukeIntro:
 	.string "LUKE: We're here on a dare.\p"
 	.string "Heheh, if I show her how cool I am,\n"
 	.string "she'll fall for me. I know it!\p"
-	.string "I know! I'll cream you and show her\n"
+	.string "I know! I'll beat you and show her\n"
 	.string "how cool I am!$"
 
 MtPyre_2F_Text_LukeDefeat:
@@ -107,7 +107,8 @@ MtPyre_2F_Text_DezNotEnoughMons:
 	.string "Just one POKéMON won't do at all.$"
 
 MtPyre_2F_Text_LeahIntro:
-	.string "You are an unfamiliar sight…\n"
+	.string "People gather here to mourn\n"
+	.string "their loss...\p"
 	.string "Depart before anything befalls you!$"
 
 MtPyre_2F_Text_LeahDefeat:

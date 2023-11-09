@@ -577,6 +577,7 @@ extern const u8 gText_ExplainDoublesMode[];
 extern const u8 gText_ExplainInverseMode[];
 extern const u8 gText_ExplainBadgeBoosts[];
 extern const u8 gText_ExtraOptions[];
+extern const u8 gText_AButton[];
 
 // birch dex rating text
 extern const u8 gBirchDexRatingText_LessThan10[];

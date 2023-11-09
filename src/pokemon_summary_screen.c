@@ -594,7 +594,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
         .width = 6,
         .height = 15,
         .paletteNum = 6,
-        .baseBlock = 680,
+        .baseBlock = 700,
     },
 	[PSS_LABEL_WINDOW_IV_EV_TITLE] = {
         .bg = 0,
@@ -603,7 +603,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
         .width = 6,
         .height = 2,
         .paletteNum = 6,
-        .baseBlock = 667,
+        .baseBlock = 687,
     },
     [PSS_LABEL_WINDOW_END] = DUMMY_WIN_TEMPLATE
 };
@@ -733,7 +733,7 @@ static const struct WindowTemplate sPageIVsEVsTemplate[] =
         .width = 4,
         .height = 6,
         .paletteNum = 6,
-        .baseBlock = 770,
+        .baseBlock = 790,
     },
     [PSS_DATA_WINDOW_EV] = {
         .bg = 0,
@@ -742,7 +742,7 @@ static const struct WindowTemplate sPageIVsEVsTemplate[] =
         .width = 6,
         .height = 15,
         .paletteNum = 6,
-        .baseBlock = 850,
+        .baseBlock = 870,
     },
 	[PSS_DATA_WINDOW_IV_BOTTOM] = {
         .bg = 0,
@@ -751,7 +751,7 @@ static const struct WindowTemplate sPageIVsEVsTemplate[] =
         .width = 4,
         .height = 9,
         .paletteNum = 6,
-        .baseBlock = 800,
+        .baseBlock = 820,
     },
 };
 static const u8 sTextColors[][3] =

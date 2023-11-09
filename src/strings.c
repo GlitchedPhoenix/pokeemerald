@@ -45,7 +45,7 @@ const u8 gText_Player[] = _("PLAYER"); // Unused
 const u8 gText_Pokedex[] = _("POKéDEX"); // Unused
 const u8 gText_Time[] = _("TIME");
 const u8 gText_Badges[] = _("BADGES"); // Unused
-const u8 gText_AButton[] = _("A Button"); // Unused
+const u8 gText_AButton[] = _("{COLOR GREEN}{A_BUTTON} INFO");
 const u8 gText_BButton[] = _("B Button"); // Unused
 const u8 gText_RButton[] = _("R Button"); // Unused
 const u8 gText_LButton[] = _("L Button"); // Unused
@@ -1589,7 +1589,7 @@ const u8 gText_ByeByeVar1[] = _("Bye-bye, {STR_VAR_2}!");
 const u8 gText_XSentOverY[] = _("{STR_VAR_1} sent over {STR_VAR_3}.");
 const u8 gText_TakeGoodCareOfX[] = _("Take good care of {STR_VAR_3}!");
 
-const u8 gText_ExplainDifficulty[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}Select your difficulty. The higher it\nis, the stronger enemy trainers will\lbecome.\pOn {COLOR BLUE}{SHADOW LIGHT_BLUE}Brutal {COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}and {COLOR DYNAMIC_COLOR2}{SHADOW DYNAMIC_COLOR1}Unfair{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}, trainers that\nscale to your progression will start\lusing stronger than normal parties\lafter certain points in the story.$");
+const u8 gText_ExplainDifficulty[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}Select your difficulty. The higher it\nis, the stronger enemy trainers will\lbecome.\pOn {COLOR BLUE}{SHADOW LIGHT_BLUE}Brutal {COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}and {COLOR DYNAMIC_COLOR2}{SHADOW DYNAMIC_COLOR1}Unfair{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}, trainers that\nscale to your progression will start\lusing stronger than normal parties\lafter certain points in the story.\pAdditionally, your Pokemon's stats will\nbe decreased by {COLOR RED}{SHADOW LIGHT_RED}5%{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}, {COLOR BLUE}{SHADOW LIGHT_BLUE}15%{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}, and {COLOR DYNAMIC_COLOR2}{SHADOW DYNAMIC_COLOR1}30%{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}\lrespectively.$");
 const u8 gText_ExplainNuzlocke[] = _("test");
 const u8 gText_ExplainMotherMode[] = _("test");
 const u8 gText_ExplainDoublesMode[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}Makes every battle outside of the\nBattle Frontier a Double Battle.\pThis will not apply if you have only\none usable Pokemon.$");

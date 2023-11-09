@@ -4446,7 +4446,7 @@
       "name": "CometValley_Main_Layout",
       "width": 58,
       "height": 90,
-      "primary_tileset": "gTileset_GeneralWest",
+      "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_CometValley",
       "border_filepath": "data/layouts/CometValley_Main/border.bin",
       "blockdata_filepath": "data/layouts/CometValley_Main/map.bin"
@@ -4456,7 +4456,7 @@
       "name": "CometValley_Clearing_Layout",
       "width": 50,
       "height": 50,
-      "primary_tileset": "gTileset_GeneralWest",
+      "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_CometValley",
       "border_filepath": "data/layouts/CometValley_Clearing/border.bin",
       "blockdata_filepath": "data/layouts/CometValley_Clearing/map.bin"

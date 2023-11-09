@@ -1045,6 +1045,7 @@ static void DrawExtraHeaderText(void)
 {
     FillWindowPixelBuffer(WIN_HEADER, PIXEL_FILL(1));
     AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gText_ExtraOptions, 8, 1, TEXT_SKIP_DRAW, NULL);
+	AddTextPrinterParameterized(WIN_HEADER, FONT_NORMAL, gText_AButton, GetStringRightAlignXOffset(FONT_NORMAL, gText_AButton, 198), 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(WIN_HEADER, COPYWIN_FULL);
 }
 

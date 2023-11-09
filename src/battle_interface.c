@@ -849,6 +849,9 @@ static void Debug_DrawNumberPair(s16 number1, s16 number2, u16 *dest)
     Debug_DrawNumber(number1, dest + 5, TRUE);
 }
 
+EWRAM_DATA u8 gDamageTimer[MAX_BATTLERS_COUNT] = {0};
+EWRAM_DATA s32 gStoredDamage[MAX_BATTLERS_COUNT] = {0};
+
 // Because the healthbox is too large to fit into one sprite, it is divided into two sprites.
 // healthboxLeft  or healthboxMain  is the left part that is used as the 'main' sprite.
 // healthboxRight or healthboxOther is the right part of the healthbox.
@@ -2166,9 +2169,6 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
     s32 maxHp, currHp;
     u8 battlerId = gSprites[healthboxSpriteId].hMain_Battler;
 
-    if (elementId == HEALTHBOX_ALL && !IsDoubleBattle())
-        GetBattlerSide(battlerId); // Pointless function call.
-
     if (GetBattlerSide(gSprites[healthboxSpriteId].hMain_Battler) == B_SIDE_PLAYER)
     {
         u8 isDoubles;
@@ -2185,7 +2185,8 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
             maxHp = GetMonData(mon, MON_DATA_MAX_HP);
             currHp = GetMonData(mon, MON_DATA_HP);
             SetBattleBarStruct(battlerId, healthboxSpriteId, maxHp, currHp, 0);
-            MoveBattleBar(battlerId, healthboxSpriteId, HEALTH_BAR, 0);
+			
+			MoveBattleBar(battlerId, healthboxSpriteId, HEALTH_BAR, 32);
         }
         isDoubles = IsDoubleBattle();
         if (!isDoubles && (elementId == HEALTHBOX_EXP_BAR || elementId == HEALTHBOX_ALL))
@@ -2203,7 +2204,7 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
             currExpBarValue = exp - currLevelExp;
             maxExpBarValue = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1] - currLevelExp;
             SetBattleBarStruct(battlerId, healthboxSpriteId, maxExpBarValue, currExpBarValue, isDoubles);
-            MoveBattleBar(battlerId, healthboxSpriteId, EXP_BAR, 0);
+            MoveBattleBar(battlerId, healthboxSpriteId, EXP_BAR, 32);
         }
         if (elementId == HEALTHBOX_NICK || elementId == HEALTHBOX_ALL)
             UpdateNickInHealthbox(healthboxSpriteId, mon);
@@ -2224,7 +2225,7 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
             maxHp = GetMonData(mon, MON_DATA_MAX_HP);
             currHp = GetMonData(mon, MON_DATA_HP);
             SetBattleBarStruct(battlerId, healthboxSpriteId, maxHp, currHp, 0);
-            MoveBattleBar(battlerId, healthboxSpriteId, HEALTH_BAR, 0);
+            MoveBattleBar(battlerId, healthboxSpriteId, HEALTH_BAR, 32);
         }
         if (elementId == HEALTHBOX_NICK || elementId == HEALTHBOX_ALL)
             UpdateNickInHealthbox(healthboxSpriteId, mon);
@@ -2236,17 +2237,48 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
 #define B_EXPBAR_PIXELS 64
 #define B_HEALTHBAR_PIXELS 48
 
-s32 MoveBattleBar(u8 battlerId, u8 healthboxSpriteId, u8 whichBar, u8 unused)
+s32 MoveBattleBar(u8 battlerId, u8 healthboxSpriteId, u8 whichBar, u16 speed)
 {
     s32 currentBarValue;
 
     if (whichBar == HEALTH_BAR) // health bar
     {
+		if (gSaveBlock2Ptr->motherMode && (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER))
+		{
+			/*if ((gDamageTimer[gActiveBattler] % 6) == 0)
+			{
+				currentBarValue = CalcNewBarValue(gBattleSpritesDataPtr->battleBars[battlerId].maxValue,
+						gBattleSpritesDataPtr->battleBars[battlerId].oldValue,
+						gBattleSpritesDataPtr->battleBars[battlerId].receivedValue,
+						&gBattleSpritesDataPtr->battleBars[battlerId].currValue,
+						B_HEALTHBAR_PIXELS / 8, 1);
+			}
+			else
+			{
+				if (gBattleSpritesDataPtr->battleBars[battlerId].currValue == -32768)
+					currentBarValue = gBattleSpritesDataPtr->battleBars[battlerId].oldValue;
+				else
+					currentBarValue = gBattleSpritesDataPtr->battleBars[battlerId].currValue;
+			}
+			
+			gDamageTimer[gActiveBattler] += 1;
+			
+			if (gDamageTimer[gActiveBattler] == 240)
+				gDamageTimer[gActiveBattler] = 0;*/
+			currentBarValue = CalcNewBarValue(gBattleSpritesDataPtr->battleBars[battlerId].maxValue,
+						gBattleSpritesDataPtr->battleBars[battlerId].oldValue,
+						gBattleSpritesDataPtr->battleBars[battlerId].receivedValue,
+						&gBattleSpritesDataPtr->battleBars[battlerId].currValue,
+						B_HEALTHBAR_PIXELS / 8, 1);
+		}
+		else
+		{
         currentBarValue = CalcNewBarValue(gBattleSpritesDataPtr->battleBars[battlerId].maxValue,
                     gBattleSpritesDataPtr->battleBars[battlerId].oldValue,
                     gBattleSpritesDataPtr->battleBars[battlerId].receivedValue,
                     &gBattleSpritesDataPtr->battleBars[battlerId].currValue,
-                    B_HEALTHBAR_PIXELS / 8, max(gBattleSpritesDataPtr->battleBars[battlerId].maxValue / 32, 1));
+                    B_HEALTHBAR_PIXELS / 8, abs(gBattleSpritesDataPtr->battleBars[battlerId].maxValue / speed));
+		}
     }
     else // exp bar
     {
