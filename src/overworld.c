@@ -1398,6 +1398,14 @@ bool8 IsMapTypeIndoors(u8 mapType)
         return FALSE;
 }
 
+void CheckQuickNurse(void)
+{
+	if (gSaveBlock2Ptr->quickNurse)
+		gSpecialVar_Result = TRUE;
+	else
+		gSpecialVar_Result = FALSE;
+}
+
 u8 GetSavedWarpRegionMapSectionId(void)
 {
     return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->dynamicWarp.mapGroup, gSaveBlock1Ptr->dynamicWarp.mapNum)->regionMapSectionId;

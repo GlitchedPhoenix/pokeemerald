@@ -579,6 +579,23 @@ extern const u8 gText_ExplainBadgeBoosts[];
 extern const u8 gText_ExtraOptions[];
 extern const u8 gText_AButton[];
 
+extern const u8 gText_Nurse[];
+extern const u8 gText_AlwaysRun[];
+extern const u8 gText_Continue[];
+extern const u8 gText_Pokenav[];
+extern const u8 gText_Quick[];
+
+extern const u8 gText_Default[];
+extern const u8 gText_Quick2[];
+extern const u8 gText_Silent[];
+extern const u8 gText_Menu[];
+
+extern const u8 gText_OptionMenuNext[];
+extern const u8 gText_OptionMenuBack[];
+extern const u8 gText_SmallDot[];
+extern const u8 gText_LargeDot[];
+extern const u8 gText_PageNav[];
+
 // birch dex rating text
 extern const u8 gBirchDexRatingText_LessThan10[];
 extern const u8 gBirchDexRatingText_LessThan20[];

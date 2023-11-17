@@ -13,6 +13,7 @@
 #include "save.h"
 #include "new_game.h"
 #include "m4a.h"
+#include "overworld.h"
 #include "random.h"
 #include "decompress.h"
 #include "constants/songs.h"
@@ -1068,6 +1069,11 @@ static u8 SetUpCopyrightScreen(void)
     switch (gMain.state)
     {
     case 0:
+		if (!(gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT) && (gSaveBlock2Ptr->quickContinue == 2))
+		{
+			SetMainCallback2(CB2_ContinueSavedGame);
+		}
+		
         SetVBlankCallback(NULL);
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
@@ -1112,8 +1118,9 @@ static u8 SetUpCopyrightScreen(void)
     case 141:
         if (UpdatePaletteFade())
             break;
-        CreateTask(Task_Scene1_Load, 0);
-        SetMainCallback2(MainCB2_Intro);
+		
+		CreateTask(Task_Scene1_Load, 0);
+		SetMainCallback2(MainCB2_Intro);
         if (gMultibootProgramStruct.gcmb_field_2 != 0)
         {
             if (gMultibootProgramStruct.gcmb_field_2 == 2)
@@ -1140,16 +1147,21 @@ static u8 SetUpCopyrightScreen(void)
 
 void CB2_InitCopyrightScreenAfterBootup(void)
 {
+	if (!gMain.state)
+	{
+		SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
+		ResetMenuAndMonGlobals();
+		Save_ResetSaveCounters();
+		LoadGameSave(SAVE_NORMAL);
+		if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
+            Sav2_ClearSetDefault();
+	}
     if (!SetUpCopyrightScreen())
     {
-        SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
-        ResetMenuAndMonGlobals();
-        Save_ResetSaveCounters();
-        LoadGameSave(SAVE_NORMAL);
-        if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
-            Sav2_ClearSetDefault();
         SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
         InitHeap(gHeap, HEAP_SIZE);
+		if (!(gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT) && (gSaveBlock2Ptr->quickContinue == 1))
+			SetMainCallback2(CB2_GoToMainMenu);
     }
 }
 

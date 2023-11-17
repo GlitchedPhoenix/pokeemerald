@@ -541,3 +541,4 @@ gSpecials::
 	def_special HasAllExtendedMons
 	def_special SavePartyHeldItems
 	def_special RestorePartyHeldItems
+	def_special CheckQuickNurse

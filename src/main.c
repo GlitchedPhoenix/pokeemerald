@@ -22,6 +22,7 @@
 #include "text.h"
 #include "intro.h"
 #include "main.h"
+#include "save.h"
 #include "trainer_hill.h"
 #include "constants/rgb.h"
 

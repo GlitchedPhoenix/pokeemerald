@@ -153,6 +153,7 @@ bool32 Overworld_IsRecvQueueAtMax(void);
 bool32 Overworld_RecvKeysFromLinkIsRunning(void);
 bool32 Overworld_SendKeysToLinkIsRunning(void);
 bool32 IsSendingKeysOverCable(void);
+void CheckQuickNurse(void);
 void ClearLinkPlayerObjectEvents(void);
 void ReloadPrimaryTileset(void);
 

@@ -1161,7 +1161,8 @@ bool32 TryStartMatchCall(void)
         && UpdateMatchCallMinutesCounter()
         && CheckMatchCallChance()
         && MapAllowsMatchCall()
-        && SelectMatchCallTrainer())
+        && SelectMatchCallTrainer()
+		&& !gSaveBlock2Ptr->silentPokenav)
     {
         StartMatchCall();
         return TRUE;

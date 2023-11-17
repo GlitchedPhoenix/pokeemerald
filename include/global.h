@@ -523,7 +523,12 @@ struct SaveBlock2
 	         u8 inverseMode:1;
 	         u8 motherMode:1;
 			 u8 filler_89:4;
-    /*0x96*/ u8 filler_90[0x6];
+	/*0x92*/ u8 quickNurse:1;
+			 u8 permaRun:1;
+			 u8 quickContinue:2;
+			 u8 silentPokenav:1;
+			 u8 filler_88:3;
+    /*0x96*/ u8 filler_90[0x5];
     /*0x98*/ struct Time localTimeOffset;
     /*0xA0*/ struct Time lastBerryTreeUpdate;
     /*0xA8*/ u32 gcnLinkFlags; // Read by Pokemon Colosseum/XD

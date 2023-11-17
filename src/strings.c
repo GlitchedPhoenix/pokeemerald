@@ -272,6 +272,17 @@ const u8 gText_MultiControl[] = _("{COLOR GREEN}MULTI CONTROL");
 const u8 gText_InverseMode[] = _("{COLOR GREEN}INVERSE MODE");
 const u8 gText_BadgeBoosts[] = _("{COLOR GREEN}BADGE BOOSTS");
 
+const u8 gText_Nurse[] = _("{COLOR GREEN}NURSE");
+const u8 gText_AlwaysRun[] = _("{COLOR GREEN}ALWAYS RUN");
+const u8 gText_Continue[] = _("{COLOR GREEN}CONTINUE");
+const u8 gText_Pokenav[] = _("{COLOR GREEN}POKéNAV");
+const u8 gText_Quick[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}QUICK");
+
+const u8 gText_Default[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}NORMAL");
+const u8 gText_Quick2[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}QUICK    ");
+const u8 gText_Silent[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}SILENT");
+const u8 gText_Menu[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}MENU        ");
+
 const u8 *const gBagMenu_ReturnToStrings[] =
 {
     [ITEMMENULOCATION_FIELD]               = gText_TheField,
@@ -1512,7 +1523,12 @@ const u8 gText_BattleScene[] = _("{COLOR GREEN}BATTLE SCENE");
 const u8 gText_BattleStyle[] = _("{COLOR GREEN}BATTLE STYLE");
 const u8 gText_Sound[] = _("{COLOR GREEN}SOUND");
 const u8 gText_Frame[] = _("{COLOR GREEN}FRAME");
+const u8 gText_SmallDot[] = _("{COLOR GREEN}·");
+const u8 gText_LargeDot[] = _("{COLOR GREEN}{EMOJI_CIRCLE}");
+const u8 gText_PageNav[] = _("{L_BUTTON}{R_BUTTON} PAGE");
 const u8 gText_OptionMenuCancel[] = _("{COLOR GREEN}CANCEL");
+const u8 gText_OptionMenuNext[] = _("{COLOR GREEN}NEXT");
+const u8 gText_OptionMenuBack[] = _("{COLOR GREEN}BACK");
 const u8 gText_ButtonMode[] = _("{COLOR GREEN}BUTTON MODE");
 const u8 gText_TextSpeedSlow[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}SLOW");
 const u8 gText_TextSpeedMid[] = _("{COLOR DARK_GRAY}{SHADOW LIGHT_GREEN}MID");
