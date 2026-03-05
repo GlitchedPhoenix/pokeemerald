@@ -2041,7 +2041,7 @@ static u8 DebugPkmCreator_GiveToPlayer(void)
         }
 
         if (i >= PARTY_SIZE)
-            return SendMonToPC(mon);
+            return CopyMonToPC(mon);
 
         CopyMon(&gPlayerParty[i], mon, sizeof(*mon));
         gPlayerPartyCount = i + 1;

@@ -2050,7 +2050,6 @@ static void DebugAction_Util_WatchCredits(u8 taskId)
 }
 static void DebugAction_Util_Trainer_Name(u8 taskId)
 {
-    NewGameBirchSpeech_SetDefaultPlayerName(Random() % 20);
     DoNamingScreen(0, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldContinueScript);
 }
 static void DebugAction_Util_Trainer_Gender(u8 taskId)
