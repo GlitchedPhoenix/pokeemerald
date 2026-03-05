@@ -43,13 +43,13 @@
 #define TEMP_FLAGS_END   FLAG_TEMP_1F
 #define NUM_TEMP_FLAGS   (TEMP_FLAGS_END - TEMP_FLAGS_START + 1)
 
-#define FLAG_UNUSED_0x020    0x20 // Unused Flag
-#define FLAG_UNUSED_0x021    0x21 // Unused Flag
-#define FLAG_UNUSED_0x022    0x22 // Unused Flag
-#define FLAG_UNUSED_0x023    0x23 // Unused Flag
-#define FLAG_UNUSED_0x024    0x24 // Unused Flag
-#define FLAG_UNUSED_0x025    0x25 // Unused Flag
-#define FLAG_UNUSED_0x026    0x26 // Unused Flag
+#define FLAG_SYS_NO_COLLISION    0x20 // Unused Flag
+#define FLAG_SYS_NO_ENCOUNTER       0x21 // Unused Flag //DEBUG
+#define FLAG_SYS_NO_TRAINER_SEE     0x22 // Unused Flag //DEBUG
+#define FLAG_SYS_NO_BAG_USE         0x23 // Unused Flag //DEBUG
+#define FLAG_SYS_NO_CATCHING        0x24 // Unused Flag //DEBUG
+#define FLAG_SYS_PC_FROM_DEBUG_MENU 0x25 // Unused Flag //DEBUG
+#define FLAG_SYS_NO_BATTLE_DMG      0x26 // Unused Flag //DEBUG
 #define FLAG_UNUSED_0x027    0x27 // Unused Flag
 #define FLAG_UNUSED_0x028    0x28 // Unused Flag
 #define FLAG_UNUSED_0x029    0x29 // Unused Flag
@@ -1223,6 +1223,7 @@
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 #define FLAG_RECEIVED_METEORITE_CALL                                0x493
 
+																						
 #define FLAG_UNUSED_0x494                                           0x494 // Unused Flag
 #define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
 #define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
