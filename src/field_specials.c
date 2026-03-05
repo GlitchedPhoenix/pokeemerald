@@ -475,6 +475,31 @@ bool32 ShouldDoRivalRayquazaCall(void)
     return TRUE;
 }
 
+bool32 ShouldDoStevenMeteoriteCall(void)
+{
+    if (FlagGet(FLAG_SYS_NATIONAL_DEX) && !FlagGet(FLAG_RECEIVED_METEORITE_CALL))
+    {
+        switch (gMapHeader.mapType)
+        {
+        case MAP_TYPE_TOWN:
+        case MAP_TYPE_CITY:
+        case MAP_TYPE_ROUTE:
+        case MAP_TYPE_OCEAN_ROUTE:
+            if (++(*GetVarPointer(VAR_STEVEN_METEORITE_STEP_COUNTER)) < 250)
+                return FALSE;
+            break;
+        default:
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 u8 GetLinkPartnerNames(void)
 {
     u8 i;

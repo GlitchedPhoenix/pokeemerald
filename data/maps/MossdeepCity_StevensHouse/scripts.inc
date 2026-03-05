@@ -41,15 +41,46 @@ MossdeepCity_StevensHouse_EventScript_StevenGivesDive::
 	setflag FLAG_RECEIVED_HM_DIVE
 	setflag FLAG_OMIT_DIVE_FROM_STEVEN_LETTER
 	msgbox MossdeepCity_StevensHouse_Text_ExplainDive, MSGBOX_DEFAULT
+	msgbox MossdeepCity_StevensHouse_Text_AlsoMeteorite, MSGBOX_DEFAULT
+	closemessage
+	msgbox MossdeepCity_StevensHouse_Text_HandedOverMeteorite, MSGBOX_DEFAULT
+	closemessage
+	msgbox MossdeepCity_StevensHouse_Text_ExcellentThankYou, MSGBOX_DEFAULT
 	closemessage
 	delay 20
 	applymovement LOCALID_STEVENS_HOUSE_STEVEN, MossdeepCity_StevensHouse_Movement_StevenReturn
 	waitmovement 0
+	removeitem ITEM_METEORITE
 	setflag FLAG_HIDE_MOSSDEEP_CITY_SCOTT
 	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ENTRANCE_AQUA_GRUNT
 	setvar VAR_STEVENS_HOUSE_STATE, 2
 	releaseall
 	end
+
+Steven_Meteorite_Call::
+	lockall
+	pokenavcall MatchCall_Text_StevenMeteoriteCall
+	waitmessage
+	closemessage
+	setflag FLAG_RECEIVED_METEORITE_CALL
+	releaseall
+	end
+
+MossdeepCity_StevensHouse_Text_AlsoMeteorite::
+	.string "Oh, {PLAYER}, one more thing.\n"
+	.string "I heard you were able to secure\l"
+	.string "a METEORITE from the incident on\l"
+	.string "MT.CHIMNEY.\p"
+	.string "Would you mind if I had a look\n"
+	.string "at it?$"
+
+MossdeepCity_StevensHouse_Text_ExcellentThankYou::
+	.string "Excellent! Thank you very much.\n"
+	.string "I will call you if I find out\l"
+	.string "anything interesting.$"
+
+MossdeepCity_StevensHouse_Text_HandedOverMeteorite::
+	.string "{PLAYER} handed over the METEORITE.$"
 
 MossdeepCity_StevensHouse_Movement_StevenApproachPlayer:
 	walk_left

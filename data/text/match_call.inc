@@ -2320,6 +2320,18 @@ MatchCall_Text_MayRayquazaCall:
 	.string "Is this maybe a major discovery?\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
+	
+MatchCall_Text_StevenMeteoriteCall:
+	.string "… … … … … …\n"
+	.string "… … … … … Beep!\p"
+	.string "STEVEN: Hey, {PLAYER}.\p"
+	.string "I recently made a breakthrough\n"
+	.string "regarding that METEORITE that\l"
+	.string "you lent me.\p"
+	.string "When you are able, could you swing\n"
+	.string "by my home in MOSSDEEP?\p"
+	.string "… … … … … …\n"
+	.string "… … … … … Click!$"
 
 MatchCall_Text_BrendanRayquazaCall:
 	.string "… … … … … …\n"

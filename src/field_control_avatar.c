@@ -592,6 +592,11 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
             ScriptContext_SetupScript(MossdeepCity_SpaceCenter_2F_EventScript_RivalRayquazaCall);
             return TRUE;
         }
+		if (ShouldDoStevenMeteoriteCall() == TRUE)
+        {
+            ScriptContext_SetupScript(Steven_Meteorite_Call);
+            return TRUE;
+        }
     }
 
     if (SafariZoneTakeStep() == TRUE)
