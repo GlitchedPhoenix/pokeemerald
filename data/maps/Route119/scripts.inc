@@ -127,6 +127,145 @@ Route119_EventScript_DefeatedBrendan::
 	goto Route119_EventScript_RivalExitScottArrive
 	end
 
+Route119_EventScript_FeebasHelper::
+	lock
+	faceplayer
+	call Route119_EventScript_FeebasHelperSetPlayerCoords
+	call_if_unset FLAG_FEEBAS_GUY_INTRO, Route119_EventScript_FeebasHelperIntro
+	msgbox Route119_Text_WatersAreBusy, MSGBOX_YESNO
+	switch VAR_RESULT
+	case 1, Route119_EventScript_FeebasWalk
+	msgbox Route119_Text_GoodLuck
+	applymovement LOCALID_FEEBAS_GUY, Common_Movement_FaceLeft
+	waitmovement 0
+	release
+	end
+
+Route119_EventScript_FeebasHelperSetPlayerCoords::
+	goto_if_eq VAR_FACING, DIR_NORTH, FeebasGuy_FacingNorth
+	goto_if_eq VAR_FACING, DIR_SOUTH, FeebasGuy_FacingSouth
+	setvar VAR_0x8004, 25
+	setvar VAR_0x8005, 39
+	return
+
+FeebasGuy_FacingNorth::
+	setvar VAR_0x8004, 24
+	setvar VAR_0x8005, 40
+	return
+
+FeebasGuy_FacingSouth::
+	setvar VAR_0x8004, 24
+	setvar VAR_0x8005, 38
+	return
+
+Route119_EventScript_FeebasWalk::
+	msgbox Route119_Text_VeryWell
+	closemessage
+	special SpawnCameraObject
+	fadescreen FADE_TO_BLACK
+	call Route119_EventScript_FeebasAdjustCamera
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraWaterfall
+	waitmovement 0
+	fadescreen FADE_FROM_BLACK
+	setvar VAR_0x8006, 0
+	specialvar VAR_RESULT, CheckFeebasSpots
+	call Route119_EventScript_WaterfallNests
+	closemessage
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraTop
+	waitmovement 0
+	setvar VAR_0x8006, 1
+	specialvar VAR_RESULT, CheckFeebasSpots
+	call Route119_EventScript_TopNests
+	closemessage
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraRiverUpper
+	waitmovement 0
+	setvar VAR_0x8006, 2
+	specialvar VAR_RESULT, CheckFeebasSpots
+	call Route119_EventScript_RiverUpperNests
+	closemessage
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraRockyBank
+	waitmovement 0
+	setvar VAR_0x8006, 3
+	specialvar VAR_RESULT, CheckFeebasSpots
+	call Route119_EventScript_RockyBankNests
+	closemessage
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraRiverLower
+	waitmovement 0
+	setvar VAR_0x8006, 4
+	specialvar VAR_RESULT, CheckFeebasSpots
+	call Route119_EventScript_RiverLowerNests
+	closemessage
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraSouthBank
+	waitmovement 0
+	setvar VAR_0x8006, 5
+	specialvar VAR_RESULT, CheckFeebasSpots
+	call Route119_EventScript_SouthBankNests
+	closemessage
+	fadescreen FADE_TO_BLACK
+	applymovement LOCALID_CAMERA, Route119_Movement_CameraReturn
+	waitmovement 0
+	call Route119_EventScript_FeebasAdjustCameraReverse
+	fadescreen FADE_FROM_BLACK
+	special RemoveCameraObject
+	msgbox Route119_Text_GoodLuck
+	release
+	end
+
+Route119_EventScript_FeebasAdjustCamera::
+	goto_if_eq VAR_FACING, DIR_NORTH, FeebasGuy_AdjustNorth
+	goto_if_eq VAR_FACING, DIR_SOUTH, FeebasGuy_AdjustSouth
+	applymovement LOCALID_CAMERA, FeebasGuy_Movement_AdjustLeft
+	waitmovement 0
+	return
+
+Route119_EventScript_FeebasAdjustCameraReverse::
+	goto_if_eq VAR_FACING, DIR_NORTH, FeebasGuy_AdjustSouth
+	goto_if_eq VAR_FACING, DIR_SOUTH, FeebasGuy_AdjustNorth
+	applymovement LOCALID_CAMERA, FeebasGuy_Movement_AdjustRight
+	waitmovement 0
+	return
+
+FeebasGuy_AdjustNorth::
+	applymovement LOCALID_CAMERA, FeebasGuy_Movement_AdjustNorth
+	waitmovement 0
+	return
+
+FeebasGuy_AdjustSouth::
+	applymovement LOCALID_CAMERA, FeebasGuy_Movement_AdjustSouth
+	waitmovement 0
+	return
+
+FeebasGuy_Movement_AdjustNorth:
+	walk_faster_up
+	step_end
+
+FeebasGuy_Movement_AdjustSouth:
+	walk_faster_down
+	step_end
+
+FeebasGuy_Movement_AdjustLeft:
+	walk_faster_left
+	step_end
+
+FeebasGuy_Movement_AdjustRight:
+	walk_faster_right
+	step_end
+
+Route119_EventScript_FeebasHelperIntro::
+	setflag FLAG_FEEBAS_GUY_INTRO
+	checkplayergender
+	call_if_eq VAR_RESULT, MALE, Route119_EventScript_FeebasHelperIntroMale
+	call_if_eq VAR_RESULT, FEMALE, Route119_EventScript_FeebasHelperIntroFemale
+	return
+
+Route119_EventScript_FeebasHelperIntroMale::
+	msgbox Route119_Text_FeebasIntroMale
+	return
+
+Route119_EventScript_FeebasHelperIntroFemale::
+	msgbox Route119_Text_FeebasIntroFemale
+	return
+
 Route119_EventScript_GiveFlyHM::
 	giveitem ITEM_HM_FLY
 	setflag FLAG_RECEIVED_HM_FLY
@@ -506,6 +645,46 @@ Route119_Text_MayExplainFly:
 	.string "I bet your mom's worried about you,\n"
 	.string "{PLAYER}{KUN}.\p"
 	.string "Well, let's meet again somewhere!$"
+
+Route119_Text_FeebasIntroMale:
+	.string "Sonny, you ever heard of a POKéMON\n"
+	.string "called FEEBAS?\p"
+	.string "It's a fickle little thing, and\n"
+	.string "they like to crowd into certain\l"
+	.string "areas, unlike other fish POKéMON.\p"
+	.string "Folks usually ignore 'em, but that's\n"
+	.string "just because they can't appreciate\l"
+	.string "their tenacity.\p"
+	.string "Been tracking 'em most of my life.\p"
+	.string "Say, you like a young'un who might\n"
+	.string "appreciate a FEEBAS' charms.\p"
+	.string "If you like, I can give you some\n"
+	.string "pointers.$"
+
+Route119_Text_FeebasIntroFemale:
+	.string "Miss, you ever heard of a POKéMON\n"
+	.string "called FEEBAS?\p"
+	.string "It's a fickle little thing, and\n"
+	.string "they like to crowd into certain\l"
+	.string "areas, unlike other fish POKéMON.\p"
+	.string "Folks usually ignore 'em, but that's\n"
+	.string "just because they can't appreciate\l"
+	.string "their tenacity.\p"
+	.string "Been tracking 'em most of my life.\p"
+	.string "Say, you like a young'un who might\n"
+	.string "appreciate a FEEBAS' charms.\p"
+	.string "If you like, I can give you some\n"
+	.string "pointers.$"
+
+Route119_Text_WatersAreBusy:
+	.string "Would you like to hear where the\n"
+	.string "FEEBAS are nesting?$"
+
+Route119_Text_VeryWell:
+	.string "Very well. Now listen closely...$"
+
+Route119_Text_GoodLuck:
+	.string "Good luck out there!$"
 
 Route119_Text_BrendanIntro:
 	.string "BRENDAN: {PLAYER}! So this is where\n"

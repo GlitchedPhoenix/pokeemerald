@@ -358,7 +358,6 @@ static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, st
 void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
-    SetMoney(&gSaveBlock1Ptr->money, GetMoney(&gSaveBlock1Ptr->money) / 2);
     HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();
@@ -1381,6 +1380,14 @@ bool8 IsMapTypeIndoors(u8 mapType)
         return TRUE;
     else
         return FALSE;
+}
+
+void CheckQuickNurse(void)
+{
+	if (gSaveBlock2Ptr->quickNurse)
+		gSpecialVar_Result = TRUE;
+	else
+		gSpecialVar_Result = FALSE;
 }
 
 mapsec_u8_t GetSavedWarpRegionMapSectionId(void)

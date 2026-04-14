@@ -368,7 +368,7 @@
       "x": 36,
       "y": 6,
       "elevation": 0,
-      "dest_map": "MAP_LILYCOVE_CITY_MOVE_DELETERS_HOUSE",
+      "dest_map": "MAP_CONVENIENCE_ROOM",
       "dest_warp_id": "0"
     },
     {

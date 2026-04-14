@@ -4,6 +4,7 @@ FallarborTown_MapScripts::
 
 FallarborTown_OnTransition:
 	setflag FLAG_VISITED_FALLARBOR_TOWN
+	setvar VAR_CONVENIENCE_ROOM, 2
 	setvar VAR_CONTEST_HALL_STATE, 0
 	clearflag FLAG_CONTEST_SKETCH_CREATED
 	end

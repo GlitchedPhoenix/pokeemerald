@@ -122,6 +122,9 @@
 #define MULTI_SLATEPORT_TENT_RULES         111
 #define MULTI_FALLARBOR_TENT_RULES         112
 #define MULTI_TAG_MATCH_TYPE               113
+#define MULTI_ARTIFACTS_ONLY               114
+#define MULTI_ARTIFACTS_AND_FORTUNES       115
+#define MULTI_ARTIFACT_CHOICER             116
 
 // Lilycove SS Tidal Multichoice Selections
 #define SSTIDAL_SELECTION_SLATEPORT        0
@@ -132,6 +135,18 @@
 #define SSTIDAL_SELECTION_FARAWAY_ISLAND   5
 #define SSTIDAL_SELECTION_EXIT             6
 #define SSTIDAL_SELECTION_COUNT            7
+
+
+// Artifact menu selections
+#define ARTIFACT_SELECTION_MAGMA_BRACER      0
+#define ARTIFACT_SELECTION_AQUA_NECKLACE     1
+#define ARTIFACT_SELECTION_TEMPEST_PIN       2
+#define ARTIFACT_SELECTION_FLAME_BROOCH      3
+#define ARTIFACT_SELECTION_IVY_BAND          4
+#define ARTIFACT_SELECTION_OCEAN_ANKLET      5
+#define ARTIFACT_SELECTION_CANCEL            6
+#define ARTIFACT_SELECTION_COUNT             7
+
 
 // Std String Ids
 #define STDSTRING_COOL             0

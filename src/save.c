@@ -8,6 +8,7 @@
 #include "load_save.h"
 #include "overworld.h"
 #include "pokemon_storage_system.h"
+#include "main.h"
 #include "trainer_hill.h"
 #include "link.h"
 #include "constants/game_stat.h"
@@ -738,6 +739,9 @@ u8 HandleSavingData(u8 saveType)
         CopyPartyAndObjectsToSave();
         WriteSaveSectorOrSlot(FULL_SAVE_SLOT, gRamSaveSectorLocations);
         break;
+	case SAVE_OPTIONS_ONLY:
+		WriteSaveSectorOrSlot(SECTOR_ID_SAVEBLOCK2, gRamSaveSectorLocations);
+		break;
     case SAVE_LINK:
     case SAVE_EREADER: // Dummied, now duplicate of SAVE_LINK
         // Used by link / Battle Frontier

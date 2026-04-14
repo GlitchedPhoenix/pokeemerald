@@ -237,6 +237,7 @@ static u8 sActiveList[32];
 
 // External declarations
 extern struct CompressedSpritePalette gMonPaletteTable[]; // GF made a mistake and did not extern it as const.
+extern struct CompressedSpritePalette gMonShinyPaletteTable[]; // GF made a mistake and did not extern it as const.
 extern const struct CompressedSpritePalette gTrainerFrontPicPaletteTable[];
 extern const struct CompressedSpriteSheet gTrainerFrontPicTable[];
 extern u8 *gFieldEffectScriptPointers[];
@@ -916,6 +917,16 @@ u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
 {
     s32 spriteId = CreateMonPicSprite_HandleDeoxys(species, 0, 0x8000, TRUE, x, y, 0, gMonPaletteTable[species].tag);
     PreservePaletteInWeather(IndexOfSpritePaletteTag(gMonPaletteTable[species].tag) + 0x10);
+    if (spriteId == 0xFFFF)
+        return MAX_SPRITES;
+    else
+        return spriteId;
+}
+
+u8 CreateMonShinySprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
+{
+    s32 spriteId = CreateMonPicSprite_HandleDeoxys(species, 0, 0, TRUE, x, y, 0, gMonShinyPaletteTable[species].tag);
+    PreservePaletteInWeather(IndexOfSpritePaletteTag(gMonShinyPaletteTable[species].tag) + 0x10);
     if (spriteId == 0xFFFF)
         return MAX_SPRITES;
     else

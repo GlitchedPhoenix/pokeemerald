@@ -954,6 +954,9 @@ gText_Sudowoodo_Attacked::
 gText_LegendaryFlewAway::
 	.string "The {STR_VAR_1} flew away!$"
 
+gText_LegendaryDisappeared::
+	.string "The {STR_VAR_1} disappeared...$"
+
 	.include "data/text/pc_transfer.inc"
 	.include "data/text/questionnaire.inc"
 	.include "data/text/abnormal_weather.inc"
@@ -1001,6 +1004,15 @@ Common_EventScript_LegendaryFlewAway::
 	fadescreenswapbuffers FADE_FROM_BLACK
 	bufferspeciesname STR_VAR_1, VAR_0x8004
 	msgbox gText_LegendaryFlewAway, MSGBOX_DEFAULT
+	release
+	end
+
+Common_EventScript_LegendaryDisappeared::
+	fadescreenswapbuffers FADE_TO_BLACK
+	removeobject VAR_LAST_TALKED
+	fadescreenswapbuffers FADE_FROM_BLACK
+	bufferspeciesname STR_VAR_1, VAR_0x8004
+	msgbox gText_LegendaryDisappeared, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1059,5 +1071,12 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/text/frontier_brain.inc"
 	.include "data/text/save.inc"
 	.include "data/text/birch_speech.inc"
+	.include "data/scripts/fortune_teller.inc"
+	.include "data/scripts/lati_merchant.inc"
+	.include "data/scripts/feebas_guy.inc"
 
 	.include "data/maps/DebugRoom/scripts.inc"
+
+	.include "data/maps/ConvenienceRoom/scripts.inc"
+
+	.include "data/maps/Route123_HiddenGrotto/scripts.inc"

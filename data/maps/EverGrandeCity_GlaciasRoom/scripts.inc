@@ -41,10 +41,20 @@ EverGrandeCity_GlaciasRoom_EventScript_Glacia::
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_GLACIA, EverGrandeCity_GlaciasRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
-	msgbox EverGrandeCity_GlaciasRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_GLACIA, EverGrandeCity_GlaciasRoom_Text_Defeat
+	call_if_set FLAG_E4_REMATCH_READY, EverGrandeCity_GlaciasRoom_EventScript_GlaciaRematch
+	call_if_unset FLAG_E4_REMATCH_READY, EverGrandeCity_GlaciasRoom_EventScript_GlaciaFirst
 	goto EverGrandeCity_GlaciasRoom_EventScript_Defeated
 	end
+
+EverGrandeCity_GlaciasRoom_EventScript_GlaciaRematch::
+	msgbox EverGrandeCity_GlaciasRoom_Text_RematchSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_GLACIA_2, EverGrandeCity_GlaciasRoom_Text_Defeat
+	return
+
+EverGrandeCity_GlaciasRoom_EventScript_GlaciaFirst::
+	msgbox EverGrandeCity_GlaciasRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_GLACIA, EverGrandeCity_GlaciasRoom_Text_Defeat
+	return
 
 EverGrandeCity_GlaciasRoom_EventScript_PostBattleSpeech::
 	msgbox EverGrandeCity_GlaciasRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
@@ -68,6 +78,15 @@ EverGrandeCity_GlaciasRoom_Text_IntroSpeech:
 	.string "What about you?\p"
 	.string "It would please me to no end if I could\n"
 	.string "go all out against you!$"
+
+EverGrandeCity_GlaciasRoom_Text_RematchSpeech:
+	.string "Welcome back, {PLAYER}.\n"
+	.string "I trust you have been keeping up\l"
+	.string "in your training?\p"
+	.string "I have honed my skills to a fine\n"
+	.string "point since we last clashed.\p"
+	.string "Please, show me how far we both\n"
+	.string "have come!$"
 
 EverGrandeCity_GlaciasRoom_Text_Defeat:
 	.string "You and your POKéMON…\n"

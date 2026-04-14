@@ -441,6 +441,31 @@ static const u8 sOrangeMailDesc[] = _(
     "MAIL to be held by\n"
     "a POKéMON.");
 
+static const u8 sRubyMailDesc[] = _(
+    "A ruby pattern\n"
+    "MAIL to be held by\n"
+    "a POKéMON.");
+
+static const u8 sFireMailDesc[] = _(
+    "A fire pattern\n"
+    "MAIL to be held by\n"
+    "a POKéMON.");
+
+static const u8 sLeafMailDesc[] = _(
+    "A leaf pattern\n"
+    "MAIL to be held by\n"
+    "a POKéMON.");
+
+static const u8 sEmeraldMailDesc[] = _(
+    "An emerald pattern\n"
+    "MAIL to be held by\n"
+    "a POKéMON.");
+
+static const u8 sSapphireMailDesc[] = _(
+    "A sapphire pattern\n"
+    "MAIL to be held by\n"
+    "a POKéMON.");
+
 static const u8 sHarborMailDesc[] = _(
     "A WINGULL-print\n"
     "MAIL to be held by\n"
@@ -1549,3 +1574,27 @@ static const u8 sOldSeaMapDesc[] = _(
     "A faded sea chart\n"
     "that shows the way\n"
     "to a certain island.");
+
+static const u8 sMagmaCuffDesc[] = _(
+    "A cuff adorned with\n"
+    "dazzling ruby.$");
+
+static const u8 sAquaNecklaceDesc[] = _(
+    "A pendant made with\n"
+    "brilliant sapphire.$");
+
+static const u8 sTempestPinDesc[] = _(
+    "A hairpin held with\n"
+    "sleek emerald.$");
+
+static const u8 sFlameBroochDesc[] = _(
+    "A brooch made of\n"
+    "fiery agate.$");
+
+static const u8 sIvyBandDesc[] = _(
+    "A ring of polished\n"
+    "peridot.$");
+
+static const u8 sOceanAnkletDesc[] = _(
+    "An anklet made of\n"
+    "pretty turquoise.$");

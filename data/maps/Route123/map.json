@@ -592,6 +592,13 @@
       "elevation": 0,
       "dest_map": "MAP_ROUTE123_BERRY_MASTERS_HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 68,
+      "y": 1,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE123_HIDDEN_GROTTO",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

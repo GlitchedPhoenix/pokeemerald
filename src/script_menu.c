@@ -23,6 +23,7 @@
 static EWRAM_DATA u8 sProcessInputDelay = 0;
 
 static u8 sLilycoveSSTidalSelections[SSTIDAL_SELECTION_COUNT];
+static u8 sArtifactSelections[ARTIFACT_SELECTION_COUNT];
 
 static void Task_HandleMultichoiceInput(u8 taskId);
 static void Task_HandleYesNoInput(u8 taskId);
@@ -32,6 +33,7 @@ static void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, 
 static void DrawLinkServicesMultichoiceMenu(u8 multichoiceId);
 static void CreatePCMultichoice(void);
 static void CreateLilycoveSSTidalMultichoice(void);
+static void CreateArtifactMultichoice(void);
 static bool8 IsPicboxClosed(void);
 static void CreateStartMenuForPokenavTutorial(void);
 static void InitMultichoiceNoWrap(bool8 ignoreBPress, u8 unusedCount, u8 windowId, u8 multichoiceId);
@@ -396,6 +398,20 @@ bool8 ScriptMenu_CreateLilycoveSSTidalMultichoice(void)
     }
 }
 
+bool8 ScriptMenu_CreateArtifactMultichoice(void)
+{
+    if (FuncIsActiveTask(Task_HandleMultichoiceInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        CreateArtifactMultichoice();
+        return TRUE;
+    }
+}
+
 // gSpecialVar_0x8004 is 1 if the Sailor was shown multiple event tickets at the same time
 // otherwise gSpecialVar_0x8004 is 0
 static void CreateLilycoveSSTidalMultichoice(void)
@@ -545,6 +561,97 @@ void GetLilycoveSSTidalSelection(void)
     }
 }
 
+static void CreateArtifactMultichoice(void)
+{
+    u8 selectionCount = 0;
+    u8 count;
+    u32 pixelWidth;
+    u8 width;
+    u8 windowId;
+    u8 i;
+    u32 j;
+
+    for (i = 0; i < ARTIFACT_SELECTION_COUNT; i++)
+    {
+        sArtifactSelections[i] = 0xFF;
+    }
+
+    GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH);
+
+	if (FlagGet(FLAG_UNLOCKED_MAGMA_BRACER) == TRUE)
+	{
+		sArtifactSelections[selectionCount] = ARTIFACT_SELECTION_MAGMA_BRACER;
+		selectionCount++;
+	}
+
+	if (FlagGet(FLAG_UNLOCKED_AQUA_NECKLACE) == TRUE)
+	{
+		sArtifactSelections[selectionCount] = ARTIFACT_SELECTION_AQUA_NECKLACE;
+		selectionCount++;
+	}
+	
+	if (FlagGet(FLAG_UNLOCKED_TEMPEST_PIN) == TRUE)
+	{
+		sArtifactSelections[selectionCount] = ARTIFACT_SELECTION_TEMPEST_PIN;
+		selectionCount++;
+	}
+
+	if (FlagGet(FLAG_UNLOCKED_FLAME_BROOCH) == TRUE)
+	{
+		sArtifactSelections[selectionCount] = ARTIFACT_SELECTION_FLAME_BROOCH;
+		selectionCount++;
+	}
+	
+	if (FlagGet(FLAG_UNLOCKED_IVY_BAND) == TRUE)
+	{
+		sArtifactSelections[selectionCount] = ARTIFACT_SELECTION_IVY_BAND;
+		selectionCount++;
+	}
+
+	if (FlagGet(FLAG_UNLOCKED_OCEAN_ANKLET) == TRUE)
+	{
+		sArtifactSelections[selectionCount] = ARTIFACT_SELECTION_OCEAN_ANKLET;
+		selectionCount++;
+	}
+
+    count = selectionCount;
+	pixelWidth = 0;
+
+	for (j = 0; j < ARTIFACT_SELECTION_COUNT; j++)
+	{
+		u8 selection = sArtifactSelections[j];
+		if (selection != 0xFF)
+		{
+			pixelWidth = DisplayTextAndGetWidth(sArtifactChoices[selection], pixelWidth);
+		}
+	}
+
+	width = ConvertPixelWidthToTileWidth(pixelWidth);
+	windowId = CreateWindowFromRect(MAX_MULTICHOICE_WIDTH - width, (6 - count) * 2, width, count * 2);
+	SetStandardWindowBorderStyle(windowId, FALSE);
+
+	for (selectionCount = 0, i = 0; i < ARTIFACT_SELECTION_COUNT; i++)
+	{
+		if (sArtifactSelections[i] != 0xFF)
+		{
+			AddTextPrinterParameterized(windowId, FONT_NORMAL, sArtifactChoices[sArtifactSelections[i]], 8, selectionCount * 16 + 1, TEXT_SKIP_DRAW, NULL);
+			selectionCount++;
+		}
+	}
+
+	InitMenuInUpperLeftCornerNormal(windowId, count, 0);
+	CopyWindowToVram(windowId, COPYWIN_FULL);
+	InitMultichoiceCheckWrap(FALSE, count, windowId, MULTI_ARTIFACT_CHOICER);
+}
+
+void GetArtifactSelection(void)
+{
+    if (gSpecialVar_Result != MULTI_B_PRESSED)
+    {
+        gSpecialVar_Result = sArtifactSelections[gSpecialVar_Result];
+    }
+}
+
 #define tState       data[0]
 #define tMonSpecies  data[1]
 #define tMonSpriteId data[2]
@@ -586,7 +693,10 @@ bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
     }
     else
     {
-        spriteId = CreateMonSprite_PicBox(species, x * 8 + 40, y * 8 + 40, 0);
+		if (FlagGet(FLAG_SHOW_SHINY_PIC))
+			spriteId = CreateMonShinySprite_PicBox(species, x * 8 + 40, y * 8 + 40, 0);
+		else
+			spriteId = CreateMonSprite_PicBox(species, x * 8 + 40, y * 8 + 40, 0);
         taskId = CreateTask(Task_PokemonPicWindow, 0x50);
         gTasks[taskId].tWindowId = CreateWindowFromRect(x, y, 8, 8);
         gTasks[taskId].tState = 0;

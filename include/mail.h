@@ -14,6 +14,12 @@
                               || itemId == ITEM_TROPIC_MAIL         \
                               || itemId == ITEM_DREAM_MAIL          \
                               || itemId == ITEM_FAB_MAIL            \
+							  || itemId == ITEM_RUBY_MAIL           \
+							  || itemId == ITEM_SAPPHIRE_MAIL       \
+							  || itemId == ITEM_EMERALD_MAIL        \
+							  || itemId == ITEM_RED_MAIL            \
+							  || itemId == ITEM_GREEN_MAIL          \
+							  || itemId == ITEM_BLUE_MAIL           \
                               || itemId == ITEM_RETRO_MAIL))
 
 // mail.h

@@ -131,6 +131,7 @@ EWRAM_DATA u16 gBattle_BG2_Y = 0;
 EWRAM_DATA u16 gBattle_BG3_X = 0;
 EWRAM_DATA u16 gBattle_BG3_Y = 0;
 EWRAM_DATA u16 gBattle_WIN0H = 0;
+EWRAM_DATA bool8 gExpShareCheck = 0;
 EWRAM_DATA u16 gBattle_WIN0V = 0;
 EWRAM_DATA u16 gBattle_WIN1H = 0;
 EWRAM_DATA u16 gBattle_WIN1V = 0;
@@ -530,6 +531,7 @@ const struct TrainerMoney gTrainerMoneyTable[] =
     {TRAINER_CLASS_HIKER, 10},
     {TRAINER_CLASS_YOUNG_COUPLE, 8},
     {TRAINER_CLASS_WINSTRATE, 10},
+	{TRAINER_CLASS_MYSTERY_WOMAN, 7},
     {0xFF, 5}, // Any trainer class not listed above uses this
 };
 
@@ -3139,6 +3141,13 @@ static void BattleStartClearSetData(void)
     gBattleStruct->safariEscapeFactor = 3;
     gBattleStruct->wildVictorySong = 0;
     gBattleStruct->moneyMultiplier = 1;
+	
+	if (FlagGet(FLAG_AQUA_NECKLACE_ACTIVE))
+	{
+		gBattleStruct->moneyMultiplier = 2;
+		if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+			gBattleStruct->moneyMultiplier = 3;
+	}
 
     for (i = 0; i < 8; i++)
     {
@@ -5243,12 +5252,16 @@ static void ReturnFromBattleToOverworld(void)
     {
         UpdateRoamerHPStatus(&gEnemyParty[0]);
 
-#ifndef BUGFIX
-        if ((gBattleOutcome & B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
-#else
-        if ((gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT) // Bug: When Roar is used by roamer, gBattleOutcome is B_OUTCOME_PLAYER_TELEPORTED (5).
-#endif                                                                               // & with B_OUTCOME_WON (1) will return TRUE and deactivates the roamer.
+        if (gBattleOutcome == B_OUTCOME_WON)                                                                             // & with B_OUTCOME_WON (1) will return TRUE and deactivates the roamer.
+		{
+			FlagSet(FLAG_ROAMER_DEFEATED);
             SetRoamerInactive();
+		}
+		else if (gBattleOutcome == B_OUTCOME_CAUGHT)
+		{
+			FlagSet(FLAG_ROAMER_CAUGHT);
+			SetRoamerInactive();
+		}
     }
 
     m4aSongNumStop(SE_LOW_HEALTH);

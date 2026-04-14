@@ -3307,7 +3307,13 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
         {
         case HOLD_EFFECT_DOUBLE_PRIZE:
             if (GetBattlerSide(battler) == B_SIDE_PLAYER)
-                gBattleStruct->moneyMultiplier = 2;
+				gBattleStruct->moneyMultiplier = 2;
+				if (FlagGet(FLAG_AQUA_NECKLACE_ACTIVE))
+				{
+					gBattleStruct->moneyMultiplier = 3;
+					if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+						gBattleStruct->moneyMultiplier = 4;
+				}
             break;
         case HOLD_EFFECT_RESTORE_STATS:
             for (i = 0; i < NUM_BATTLE_STATS; i++)

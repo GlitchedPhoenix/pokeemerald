@@ -547,14 +547,9 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
         // have a lower chance to be inherited in Emerald and why the IV picked for inheritance can
         // be repeated. Amusingly, FRLG and RS also got this wrong. They remove selectedIvs[i], which
         // is not an index! This means that it can sometimes remove the wrong stat.
-        #ifndef BUGFIX
-        selectedIvs[i] = availableIVs[Random() % (NUM_STATS - i)];
-        RemoveIVIndexFromList(availableIVs, i);
-        #else
         u8 index = Random() % (NUM_STATS - i);
         selectedIvs[i] = availableIVs[index];
         RemoveIVIndexFromList(availableIVs, index);
-        #endif
     }
 
     // Determine which parent each of the selected IVs should inherit from.
@@ -887,15 +882,15 @@ static bool8 TryProduceOrHatchEgg(struct DayCare *daycare)
     }
 
     // Check if an egg should be produced
-    if (daycare->offspringPersonality == 0 && validEggs == DAYCARE_MON_COUNT && (daycare->mons[1].steps & 0xFF) == 0xFF)
+    if (daycare->offspringPersonality == 0 && validEggs == DAYCARE_MON_COUNT && ((FlagGet(FLAG_TEMPEST_PIN_ACTIVE) && (daycare->mons[1].steps & 0xFF) == 0x8F) || ((daycare->mons[1].steps & 0xFF) == 0xFF)))
     {
         u8 compatibility = GetDaycareCompatibilityScore(daycare);
-        if (compatibility > (Random() * 100u) / USHRT_MAX)
-            TriggerPendingDaycareEgg();
+		if (100u > (Random() * 100u) / USHRT_MAX)
+			TriggerPendingDaycareEgg();
     }
 
     // Try to hatch Egg
-    if (++daycare->stepCounter == 255)
+    if ((FlagGet(FLAG_TEMPEST_PIN_ACTIVE) && ++daycare->stepCounter == 127) || ++daycare->stepCounter == 255)
     {
         u32 eggCycles;
         u8 toSub = GetEggCyclesToSubtract();

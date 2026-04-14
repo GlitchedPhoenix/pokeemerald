@@ -4,6 +4,7 @@
 #include "decompress.h"
 #include "decoration.h"
 #include "decoration_inventory.h"
+#include "event_data.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
@@ -633,11 +634,18 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
         }
         else
         {
-            ConvertIntToDecimalStringN(
-                gStringVar1,
-                gDecorations[itemId].price,
-                STR_CONV_MODE_LEFT_ALIGN,
-                5);
+			if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+				ConvertIntToDecimalStringN(
+					gStringVar1,
+					gDecorations[itemId].price/2,
+					STR_CONV_MODE_LEFT_ALIGN,
+					5);
+			else
+				ConvertIntToDecimalStringN(
+					gStringVar1,
+					gDecorations[itemId].price,
+					STR_CONV_MODE_LEFT_ALIGN,
+					5);
         }
 
         StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
@@ -993,6 +1001,10 @@ static void Task_BuyMenu(u8 taskId)
             if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
             {
                 BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
+            }
+			else if (GetItemPocket(itemId) == POCKET_TM_HM && CheckBagHasItem(itemId, 1))
+            {
+                BuyMenuDisplayMessage(taskId, gText_YouAlreadyHaveThis, BuyMenuReturnToItemList);
             }
             else
             {

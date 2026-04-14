@@ -128,14 +128,13 @@
 #define ITEM_070 112
 #define ITEM_071 113
 #define ITEM_072 114
-#define ITEM_073 115
-#define ITEM_074 116
-#define ITEM_075 117
-#define ITEM_076 118
-#define ITEM_077 119
-#define ITEM_078 120
-
 // Mails
+#define ITEM_RUBY_MAIL 115
+#define ITEM_EMERALD_MAIL 116
+#define ITEM_RED_MAIL 117
+#define ITEM_GREEN_MAIL 118
+#define ITEM_BLUE_MAIL 119
+#define ITEM_SAPPHIRE_MAIL 120
 #define ITEM_ORANGE_MAIL 121
 #define ITEM_HARBOR_MAIL 122
 #define ITEM_GLITTER_MAIL 123
@@ -149,7 +148,7 @@
 #define ITEM_FAB_MAIL 131
 #define ITEM_RETRO_MAIL 132
 
-#define FIRST_MAIL_INDEX ITEM_ORANGE_MAIL
+#define FIRST_MAIL_INDEX ITEM_RUBY_MAIL
 
 // Berries
 #define ITEM_CHERI_BERRY 133
@@ -416,8 +415,14 @@
 // Emerald
 #define ITEM_MAGMA_EMBLEM 375
 #define ITEM_OLD_SEA_MAP 376
+#define ITEM_MAGMA_BRACER 377
+#define ITEM_AQUA_NECKLACE 378
+#define ITEM_TEMPEST_PIN 379
+#define ITEM_FLAME_BROOCH 380
+#define ITEM_IVY_BAND 381
+#define ITEM_OCEAN_ANKLET 382
 
-#define ITEMS_COUNT 377
+#define ITEMS_COUNT 383
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations
 // Its icon is defined at ITEMS_COUNT as the "return to field" arrow

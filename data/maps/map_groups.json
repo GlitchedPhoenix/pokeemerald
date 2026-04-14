@@ -93,7 +93,8 @@
     "Underwater_Route129",
     "Underwater_Route105",
     "Underwater_Route125",
-    "DebugRoom"
+    "DebugRoom",
+    "Route123_HiddenGrotto"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
@@ -584,7 +585,8 @@
     "NavelRock_Down10",
     "NavelRock_Down11",
     "NavelRock_Bottom",
-    "TrainerHill_Elevator"
+    "TrainerHill_Elevator",
+    "ConvenienceRoom"
   ],
   "gMapGroup_IndoorRoute104Prototype": [
     "Route104_Prototype",

@@ -4420,6 +4420,26 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/DebugRoom/border.bin",
       "blockdata_filepath": "data/layouts/DebugRoom/map.bin"
+    },
+    {
+      "id": "LAYOUT_CONVENIENCE_ROOM",
+      "name": "ConvenienceRoom_Layout",
+      "width": 16,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/ConvenienceRoom/border.bin",
+      "blockdata_filepath": "data/layouts/ConvenienceRoom/map.bin"
+    },
+    {
+      "id": "LAYOUT_ROUTE123_HIDDEN_GROTTO",
+      "name": "Route123_HiddenGrotto_Layout",
+      "width": 17,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lilycove",
+      "border_filepath": "data/layouts/Route123_HiddenGrotto/border.bin",
+      "blockdata_filepath": "data/layouts/Route123_HiddenGrotto/map.bin"
     }
   ]
 }

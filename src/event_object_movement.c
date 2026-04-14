@@ -469,6 +469,14 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_LUGIA                   0x1121
 #define OBJ_EVENT_PAL_TAG_RS_BRENDAN              0x1122
 #define OBJ_EVENT_PAL_TAG_RS_MAY                  0x1123
+#define OBJ_EVENT_PAL_TAG_SHINY_LATIOS            0x1124
+#define OBJ_EVENT_PAL_TAG_SHINY_LATIAS            0x1125
+#define OBJ_EVENT_PAL_TAG_SHINY_LATIOS_REFLECTION            0x1126
+#define OBJ_EVENT_PAL_TAG_SHINY_LATIAS_REFLECTION            0x1127
+#define OBJ_EVENT_PAL_TAG_HUMAN_LATIOS_S            0x1128
+#define OBJ_EVENT_PAL_TAG_HUMAN_LATIAS_S            0x1129
+#define OBJ_EVENT_PAL_TAG_HUMAN_LATIOS_C            0x112A
+#define OBJ_EVENT_PAL_TAG_HUMAN_LATIAS_C            0x112B
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/object_events/object_event_graphics_info_pointers.h"
@@ -515,12 +523,15 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Lugia,                 OBJ_EVENT_PAL_TAG_LUGIA},
     {gObjectEventPal_RubySapphireBrendan,   OBJ_EVENT_PAL_TAG_RS_BRENDAN},
     {gObjectEventPal_RubySapphireMay,       OBJ_EVENT_PAL_TAG_RS_MAY},
-#ifdef BUGFIX
+	{gObjectEventPal_ShinyLatios,           OBJ_EVENT_PAL_TAG_SHINY_LATIOS},
+	{gObjectEventPal_ShinyLatias,           OBJ_EVENT_PAL_TAG_SHINY_LATIAS},
+	{gObjectEventPal_ShinyLatiosReflection,           OBJ_EVENT_PAL_TAG_SHINY_LATIOS_REFLECTION},
+	{gObjectEventPal_ShinyLatiasReflection,           OBJ_EVENT_PAL_TAG_SHINY_LATIAS_REFLECTION},
+	{gObjectEventPal_HumanLatiosS,           OBJ_EVENT_PAL_TAG_HUMAN_LATIOS_S},
+	{gObjectEventPal_HumanLatiasS,           OBJ_EVENT_PAL_TAG_HUMAN_LATIAS_S},
+	{gObjectEventPal_HumanLatiosC,           OBJ_EVENT_PAL_TAG_HUMAN_LATIOS_C},
+	{gObjectEventPal_HumanLatiasC,           OBJ_EVENT_PAL_TAG_HUMAN_LATIAS_C},
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
-#else
-    {}, // BUG: FindObjectEventPaletteIndexByTag looks for OBJ_EVENT_PAL_TAG_NONE and not 0x0.
-        // If it's looking for a tag that isn't in this table, the game locks in an infinite loop.
-#endif
 };
 
 static const u16 sReflectionPaletteTags_Brendan[] = {
@@ -628,6 +639,20 @@ static const u16 sReflectionPaletteTags_RedLeaf[] = {
     OBJ_EVENT_PAL_TAG_RED_LEAF,
 };
 
+static const u16 sReflectionPaletteTags_ShinyLatias[] = {
+    OBJ_EVENT_PAL_TAG_SHINY_LATIAS_REFLECTION,
+    OBJ_EVENT_PAL_TAG_SHINY_LATIAS_REFLECTION,
+    OBJ_EVENT_PAL_TAG_SHINY_LATIAS_REFLECTION,
+    OBJ_EVENT_PAL_TAG_SHINY_LATIAS_REFLECTION,
+};
+
+static const u16 sReflectionPaletteTags_ShinyLatios[] = {
+    OBJ_EVENT_PAL_TAG_SHINY_LATIOS_REFLECTION,
+    OBJ_EVENT_PAL_TAG_SHINY_LATIOS_REFLECTION,
+    OBJ_EVENT_PAL_TAG_SHINY_LATIOS_REFLECTION,
+    OBJ_EVENT_PAL_TAG_SHINY_LATIOS_REFLECTION,
+};
+
 static const struct PairedPalettes sSpecialObjectReflectionPaletteSets[] = {
     {OBJ_EVENT_PAL_TAG_BRENDAN,          sReflectionPaletteTags_Brendan},
     {OBJ_EVENT_PAL_TAG_MAY,              sReflectionPaletteTags_May},
@@ -642,6 +667,8 @@ static const struct PairedPalettes sSpecialObjectReflectionPaletteSets[] = {
     {OBJ_EVENT_PAL_TAG_NPC_3,            sReflectionPaletteTags_Npc3},
     {OBJ_EVENT_PAL_TAG_SUBMARINE_SHADOW, sReflectionPaletteTags_SubmarineShadow},
     {OBJ_EVENT_PAL_TAG_RED_LEAF,         sReflectionPaletteTags_RedLeaf},
+	{OBJ_EVENT_PAL_TAG_SHINY_LATIAS,         sReflectionPaletteTags_ShinyLatias},
+	{OBJ_EVENT_PAL_TAG_SHINY_LATIOS,         sReflectionPaletteTags_ShinyLatios},
     {OBJ_EVENT_PAL_TAG_NONE,             NULL},
 };
 

@@ -203,6 +203,7 @@ SSTidalCorridor_EventScript_ScottScene::
 	delay 30
 	setflag FLAG_MET_SCOTT_ON_SS_TIDAL
 	setvar VAR_SS_TIDAL_SCOTT_STATE, 1
+	removeitem ITEM_SS_TICKET
 	releaseall
 	end
 

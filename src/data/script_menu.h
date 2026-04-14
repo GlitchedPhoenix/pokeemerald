@@ -771,6 +771,23 @@ static const struct MenuAction MultichoiceList_TagMatchType[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_ArtifactsOnly[] =
+{
+    {gText_GetArtifacts},
+    {gText_ExplainArtifacts},
+    {gText_ReturnArtifacts},
+    {gText_Exit},
+};
+
+static const struct MenuAction MultichoiceList_ArtifactsAndFortunes[] =
+{
+    {gText_GetArtifacts},
+    {gText_ExplainArtifacts},
+    {gText_ReturnArtifacts},
+	{gText_FortuneTelling},
+    {gText_Exit},
+};
+
 static const struct MenuAction MultichoiceList_Exit[] =
 {
     {gText_Exit},
@@ -898,6 +915,9 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_SLATEPORT_TENT_RULES]       = MULTICHOICE(MultichoiceList_SlateportTentRules),
     [MULTI_FALLARBOR_TENT_RULES]       = MULTICHOICE(MultichoiceList_FallarborTentRules),
     [MULTI_TAG_MATCH_TYPE]             = MULTICHOICE(MultichoiceList_TagMatchType),
+	[MULTI_ARTIFACTS_ONLY]             = MULTICHOICE(MultichoiceList_ArtifactsOnly),
+	[MULTI_ARTIFACTS_AND_FORTUNES]     = MULTICHOICE(MultichoiceList_ArtifactsAndFortunes),
+	[MULTI_ARTIFACT_CHOICER]           = MULTICHOICE(MultichoiceList_Exit),
 };
 
 const u8 *const gStdStrings[] =
@@ -961,6 +981,17 @@ static const u8 *const sLilycoveSSTidalDestinations[SSTIDAL_SELECTION_COUNT] =
     [SSTIDAL_SELECTION_BIRTH_ISLAND]    = gText_BirthIsland,
     [SSTIDAL_SELECTION_FARAWAY_ISLAND]  = gText_FarawayIsland,
     [SSTIDAL_SELECTION_EXIT]            = gText_Exit,
+};
+
+static const u8 *const sArtifactChoices[ARTIFACT_SELECTION_COUNT] =
+{
+    [ARTIFACT_SELECTION_MAGMA_BRACER]      = gText_MagmaBracer,
+    [ARTIFACT_SELECTION_AQUA_NECKLACE]     = gText_AquaNecklace,
+    [ARTIFACT_SELECTION_TEMPEST_PIN]       = gText_TempestPin,
+    [ARTIFACT_SELECTION_FLAME_BROOCH]      = gText_FlameBrooch,
+    [ARTIFACT_SELECTION_IVY_BAND]          = gText_IvyBand,
+    [ARTIFACT_SELECTION_OCEAN_ANKLET]      = gText_OceanAnklet,
+    [ARTIFACT_SELECTION_CANCEL]            = gText_Cancel,
 };
 
 static const u8 *const sCableClubOptions_WithRecordMix[] =

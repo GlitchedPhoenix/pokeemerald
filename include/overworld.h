@@ -61,6 +61,7 @@ void Overworld_ResetStateAfterDigEscRope(void);
 void ResetGameStats(void);
 void IncrementGameStat(u8 index);
 u32 GetGameStat(u8 index);
+void CheckQuickNurse(void);
 void SetGameStat(u8 index, u32 value);
 void ApplyNewEncryptionKeyToGameStats(u32 newKey);
 void LoadObjEventTemplatesFromHeader(void);

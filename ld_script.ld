@@ -1183,6 +1183,7 @@ SECTIONS {
         sound/songs/midi/mus_rg_sevii_67.o(.rodata);
         sound/songs/midi/mus_rg_poke_flute.o(.rodata);
         sound/songs/midi/mus_rg_vs_deoxys.o(.rodata);
+		sound/songs/midi/mus_rude_buster.o(.rodata);
         sound/songs/midi/mus_rg_vs_mewtwo.o(.rodata);
         sound/songs/midi/mus_rg_vs_legend.o(.rodata);
         sound/songs/midi/mus_rg_encounter_gym_leader.o(.rodata);

@@ -60,6 +60,7 @@ static void ItemUseOnFieldCB_Rod(u8);
 static void ItemUseOnFieldCB_Itemfinder(u8);
 static void ItemUseOnFieldCB_Berry(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
+void Cycle_Through_Repels(void);
 static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8);
 static bool8 TryToWaterSudowoodo(void);
 static void BootUpSoundTMHM(u8);
@@ -866,12 +867,32 @@ static void Task_UseRepel(u8 taskId)
     if (!IsSEPlaying())
     {
         VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(gSpecialVar_ItemId));
+		VarSet(VAR_REPEL_LAST_USED, gSpecialVar_ItemId);
         RemoveUsedItem();
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
             DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
     }
+}
+
+void Cycle_Through_Repels(void)
+{//Once the last repel of the chosen type has been depleted, find the next lowest repel class 
+  //and start using it! (Set it as VAR_REPEL_LAST_USED)
+
+     u16 RepelCycle[] = {ITEM_REPEL, ITEM_SUPER_REPEL, ITEM_MAX_REPEL};    
+     u8 i = 0;
+
+     while (gSpecialVar_Result == FALSE){
+         gSpecialVar_Result = CheckBagHasItem(RepelCycle[i],1);
+         if (gSpecialVar_Result == TRUE)
+             VarSet(VAR_REPEL_LAST_USED, RepelCycle[i]);
+         i++;
+         if (i > 2)
+             return;
+     }
+
+     return;
 }
 
 static void Task_UsedBlackWhiteFlute(u8 taskId)

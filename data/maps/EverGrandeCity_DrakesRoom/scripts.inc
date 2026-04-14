@@ -42,10 +42,20 @@ EverGrandeCity_DrakesRoom_EventScript_Drake::
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_DRAKE, EverGrandeCity_DrakesRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
-	msgbox EverGrandeCity_DrakesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_DRAKE, EverGrandeCity_DrakesRoom_Text_Defeat
+	call_if_set FLAG_E4_REMATCH_READY, EverGrandeCity_DrakesRoom_EventScript_DrakeRematch
+	call_if_unset FLAG_E4_REMATCH_READY, EverGrandeCity_DrakesRoom_EventScript_DrakeFirst
 	goto EverGrandeCity_DrakesRoom_EventScript_Defeated
 	end
+
+EverGrandeCity_DrakesRoom_EventScript_DrakeRematch::
+	msgbox EverGrandeCity_DrakesRoom_Text_RematchSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_DRAKE_2, EverGrandeCity_DrakesRoom_Text_Defeat
+	return
+
+EverGrandeCity_DrakesRoom_EventScript_DrakeFirst::
+	msgbox EverGrandeCity_DrakesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_DRAKE, EverGrandeCity_DrakesRoom_Text_Defeat
+	return
 
 EverGrandeCity_DrakesRoom_EventScript_PostBattleSpeech::
 	msgbox EverGrandeCity_DrakesRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
@@ -73,6 +83,12 @@ EverGrandeCity_DrakesRoom_Text_IntroSpeech:
 	.string "Do you know what is needed?\p"
 	.string "If you don't, then you will never\n"
 	.string "prevail over me!$"
+
+EverGrandeCity_DrakesRoom_Text_RematchSpeech:
+	.string "Hm. There is no need for us to\n"
+	.string "exchange words.\p"
+	.string "Show me how hot the wildfire in\n"
+	.string "your heart burns!$"
 
 EverGrandeCity_DrakesRoom_Text_Defeat:
 	.string "Superb, it should be said.$"

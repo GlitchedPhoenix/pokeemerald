@@ -196,11 +196,7 @@ u16 ChooseMoveAndTargetInBattlePalace(void)
                 numMultipleMoveGroups++;
             if ((numMovesPerGroup & (0xF << 4)) >= (2 << 4))
                 numMultipleMoveGroups++;
-#ifdef BUGFIX
             if ((numMovesPerGroup & (0xF << 8)) >= (2 << 8))
-#else
-            if ((numMovesPerGroup & (0xF << 4)) >= (2 << 8))
-#endif
                 numMultipleMoveGroups++;
 
 
@@ -231,11 +227,7 @@ u16 ChooseMoveAndTargetInBattlePalace(void)
                     randSelectGroup = PALACE_MOVE_GROUP_ATTACK;
                 if ((numMovesPerGroup & (0xF << 4)) >= (2 << 4))
                     randSelectGroup = PALACE_MOVE_GROUP_DEFENSE;
-#ifdef BUGFIX
                 if ((numMovesPerGroup & (0xF << 8)) >= (2 << 8))
-#else
-                if ((numMovesPerGroup & (0xF << 4)) >= (2 << 8))
-#endif
                     randSelectGroup = PALACE_MOVE_GROUP_SUPPORT;
 
                 do
@@ -710,17 +702,7 @@ void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
 void DecompressTrainerBackPic(u16 backPicId, u8 battler)
 {
     u8 position = GetBattlerPosition(battler);
-#ifdef BUGFIX
     CpuCopy32(gTrainerBackPicTable[backPicId].data, gMonSpritesGfxPtr->sprites.ptr[position], gTrainerBackPicTable[backPicId].size);
-#else
-    // Trainer back pics aren't compressed!
-    // Attempting to decompress the uncompressed data can softlock or crash the game.
-    // This is ok in vanilla by chance, because the pixels in the trainer back sprites that correspond
-    // to the compressed data's header are all 0, so the decompression does nothing.
-    DecompressPicFromTable_2(&gTrainerBackPicTable[backPicId],
-                             gMonSpritesGfxPtr->sprites.ptr[position],
-                             SPECIES_NONE);
-#endif
     LoadCompressedPalette(gTrainerBackPicPaletteTable[backPicId].data,
                           OBJ_PLTT_ID(battler), PLTT_SIZE_4BPP);
 }
@@ -1093,32 +1075,7 @@ void ClearBehindSubstituteBit(u8 battler)
 
 void HandleLowHpMusicChange(struct Pokemon *mon, u8 battler)
 {
-    u16 hp = GetMonData(mon, MON_DATA_HP);
-    u16 maxHP = GetMonData(mon, MON_DATA_MAX_HP);
-
-    if (GetHPBarLevel(hp, maxHP) == HP_BAR_RED)
-    {
-        if (!gBattleSpritesDataPtr->battlerData[battler].lowHpSong)
-        {
-            if (!gBattleSpritesDataPtr->battlerData[BATTLE_PARTNER(battler)].lowHpSong)
-                PlaySE(SE_LOW_HEALTH);
-            gBattleSpritesDataPtr->battlerData[battler].lowHpSong = 1;
-        }
-    }
-    else
-    {
-        gBattleSpritesDataPtr->battlerData[battler].lowHpSong = 0;
-        if (!IsDoubleBattle())
-        {
-            m4aSongNumStop(SE_LOW_HEALTH);
-            return;
-        }
-        if (IsDoubleBattle() && !gBattleSpritesDataPtr->battlerData[BATTLE_PARTNER(battler)].lowHpSong)
-        {
-            m4aSongNumStop(SE_LOW_HEALTH);
-            return;
-        }
-    }
+	return;
 }
 
 void BattleStopLowHpSound(void)

@@ -2,6 +2,7 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags::
 	special SetChampionSaveWarp
 	setflag FLAG_IS_CHAMPION
 	call EverGrandeCity_HallOfFame_EventScript_ResetDefeatedEventLegendaries
+	call_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, HallOfFame_EventScript_HandleRoamer
 	call_if_eq VAR_FOSSIL_MANIAC_STATE, 0, EverGrandeCity_HallOfFame_EventScript_SetDesertUnderpassCommentReady
 	clearflag FLAG_HIDE_LILYCOVE_MOTEL_GAME_DESIGNERS
 	call EverGrandeCity_HallOfFame_EventScript_ResetEliteFour
@@ -14,6 +15,8 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags::
 	clearflag FLAG_HIDE_SLATEPORT_CITY_HARBOR_SS_TIDAL
 	clearflag FLAG_HIDE_LILYCOVE_HARBOR_SSTIDAL
 	setflag FLAG_HIDE_SAFARI_ZONE_SOUTH_CONSTRUCTION_WORKERS
+	setflag FLAG_HIDE_SOOTOPOLIS_FT
+	clearflag FLAG_HIDE_CONVENIENCE_FT
 	clearflag FLAG_HIDE_SAFARI_ZONE_SOUTH_EAST_EXPANSION
 	setflag FLAG_HIDE_LILYCOVE_CITY_RIVAL
 	special UpdateTrainerFanClubGameClear
@@ -24,12 +27,32 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags::
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 0, EverGrandeCity_HallOfFame_EventScript_ReadyDexUpgradeEvent
 	return
 
+HallOfFame_EventScript_HandleRoamer::
+	goto_if_unset FLAG_ROAMER_DEFEATED, Common_EventScript_NopReturn
+	goto_if_set FLAG_ROAMER_CAUGHT, Common_EventScript_NopReturn
+	setvar VAR_ROAMER_EVENT_TRIGGER, 2
+	return
+
 EverGrandeCity_HallOfFame_EventScript_ResetDefeatedEventLegendaries::
 	clearflag FLAG_DEFEATED_MEW
 	clearflag FLAG_DEFEATED_LATIAS_OR_LATIOS
 	clearflag FLAG_DEFEATED_DEOXYS
 	clearflag FLAG_DEFEATED_LUGIA
 	clearflag FLAG_DEFEATED_HO_OH
+	call_if_unset FLAG_CAUGHT_GROUDON, EverGrandeCity_HallOfFame_EventScript_ResetGroudon
+	call_if_unset FLAG_CAUGHT_KYOGRE, EverGrandeCity_HallOfFame_EventScript_ResetKyogre
+	clearflag FLAG_DEFEATED_RAYQUAZA
+	clearflag FLAG_DEFEATED_REGIROCK
+	clearflag FLAG_DEFEATED_REGISTEEL
+	clearflag FLAG_DEFEATED_REGICE
+	return
+
+EverGrandeCity_HallOfFame_EventScript_ResetGroudon:: // specifically check these two so new abnormal weather events don't start on accident
+	clearflag FLAG_DEFEATED_GROUDON
+	return
+
+EverGrandeCity_HallOfFame_EventScript_ResetKyogre::
+	clearflag FLAG_DEFEATED_KYOGRE
 	return
 
 EverGrandeCity_HallOfFame_EventScript_SetDesertUnderpassCommentReady::

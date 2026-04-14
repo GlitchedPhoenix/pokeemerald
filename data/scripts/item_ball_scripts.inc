@@ -231,7 +231,7 @@ Route123_EventScript_ItemUltraBall::
 	end
 
 Route123_EventScript_ItemElixir::
-	finditem ITEM_ELIXIR
+	finditem ITEM_LUCKY_EGG
 	end
 
 Route123_EventScript_ItemPPUp::

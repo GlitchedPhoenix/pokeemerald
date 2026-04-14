@@ -13,9 +13,33 @@ extern const u8 gText_ExpandedPlaceholder_Magma[];
 extern const u8 gText_ExpandedPlaceholder_Archie[];
 extern const u8 gText_ExpandedPlaceholder_Maxie[];
 extern const u8 gText_ExpandedPlaceholder_Kyogre[];
+extern const u8 gText_PlayerUsedRepel[];
+extern const u8 gMenuText_Move[];
+extern const u8 gText_MoveItemWhere[];
+extern const u8 gText_XsYAnd[];
+extern const u8 gText_XsYWereSwapped[];
 extern const u8 gText_ExpandedPlaceholder_Groudon[];
 extern const u8 gText_ExpandedPlaceholder_Brendan[];
 extern const u8 gText_ExpandedPlaceholder_May[];
+extern const u8 gText_ExpAll[];
+extern const u8 gText_ExpandedPlaceholder_Him[];
+extern const u8 gText_YouAlreadyHaveThis[];
+extern const u8 gMenuText_Move[];
+extern const u8 gText_ExpandedPlaceholder_Her[];
+extern const u8 gText_SoldOut[];
+extern const u8 gText_SoldOut2[];
+
+extern const u8 gText_GetArtifacts[];
+extern const u8 gText_ExplainArtifacts[];
+extern const u8 gText_ReturnArtifacts[];
+extern const u8 gText_FortuneTelling[];
+
+extern const u8 gText_MagmaBracer[];
+extern const u8 gText_AquaNecklace[];
+extern const u8 gText_TempestPin[];
+extern const u8 gText_FlameBrooch[];
+extern const u8 gText_IvyBand[];
+extern const u8 gText_OceanAnklet[];
 
 extern const u8 gText_FromSpace[];
 
@@ -533,6 +557,28 @@ extern const u8 gText_SearchingPleaseWait[];
 extern const u8 gText_SearchCompleted[];
 extern const u8 gText_NoMatchingPkmnWereFound[];
 extern const u8 gText_SelectorArrow[];
+
+extern const u8 gText_Nurse[];
+extern const u8 gText_AlwaysRun[];
+extern const u8 gText_Continue[];
+extern const u8 gText_Pokenav[];
+extern const u8 gText_Quick[];
+
+extern const u8 gText_Default[];
+extern const u8 gText_Quick2[];
+extern const u8 gText_Silent[];
+extern const u8 gText_Menu[];
+
+extern const u8 gText_PronounHe[];
+extern const u8 gText_PronounShe[];
+extern const u8 gText_PronounHeLower[];
+extern const u8 gText_PronounSheLower[];
+
+extern const u8 gText_OptionMenuNext[];
+extern const u8 gText_OptionMenuBack[];
+extern const u8 gText_SmallDot[];
+extern const u8 gText_LargeDot[];
+extern const u8 gText_PageNav[];
 
 // birch dex rating text
 extern const u8 gBirchDexRatingText_LessThan10[];

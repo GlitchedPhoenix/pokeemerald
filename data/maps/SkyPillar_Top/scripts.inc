@@ -17,7 +17,12 @@ SkyPillar_Top_EventScript_TryRemoveRayquaza::
 SkyPillar_Top_OnTransition:
 	call_if_lt VAR_SKY_PILLAR_STATE, 2, SkyPillar_Top_EventScript_SetCleanLayout
 	call_if_ge VAR_SKY_PILLAR_STATE, 2, SkyPillar_Top_EventScript_TryShowRayquaza
+	call_if_set FLAG_CAUGHT_RAYQUAZA, SkyPillar_Top_EventScript_HideRayquaza
 	end
+
+SkyPillar_Top_EventScript_HideRayquaza::
+	setflag FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL
+	return
 
 SkyPillar_Top_EventScript_SetCleanLayout::
 	setmaplayoutindex LAYOUT_SKY_PILLAR_TOP_CLEAN
@@ -25,6 +30,7 @@ SkyPillar_Top_EventScript_SetCleanLayout::
 	return
 
 SkyPillar_Top_EventScript_TryShowRayquaza::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA, Common_EventScript_NopReturn
 	call_if_unset FLAG_DEFEATED_RAYQUAZA, SkyPillar_Top_EventScript_ShowRayquaza
 	return
 
@@ -55,13 +61,14 @@ SkyPillar_Top_EventScript_Rayquaza::
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SkyPillar_Top_EventScript_DefeatedRayquaza
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SkyPillar_Top_EventScript_RanFromRayquaza
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SkyPillar_Top_EventScript_RanFromRayquaza
-	setflag FLAG_DEFEATED_RAYQUAZA
+	setflag FLAG_CAUGHT_RAYQUAZA
 	releaseall
 	end
 
 SkyPillar_Top_EventScript_DefeatedRayquaza::
 	setflag FLAG_DEFEATED_RAYQUAZA
-	goto SkyPillar_Top_EventScript_DefeatedRayquaza2
+	setvar VAR_0x8004, SPECIES_RAYQUAZA
+	goto SkyPillar_Top_EventScript_RanFromRayquaza2
 	end
 
 SkyPillar_Top_EventScript_RanFromRayquaza::

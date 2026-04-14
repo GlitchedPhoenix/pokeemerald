@@ -2202,12 +2202,37 @@ void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFix
     CalculateMonStats(mon);
 }
 
+bool8 GetMonIVTotal(void)
+{
+	u8 hpIV = GetMonData(&gEnemyParty[0], MON_DATA_HP_IV, NULL);
+	u8 atkIV = GetMonData(&gEnemyParty[0], MON_DATA_ATK_IV, NULL);
+	u8 defIV = GetMonData(&gEnemyParty[0], MON_DATA_DEF_IV, NULL);
+	u8 spdIV = GetMonData(&gEnemyParty[0], MON_DATA_SPEED_IV, NULL);
+	u8 spatkIV = GetMonData(&gEnemyParty[0], MON_DATA_SPATK_IV, NULL);
+	u8 spdefIV = GetMonData(&gEnemyParty[0], MON_DATA_SPDEF_IV, NULL);
+	u16 sum = 0;
+	
+	sum += hpIV;
+	sum += atkIV;
+	sum += defIV;
+	sum += spdIV;
+	sum += spatkIV;
+	sum += spdefIV;
+	
+	if (sum >= 180)
+		return TRUE;
+	else
+		return FALSE;
+}
+
 void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
     u32 personality;
     u32 value;
+	u32 shinyValue;
     u16 checksum;
+	u16 i;
 
     ZeroBoxMonData(boxMon);
 
@@ -2216,12 +2241,9 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     else
         personality = Random32();
 
-    SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
-
     // Determine original trainer ID
     if (otIdType == OT_ID_RANDOM_NO_SHINY)
     {
-        u32 shinyValue;
         do
         {
             // Choose random OT IDs until one that results in a non-shiny Pokémon
@@ -2240,7 +2262,36 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
               | (gSaveBlock2Ptr->playerTrainerId[2] << 16)
               | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
     }
+	
+	if (FlagGet(FLAG_TEMPEST_PIN_ACTIVE))
+	{
+		u16 rerolls = 16;
+		u8 nature = personality % NUM_NATURES;  // keep current nature
+		
+		if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+			rerolls = 24;
+		
+		for (i = 0; i < rerolls; i++)
+		{
+			do {
+				personality = Random32();
+			} while (nature != GetNatureFromPersonality(personality));
+			shinyValue = GET_SHINY_VALUE(value, personality);
+			if (shinyValue < SHINY_ODDS)
+				break;
+		}
+	}
+	
+	if (FlagGet(FLAG_SHINY_CREATION))
+	{
+		u8 nature = personality % NUM_NATURES;  // keep current nature
+		do {
+			personality = Random32();
+			personality = ((((Random() % SHINY_ODDS) ^ (HIHALF(value) ^ LOHALF(value))) ^ LOHALF(personality)) << 16) | LOHALF(personality);
+		} while (nature != GetNatureFromPersonality(personality));
+	}
 
+	SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
     SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
 
     checksum = CalculateBoxMonChecksum(boxMon);
@@ -2273,23 +2324,76 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     else
     {
         u32 iv;
+		u16 rerolls = 8;
+		u16 sum;
+		u8 i;
         value = Random();
+		
+		if (FlagGet(FLAG_IVY_BAND_ACTIVE))
+		{
+			if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+				rerolls = 24;
+			
+			for (i = 0; i < rerolls; i++)
+			{	
+				sum = 0;
+				
+				iv = (value & MAX_IV_MASK)%16 + 16;
+				sum += iv;
+				SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
+				iv = ((value & (MAX_IV_MASK << 5)) >> 5)%16 + 16;
+				sum += iv;
+				SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
+				iv = ((value & (MAX_IV_MASK << 10)) >> 10)%16 + 16;
+				sum += iv;
+				SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
+				
+				if (sum >= 90)
+					break;
+				
+				value = Random();
+			}
 
-        iv = value & MAX_IV_MASK;
-        SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 5)) >> 5;
-        SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 10)) >> 10;
-        SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
+			value = Random();
 
-        value = Random();
+			for (i = 0; i < rerolls; i++)
+			{	
+				sum = 0;
+				
+				iv = (value & MAX_IV_MASK)%16 + 16;
+				sum += iv;
+				SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
+				iv = ((value & (MAX_IV_MASK << 5)) >> 5)%16 + 16;
+				sum += iv;
+				SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
+				iv = ((value & (MAX_IV_MASK << 10)) >> 10)%16 + 16;
+				sum += iv;
+				SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
+				
+				if (sum >= 90)
+					break;
+				
+				value = Random();
+			}
+		}
+		else
+		{
+			iv = value & MAX_IV_MASK;
+			SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
+			iv = (value & (MAX_IV_MASK << 5)) >> 5;
+			SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
+			iv = (value & (MAX_IV_MASK << 10)) >> 10;
+			SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
 
-        iv = value & MAX_IV_MASK;
-        SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 5)) >> 5;
-        SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 10)) >> 10;
-        SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
+			value = Random();
+
+			iv = value & MAX_IV_MASK;
+			SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
+			iv = (value & (MAX_IV_MASK << 5)) >> 5;
+			SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
+			iv = (value & (MAX_IV_MASK << 10)) >> 10;
+			SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
+		}
     }
 
     if (gSpeciesInfo[species].abilities[1])
@@ -4715,6 +4819,12 @@ bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, 
     if ((retVal == 0 || friendshipOnly) && !ShouldSkipFriendshipChange() && friendshipChange == 0)      \
     {                                                                                                   \
         friendshipChange = itemEffect[itemEffectParam];                                                 \
+		if (FlagGet(FLAG_AQUA_NECKLACE_ACTIVE))\
+		{                                                                                               \
+			friendshipChange *= 2;                                                                      \
+			if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))\
+				friendshipChange *= 3;\
+		}\
         friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, NULL);                                        \
         if (friendshipChange > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)                            \
             friendship += 150 * friendshipChange / 100;                                                 \
@@ -5951,6 +6061,13 @@ void AdjustFriendship(struct Pokemon *mon, u8 event)
         if (mod > 0 && holdEffect == HOLD_EFFECT_FRIENDSHIP_UP)
             // 50% increase, rounding down
             mod = (150 * mod) / 100;
+		
+		if (mod > 0 && FlagGet(FLAG_AQUA_NECKLACE_ACTIVE))
+		{
+			mod *= 2;
+			if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+				mod *= 3;
+		}
 
         friendship += mod;
         if (mod > 0)

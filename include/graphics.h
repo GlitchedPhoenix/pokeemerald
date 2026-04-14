@@ -2962,6 +2962,7 @@ extern const u32 gTrainerFrontPic_Red[];
 extern const u32 gTrainerFrontPic_Leaf[];
 extern const u32 gTrainerFrontPic_RubySapphireBrendan[];
 extern const u32 gTrainerFrontPic_RubySapphireMay[];
+extern const u32 gTrainerFrontPic_FortuneTeller[];
 
 extern const u32 gTrainerPalette_Hiker[];
 extern const u32 gTrainerPalette_AquaGruntM[];
@@ -5066,6 +5067,41 @@ extern const u32 gMailTiles_Fab[];
 extern const u32 gMailTilemap_Fab[];
 extern const u32 gMailTiles_Retro[];
 extern const u32 gMailTilemap_Retro[];
+
+extern const u32 gMailTilemap_Sapphire[];
+extern const u32 gMailTiles_Sapphire[];
+extern const u16 gMailPalette_Sapphire[];
+extern const u32 gMailTiles_Ruby[];
+extern const u16 gMailPalette_Ruby[];
+extern const u32 gMailTiles_Emerald[];
+extern const u16 gMailPalette_Emerald[];
+extern const u32 gMailTiles_FireRed[];
+extern const u16 gMailPalette_FireRed[];
+extern const u32 gMailTiles_LeafGreen[];
+extern const u16 gMailPalette_LeafGreen[];
+
+extern const u32 gItemIcon_MagmaCuff[];
+extern const u32 gItemIcon_AquaNecklace[];
+extern const u32 gItemIcon_TempestPin[];
+extern const u32 gItemIcon_FlameBrooch[];
+extern const u32 gItemIcon_IvyBand[];
+extern const u32 gItemIcon_OceanAnklet[];
+
+extern const u32 gItemIconPalette_MagmaCuff[];
+extern const u32 gItemIconPalette_AquaNecklace[];
+extern const u32 gItemIconPalette_TempestPin[];
+extern const u32 gItemIconPalette_FlameBrooch[];
+extern const u32 gItemIconPalette_IvyBand[];
+extern const u32 gItemIconPalette_OceanAnklet[];
+
+extern const u32 gItemIcon_RubyMail[];
+extern const u32 gItemIcon_SapphireMail[];
+extern const u32 gItemIconPalette_RSMail[];
+extern const u32 gItemIcon_EmeraldMail[];
+extern const u32 gItemIcon_FireMail[];
+extern const u32 gItemIconPalette_EmeraldMail[];
+extern const u32 gItemIcon_LeafMail[];
+extern const u32 gItemIconPalette_LeafMail[];
 
 extern const u8 gMonMarkingsMenu_Gfx[];
 extern const u16 gMonMarkingsMenu_Pal[];

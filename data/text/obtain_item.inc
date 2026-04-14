@@ -1,6 +1,14 @@
 gText_ObtainedTheItem::
 	.string "Obtained the {STR_VAR_2}!$"
 
+gText_PutItemInPC::
+	.string "{PLAYER} put away the {STR_VAR_2}\n"
+	.string "in the PC since bag is full.$"
+
+gText_TooBadBagAndPCAreFull::
+	.string "Too bad!\n"
+	.string "The BAG and PC are full…$"
+
 gText_TheBagIsFull::
 	.string "The BAG is full…$"
 

@@ -36,13 +36,23 @@ EverGrandeCity_PhoebesRoom_EventScript_CloseDoor::
 	call PokemonLeague_EliteFour_EventScript_CloseDoor
 	return
 
+EverGrandeCity_PhoebesRoom_EventScript_PhoebeFirst::
+	msgbox EverGrandeCity_PhoebesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PHOEBE, EverGrandeCity_PhoebesRoom_Text_Defeat
+	return
+
+EverGrandeCity_PhoebesRoom_EventScript_PhoebeRematch::
+	msgbox EverGrandeCity_PhoebesRoom_Text_RematchSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_PHOEBE_2, EverGrandeCity_PhoebesRoom_Text_Defeat
+	return
+
 EverGrandeCity_PhoebesRoom_EventScript_Phoebe::
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_PHOEBE, EverGrandeCity_PhoebesRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
-	msgbox EverGrandeCity_PhoebesRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_PHOEBE, EverGrandeCity_PhoebesRoom_Text_Defeat
+	call_if_set FLAG_E4_REMATCH_READY, EverGrandeCity_PhoebesRoom_EventScript_PhoebeRematch
+	call_if_unset FLAG_E4_REMATCH_READY, EverGrandeCity_PhoebesRoom_EventScript_PhoebeFirst
 	goto EverGrandeCity_PhoebesRoom_EventScript_Defeated
 	end
 
@@ -68,6 +78,13 @@ EverGrandeCity_PhoebesRoom_Text_IntroSpeech:
 	.string "is extremely tight.\p"
 	.string "So, come on, just try and see if you can\n"
 	.string "even inflict damage on my POKéMON!$"
+
+EverGrandeCity_PhoebesRoom_Text_RematchSpeech:
+	.string "Haha, it's you again, {PLAYER}!\p"
+	.string "We have patiently awaited your\n"
+	.string "return. Me and my POKéMON have\l"
+	.string "been growing closer than ever.\p"
+	.string "Show me your power!$"
 
 EverGrandeCity_PhoebesRoom_Text_Defeat:
 	.string "Oh, darn.\n"

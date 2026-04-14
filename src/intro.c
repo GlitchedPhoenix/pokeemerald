@@ -1,6 +1,7 @@
 #include "global.h"
 #include "main.h"
 #include "palette.h"
+#include "reload_save.h"
 #include "scanline_effect.h"
 #include "task.h"
 #include "title_screen.h"
@@ -14,6 +15,7 @@
 #include "new_game.h"
 #include "m4a.h"
 #include "random.h"
+#include "overworld.h"
 #include "decompress.h"
 #include "constants/songs.h"
 #include "intro_credits_graphics.h"
@@ -1146,16 +1148,21 @@ static u8 SetUpCopyrightScreen(void)
 
 void CB2_InitCopyrightScreenAfterBootup(void)
 {
+	if (!gMain.state)
+	{
+		SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
+		ResetMenuAndMonGlobals();
+		Save_ResetSaveCounters();
+		LoadGameSave(SAVE_NORMAL);
+		if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
+            Sav2_ClearSetDefault();
+	}
     if (!SetUpCopyrightScreen())
     {
-        SetSaveBlocksPointers(GetSaveBlocksPointersBaseOffset());
-        ResetMenuAndMonGlobals();
-        Save_ResetSaveCounters();
-        LoadGameSave(SAVE_NORMAL);
-        if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
-            Sav2_ClearSetDefault();
         SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
         InitHeap(gHeap, HEAP_SIZE);
+		if (!(gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT) && (gSaveBlock2Ptr->quickContinue == 1))
+			SetMainCallback2(CB2_GoToMainMenu);
     }
 }
 

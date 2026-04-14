@@ -244,6 +244,15 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Storyteller
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Giddy;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedMauvilleOldMan1;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedMauvilleOldMan2;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_FortuneTeller;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ShinyLatias;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ShinyLatios;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HumanLatias;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HumanLatios;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HumanLatiasShiny;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HumanLatiosShiny;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HumanLatiasC;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HumanLatiosC;
 
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
@@ -486,6 +495,15 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_LINK_RS_MAY] =              &gObjectEventGraphicsInfo_RubySapphireMay,
     [OBJ_EVENT_GFX_LUGIA] =                    &gObjectEventGraphicsInfo_Lugia,
     [OBJ_EVENT_GFX_HOOH] =                     &gObjectEventGraphicsInfo_HoOh,
+	[OBJ_EVENT_GFX_FORTUNE_TELLER] =           &gObjectEventGraphicsInfo_FortuneTeller,
+	[OBJ_EVENT_GFX_SHINY_LATIOS] =           &gObjectEventGraphicsInfo_ShinyLatios,
+	[OBJ_EVENT_GFX_SHINY_LATIAS] =           &gObjectEventGraphicsInfo_ShinyLatias,
+	[OBJ_EVENT_GFX_HUMAN_LATIOS] =           &gObjectEventGraphicsInfo_HumanLatios,
+	[OBJ_EVENT_GFX_HUMAN_LATIAS] =           &gObjectEventGraphicsInfo_HumanLatias,
+	[OBJ_EVENT_GFX_HUMAN_LATIOS_SHINY] =           &gObjectEventGraphicsInfo_HumanLatiosShiny,
+	[OBJ_EVENT_GFX_HUMAN_LATIAS_SHINY] =           &gObjectEventGraphicsInfo_HumanLatiasShiny,
+	[OBJ_EVENT_GFX_HUMAN_LATIOS_COLORLESS] =           &gObjectEventGraphicsInfo_HumanLatiosC,
+	[OBJ_EVENT_GFX_HUMAN_LATIAS_COLORLESS] =           &gObjectEventGraphicsInfo_HumanLatiasC,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {

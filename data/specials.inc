@@ -535,3 +535,12 @@ gSpecials::
 	def_special RemoveRecordsWindow
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
+	def_special CheckQuickNurse
+	def_special GetFirstHeldItem
+	def_special GetFortuneTellerMap
+	def_special ScriptMenu_CreateArtifactMultichoice
+	def_special GetArtifactSelection
+	def_special GetRoamerShininess
+	def_special SetSeenMon
+	def_special LatiMerchantRandom
+	def_special CheckFeebasSpots

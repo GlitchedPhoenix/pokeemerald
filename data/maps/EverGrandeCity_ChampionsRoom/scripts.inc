@@ -39,16 +39,45 @@ EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace:
 
 EverGrandeCity_ChampionsRoom_EventScript_Wallace::
 	playbgm MUS_ENCOUNTER_CHAMPION, FALSE
-	msgbox EverGrandeCity_ChampionsRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
+	call_if_set FLAG_E4_REMATCH_READY, EverGrandeCity_ChampionsRoom_EventScript_WallaceRematch
+	call_if_unset FLAG_E4_REMATCH_READY, EverGrandeCity_ChampionsRoom_EventScript_WallaceFirst
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	end
+
+EverGrandeCity_ChampionsRoom_EventScript_WallaceRematch::
+	msgbox EverGrandeCity_ChampionsRoom_Text_RematchSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_WALLACE_2, EverGrandeCity_ChampionsRoom_Text_DefeatRematch
+	return
+
+EverGrandeCity_ChampionsRoom_EventScript_WallaceFirst::
+	msgbox EverGrandeCity_ChampionsRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
+	return
 
 EverGrandeCity_ChampionsRoom_EventScript_Defeated::
 	playse SE_DOOR
 	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
 	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE
 	special DrawWholeMapView
+	goto_if_set FLAG_E4_REMATCH_READY, EverGrandeCity_ChampionsRoom_EventScript_DefeatedRematch
+	goto_if_unset FLAG_E4_REMATCH_READY, EverGrandeCity_ChampionsRoom_EventScript_DefeatedFirst
+	end
+
+EverGrandeCity_ChampionsRoom_EventScript_DefeatedRematch::
+	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeechRematch, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart2
+	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExitStart
+	waitmovement 0
+	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, EverGrandeCity_ChampionsRoom_Movement_WallaceExit
+	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
+	waitmovement 0
+	warp MAP_EVER_GRANDE_CITY_HALL_OF_FAME, 7, 16
+	waitstate
+	releaseall
+	end
+
+EverGrandeCity_ChampionsRoom_EventScript_DefeatedFirst::
 	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
 	closemessage
 	playse SE_DOOR
@@ -202,6 +231,11 @@ EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart:
 	walk_in_place_faster_down
 	step_end
 
+EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart2:
+	walk_up
+	walk_up
+	step_end
+
 EverGrandeCity_ChampionsRoom_Movement_WallaceExit:
 	walk_up
 	delay_8
@@ -242,6 +276,18 @@ EverGrandeCity_ChampionsRoom_Text_IntroSpeech:
 	.string "their POKéMON in HOENN?\p"
 	.string "Show me right here and now!$"
 
+EverGrandeCity_ChampionsRoom_Text_RematchSpeech:
+	.string "WALLACE: Welcome back, {PLAYER}.\p"
+	.string "I heard of your victory against.\n"
+	.string "STEVEN at METEOR FALLS.\p"
+	.string "Your talent is simply magnificent,\n"
+	.string "more splendid than even the most\l"
+	.string "majestic of waves.\p"
+	.string "I would like to dance with you\n"
+	.string "once more, and take your measure\l"
+	.string "as the HOENN CHAMPION!\p"
+	.string "En garde!$"
+
 EverGrandeCity_ChampionsRoom_Text_Defeat:
 	.string "I, the CHAMPION, fall in defeat…\p"
 	.string "That was wonderful work.\n"
@@ -250,6 +296,11 @@ EverGrandeCity_ChampionsRoom_Text_Defeat:
 	.string "Kudos to you, {PLAYER}{KUN}!\p"
 	.string "You are a truly noble POKéMON\n"
 	.string "TRAINER!$"
+
+EverGrandeCity_ChampionsRoom_Text_DefeatRematch:
+	.string "And so, the title of CHAMPION\n"
+	.string "eludes me once again.\p"
+	.string "Truly magnificent!$"
 
 EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech:
 	.string "WALLACE: The POKéMON you sent into\n"
@@ -265,6 +316,13 @@ EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech:
 	.string "of the POKéMON LEAGUE.\p"
 	.string "I now proclaim you to be the new\n"
 	.string "HOENN region…$"
+
+EverGrandeCity_ChampionsRoom_Text_PostBattleSpeechRematch:
+	.string "WALLACE: I take it we can skip the\n"
+	.string "formalities, yes?\p"
+	.string "Let us make a record of your latest\n"
+	.string "achievement.\p"
+	.string "Onwards!$"
 
 EverGrandeCity_ChampionsRoom_Text_MayAdvice:
 	.string "MAY: {PLAYER}{KUN}!\p"

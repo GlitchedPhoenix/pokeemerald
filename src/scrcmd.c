@@ -139,6 +139,15 @@ bool8 ScrCmd_callnative(struct ScriptContext *ctx)
     return FALSE;
 }
 
+bool8 ScrCmd_checkpcspace(struct ScriptContext *ctx)
+{
+    u16 itemId = VarGet(ScriptReadHalfword(ctx));
+    u32 quantity = VarGet(ScriptReadHalfword(ctx));
+
+    gSpecialVar_Result = CheckPCHasSpace(itemId, (u8)quantity);
+    return FALSE;
+}
+
 bool8 ScrCmd_waitstate(struct ScriptContext *ctx)
 {
     ScriptContext_Stop();

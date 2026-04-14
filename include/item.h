@@ -46,6 +46,7 @@ bool8 HasAtLeastOneBerry(void);
 bool8 CheckBagHasSpace(u16 itemId, u16 count);
 bool8 AddBagItem(u16 itemId, u16 count);
 bool8 RemoveBagItem(u16 itemId, u16 count);
+bool8 CheckPCHasSpace(u16 itemId, u16 count);
 u8 GetPocketByItemId(u16 itemId);
 void ClearItemSlots(struct ItemSlot *itemSlots, u8 itemCount);
 u8 CountUsedPCItemSlots(void);
@@ -75,6 +76,7 @@ ItemUseFunc GetItemFieldFunc(u16 itemId);
 u8 GetItemBattleUsage(u16 itemId);
 ItemUseFunc GetItemBattleFunc(u16 itemId);
 u8 GetItemSecondaryId(u16 itemId);
+void ItemId_GetHoldEffectParam_Script();
 
 /* Expands to:
  * enum

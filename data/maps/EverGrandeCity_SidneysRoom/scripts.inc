@@ -42,13 +42,23 @@ EverGrandeCity_SidneysRoom_EventScript_WalkInCloseDoor::
 	releaseall
 	end
 
+EverGrandeCity_SidneysRoom_EventScript_SidneyFirst::
+	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
+	return
+
+EverGrandeCity_SidneysRoom_EventScript_SidneyRematch::
+	msgbox EverGrandeCity_SidneysRoom_Text_RematchSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_SIDNEY_2, EverGrandeCity_SidneysRoom_Text_Defeat
+	return
+
 EverGrandeCity_SidneysRoom_EventScript_Sidney::
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_ELITE_4_SIDNEY, EverGrandeCity_SidneysRoom_EventScript_PostBattleSpeech
 	playbgm MUS_ENCOUNTER_ELITE_FOUR, FALSE
-	msgbox EverGrandeCity_SidneysRoom_Text_IntroSpeech, MSGBOX_DEFAULT
-	trainerbattle_no_intro TRAINER_SIDNEY, EverGrandeCity_SidneysRoom_Text_Defeat
+	call_if_set FLAG_E4_REMATCH_READY, EverGrandeCity_SidneysRoom_EventScript_SidneyRematch
+	call_if_unset FLAG_E4_REMATCH_READY, EverGrandeCity_SidneysRoom_EventScript_SidneyFirst
 	goto EverGrandeCity_SidneysRoom_EventScript_Defeated
 	end
 
@@ -73,6 +83,12 @@ EverGrandeCity_SidneysRoom_Text_IntroSpeech:
 	.string "All right! You and me, let's enjoy\n"
 	.string "a battle that can only be staged\l"
 	.string "here in the POKéMON LEAGUE!$"
+
+EverGrandeCity_SidneysRoom_Text_RematchSpeech:
+	.string "Hey, it's {PLAYER}!\n"
+	.string "You back in here for another go?\p"
+	.string "Nice! Real nice!\p"
+	.string "Alright then, gimme all you got!$"
 
 EverGrandeCity_SidneysRoom_Text_Defeat:
 	.string "Well, how do you like that? I lost!\n"

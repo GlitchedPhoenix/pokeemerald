@@ -328,6 +328,13 @@ static void Cmd_finishaction(void);
 static void Cmd_finishturn(void);
 static void Cmd_trainerslideout(void);
 
+static const u16 sBadgeFlags[8] = {
+    FLAG_BADGE01_GET, FLAG_BADGE02_GET, FLAG_BADGE03_GET, FLAG_BADGE04_GET,
+    FLAG_BADGE05_GET, FLAG_BADGE06_GET, FLAG_BADGE07_GET, FLAG_BADGE08_GET,
+};
+
+static const u16 sWhiteOutBadgeMoney[9] = { 8, 16, 24, 36, 48, 60, 80, 100, 120 };
+
 void (*const gBattleScriptingCommandsTable[])(void) =
 {
     [B_SCR_OP_ATTACKCANCELER]                  = Cmd_attackcanceler,                          //0x0
@@ -2177,7 +2184,7 @@ static void Cmd_waitmessage(void)
         else
         {
             u16 toWait = T2_READ_16(gBattlescriptCurrInstr + 1);
-            if (++gPauseCounterBattle >= toWait)
+            if (++gPauseCounterBattle >= toWait || (JOY_NEW(A_BUTTON | B_BUTTON)))
             {
                 gPauseCounterBattle = 0;
                 gBattlescriptCurrInstr += 3;
@@ -3298,10 +3305,12 @@ static void Cmd_getexp(void)
         {
             u16 calculatedExp;
             s32 viaSentIn;
+			gExpShareCheck = FALSE;
 
             for (viaSentIn = 0, i = 0; i < PARTY_SIZE; i++)
             {
-                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE || GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
+                if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE || GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
+                     || GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
                     continue;
                 if (gBitTable[i] & sentIn)
                     viaSentIn++;
@@ -3319,23 +3328,21 @@ static void Cmd_getexp(void)
 
             calculatedExp = gSpeciesInfo[gBattleMons[gBattlerFainted].species].expYield * gBattleMons[gBattlerFainted].level / 7;
 
-            if (viaExpShare) // at least one mon is getting exp via exp share
-            {
-                *exp = SAFE_DIV(calculatedExp / 2, viaSentIn);
-                if (*exp == 0)
-                    *exp = 1;
+			if (FlagGet(FLAG_MAGMA_BRACER_ACTIVE))
+			{
+				if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+					calculatedExp *= 2;
+				else
+					calculatedExp = calculatedExp * 3 / 2;
+			}
 
-                gExpShareExp = calculatedExp / 2 / viaExpShare;
-                if (gExpShareExp == 0)
-                    gExpShareExp = 1;
-            }
-            else
-            {
-                *exp = SAFE_DIV(calculatedExp, viaSentIn);
-                if (*exp == 0)
-                    *exp = 1;
-                gExpShareExp = 0;
-            }
+			gExpShareExp = calculatedExp / 2;
+			if (gExpShareExp == 0)
+				gExpShareExp = 1;
+
+			*exp = max(SAFE_DIV(calculatedExp, viaSentIn), gExpShareExp);
+			if (*exp == 0)
+				*exp = 1;
 
             gBattleScripting.getexpState++;
             gBattleStruct->expGetterMonId = 0;
@@ -3352,15 +3359,19 @@ static void Cmd_getexp(void)
             else
                 holdEffect = GetItemHoldEffect(item);
 
-            if (holdEffect != HOLD_EFFECT_EXP_SHARE && !(gBattleStruct->sentInPokes & 1))
+            if (holdEffect != HOLD_EFFECT_EXP_SHARE && (gExpShareCheck == ((gBattleStruct->sentInPokes & (1 << gBattleStruct->expGetterMonId)) != 0)))
             {
-                *(&gBattleStruct->sentInPokes) >>= 1;
                 gBattleScripting.getexpState = 5;
                 gBattleMoveDamage = 0; // used for exp
             }
             else if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) == MAX_LEVEL)
             {
-                *(&gBattleStruct->sentInPokes) >>= 1;
+                gBattleScripting.getexpState = 5;
+                gBattleMoveDamage = 0; // used for exp
+            }
+			else if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPECIES) == SPECIES_NONE 
+            || GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_IS_EGG))
+            {
                 gBattleScripting.getexpState = 5;
                 gBattleMoveDamage = 0; // used for exp
             }
@@ -3376,8 +3387,10 @@ static void Cmd_getexp(void)
 
                 if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP))
                 {
-                    if (gBattleStruct->sentInPokes & 1)
+                    if (gBattleStruct->sentInPokes & (1 << gBattleStruct->expGetterMonId))
                         gBattleMoveDamage = *exp;
+					else if (gExpShareCheck)
+                        gBattleMoveDamage += gExpShareExp;
                     else
                         gBattleMoveDamage = 0;
 
@@ -3426,10 +3439,10 @@ static void Cmd_getexp(void)
                     PREPARE_STRING_BUFFER(gBattleTextBuff2, i);
                     PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff3, 5, gBattleMoveDamage);
 
-                    PrepareStringBattle(STRINGID_PKMNGAINEDEXP, gBattleStruct->expGetterBattlerId);
+					if (gBattleStruct->sentInPokes & (1 << gBattleStruct->expGetterMonId))
+						PrepareStringBattle(STRINGID_PKMNGAINEDEXP, gBattleStruct->expGetterBattlerId);
                     MonGainEVs(&gPlayerParty[gBattleStruct->expGetterMonId], gBattleMons[gBattlerFainted].species);
                 }
-                gBattleStruct->sentInPokes >>= 1;
                 gBattleScripting.getexpState++;
             }
         }
@@ -3522,8 +3535,29 @@ static void Cmd_getexp(void)
             gBattleStruct->expGetterMonId++;
             if (gBattleStruct->expGetterMonId < PARTY_SIZE)
                 gBattleScripting.getexpState = 2; // loop again
-            else
-                gBattleScripting.getexpState = 6; // we're done
+            else{
+                s32 totalMon = 0;
+                s32 viaSentIn = 0;
+                sentIn = gSentPokesToOpponent[(gBattlerFainted & 2) >> 1];
+                for (viaSentIn = 0, i = 0; i < PARTY_SIZE; i++)  // To see if every mon has seen battle
+                {
+                    if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE || GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
+                    || GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
+                        continue;
+                    totalMon++;
+                    if (gBitTable[i] & sentIn)
+                        viaSentIn++;
+                }
+                if (!gExpShareCheck && gSaveBlock2Ptr->expAll && totalMon>viaSentIn){
+                    gExpShareCheck = TRUE;
+                    gBattleStruct->expGetterMonId = 0;
+                    PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff3, 5, gExpShareExp);
+                    PrepareStringBattle(STRINGID_PKMNGAINEDEXPALL, gBattleStruct->expGetterBattlerId);
+                    gBattleScripting.getexpState = 2; // loop again
+                }
+                else
+                    gBattleScripting.getexpState = 6; // we're done
+            }													
         }
         break;
     case 6: // increment instruction
@@ -3926,7 +3960,7 @@ static void Cmd_pause(void)
     if (gBattleControllerExecFlags == 0)
     {
         u16 value = T2_READ_16(gBattlescriptCurrInstr + 1);
-        if (++gPauseCounterBattle >= value)
+        if (++gPauseCounterBattle >= value || (JOY_NEW(A_BUTTON | B_BUTTON)))
         {
             gPauseCounterBattle = 0;
             gBattlescriptCurrInstr += 3;
@@ -5558,7 +5592,7 @@ static void Cmd_yesnoboxstoplearningmove(void)
         else if (JOY_NEW(B_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            gBattlescriptCurrInstr = gBattlescriptCurrInstr += 5;
             HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
         }
         break;
@@ -5644,12 +5678,38 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
 
 static void Cmd_getmoneyreward(void)
 {
-    u32 moneyReward = GetTrainerMoneyToGive(gTrainerBattleOpponent_A);
-    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
-        moneyReward += GetTrainerMoneyToGive(gTrainerBattleOpponent_B);
+    u32 money;
+    u8 sPartyLevel = 1;
 
-    AddMoney(&gSaveBlock1Ptr->money, moneyReward);
-    PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff1, 5, moneyReward);
+    if (gBattleOutcome == B_OUTCOME_WON)
+    {
+        money = GetTrainerMoneyToGive(gTrainerBattleOpponent_A);
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+            money += GetTrainerMoneyToGive(gTrainerBattleOpponent_B);
+        AddMoney(&gSaveBlock1Ptr->money, money);
+    }
+    else
+    {
+        s32 i, count;
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+             && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
+            {
+                if (GetMonData(&gPlayerParty[i], MON_DATA_LEVEL) > sPartyLevel)
+                    sPartyLevel = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            }
+        }
+        for (count = 0, i = 0; i < ARRAY_COUNT(sBadgeFlags); i++)
+        {
+            if (FlagGet(sBadgeFlags[i]) == TRUE)
+                ++count;
+        }
+        money = sWhiteOutBadgeMoney[count] * sPartyLevel;
+        RemoveMoney(&gSaveBlock1Ptr->money, money);
+    }
+
+   PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff1, 5, money);
 
     gBattlescriptCurrInstr++;
 }
@@ -10000,6 +10060,12 @@ static void Cmd_handleballthrow(void)
 
         if (gBattleMons[gBattlerTarget].status1 & (STATUS1_SLEEP | STATUS1_FREEZE))
             odds *= 2;
+		if (FlagGet(FLAG_MAGMA_BRACER_ACTIVE))
+		{
+			odds *= 2;
+			if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+				odds = (odds * 3) / 2;
+		}
         if (gBattleMons[gBattlerTarget].status1 & (STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON))
             odds = (odds * 15) / 10;
 

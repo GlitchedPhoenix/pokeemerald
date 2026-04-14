@@ -29,6 +29,7 @@
 #include "party_menu.h"
 #include "pokeblock.h"
 #include "pokemon.h"
+#include "pokedex.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
 #include "rayquaza_scene.h"
@@ -477,7 +478,7 @@ bool32 ShouldDoRivalRayquazaCall(void)
 
 bool32 ShouldDoStevenMeteoriteCall(void)
 {
-    if (FlagGet(FLAG_SYS_NATIONAL_DEX) && !FlagGet(FLAG_RECEIVED_METEORITE_CALL))
+    if (FlagGet(FLAG_BADGE08_GET) && !FlagGet(FLAG_RECEIVED_METEORITE_CALL))
     {
         switch (gMapHeader.mapType)
         {
@@ -988,6 +989,27 @@ u8 GetLeadMonFriendshipScore(void)
         return FRIENDSHIP_1_TO_49;
 
     return FRIENDSHIP_NONE;
+}
+
+u8 GetFirstHeldItem(void)
+{
+    struct Pokemon *pokemon = &gPlayerParty[GetLeadMonIndex()];
+    return GetMonData(pokemon, MON_DATA_HELD_ITEM);
+}
+
+void SetSeenMon(void)
+{
+    GetSetPokedexFlag(SpeciesToNationalPokedexNum(gSpecialVar_0x8004), FLAG_SET_SEEN);
+}
+
+u8 GetFortuneTellerMap(void)
+{
+    if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SOOTOPOLIS_CITY))
+		return 19;
+	else if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FORTREE_CITY))
+		return 8;
+	else
+		return 9;
 }
 
 static void CB2_FieldShowRegionMap(void)
@@ -3425,6 +3447,16 @@ void SetPCBoxToSendMon(u8 boxId)
 u16 GetPCBoxToSendMon(void)
 {
     return sPCBoxToSendMon;
+}
+
+bool8 LatiMerchantRandom(void)
+{
+	u16 randomNumber = (Random()%(VarGet(VAR_LATI_PROGRESS)));
+	
+	if (randomNumber == 0)
+		return TRUE;
+	else
+		return FALSE;
 }
 
 bool8 ShouldShowBoxWasFullMessage(void)

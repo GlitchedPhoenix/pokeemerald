@@ -525,7 +525,13 @@ struct SaveBlock2
              //u16 padding1:4;
              //u16 padding2;
     /*0x18*/ struct Pokedex pokedex;
-    /*0x90*/ u8 filler_90[0x8];
+	/*0x90*/ u8 quickNurse:1;
+			 u8 permaRun:1;
+			 u8 quickContinue:2;
+			 u8 silentPokenav:1;
+			 u8 expAll:1;
+			 u8 filler_88:2;
+    /*0x90*/ u8 filler_90[0x7];
     /*0x98*/ struct Time localTimeOffset;
     /*0xA0*/ struct Time lastBerryTreeUpdate;
     /*0xA8*/ u32 gcnLinkFlags; // Read by Pokémon Colosseum/XD

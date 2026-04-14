@@ -20,6 +20,7 @@
 #include "match_call.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "pokemon.h"
 #include "safari_zone.h"
 #include "script.h"
@@ -29,9 +30,11 @@
 #include "trainer_see.h"
 #include "trainer_hill.h"
 #include "wild_encounter.h"
+#include "constants/battle.h"
 #include "constants/event_bg.h"
 #include "constants/event_objects.h"
 #include "constants/field_poison.h"
+#include "constants/party_menu.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
@@ -69,6 +72,8 @@ static bool8 TryStartMiscWalkingScripts(u16);
 static bool8 TryStartStepCountScript(u16);
 static void UpdateFriendshipStepCounter(void);
 static bool8 UpdatePoisonStepCounter(void);
+static void TryFlameBroochStepCount(void);
+static void DoFlameBroochHeal(void);
 
 void FieldClearPlayerInput(struct FieldInput *input)
 {
@@ -140,6 +145,57 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
 #endif
 }
 
+static void TryFlameBroochStepCount(void)
+{
+	if (FlagGet(FLAG_FLAME_BROOCH_ACTIVE))
+	{
+		u16 *ptr;
+		u8 steps = 16;
+		
+		if (FlagGet(FLAG_OCEAN_ANKLET_ACTIVE))
+			steps = 8;
+		
+		ptr = GetVarPointer(VAR_FLAME_BROOCH_STEP_COUNTER);
+        (*ptr)++;
+        (*ptr) %= steps;
+		
+		if (*ptr == 0)
+		{
+			DoFlameBroochHeal();
+		}
+	}
+}
+
+static void DoFlameBroochHeal(void)
+{
+	int i;
+    u32 hp;
+    struct Pokemon *pokemon = gPlayerParty;
+	u32 status;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(pokemon, MON_DATA_SANITY_HAS_SPECIES))
+        {
+			hp = GetMonData(pokemon, MON_DATA_HP);
+			status = GetMonData(pokemon, MON_DATA_STATUS, 0);
+			
+			if (GetAilmentFromStatus(GetMonData(pokemon, MON_DATA_STATUS)) != AILMENT_NONE)
+			{
+				status &= ~STATUS1_ANY;
+				SetMonData(pokemon, MON_DATA_STATUS, &status);
+			}
+			
+			if (hp < GetMonData(pokemon, MON_DATA_MAX_HP))
+			{
+				hp++;
+				SetMonData(pokemon, MON_DATA_HP, &hp);
+			}
+        }
+        pokemon++;
+    }
+}
+
 int ProcessPlayerFieldInput(struct FieldInput *input)
 {
     struct MapPosition position;
@@ -165,6 +221,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     {
         IncrementGameStat(GAME_STAT_STEPS);
         IncrementBirthIslandRockStepCount();
+		TryFlameBroochStepCount();
         if (TryStartStepBasedScript(&position, metatileBehavior, playerDirection) == TRUE)
             return TRUE;
     }
@@ -656,6 +713,11 @@ static void UpdateFriendshipStepCounter(void)
 void ClearPoisonStepCounter(void)
 {
     VarSet(VAR_POISON_STEP_COUNTER, 0);
+}
+
+void ClearFlameBroochStepCounter(void)
+{
+    VarSet(VAR_FLAME_BROOCH_STEP_COUNTER, 0);
 }
 
 static bool8 UpdatePoisonStepCounter(void)

@@ -736,3 +736,34 @@ const u32 gItemIconPalette_MagmaEmblem[] = INCBIN_U32("graphics/items/icon_palet
 
 const u32 gItemIcon_OldSeaMap[] = INCBIN_U32("graphics/items/icons/old_sea_map.4bpp.lz");
 const u32 gItemIconPalette_OldSeaMap[] = INCBIN_U32("graphics/items/icon_palettes/old_sea_map.gbapal.lz");
+
+// New mail
+
+const u32 gItemIcon_RubyMail[] = INCBIN_U32("graphics/items/icons/ruby_mail.4bpp.lz");
+const u32 gItemIcon_SapphireMail[] = INCBIN_U32("graphics/items/icons/sapphire_mail.4bpp.lz");
+const u32 gItemIconPalette_RSMail[] = INCBIN_U32("graphics/items/icons/ruby_mail.gbapal.lz");
+const u32 gItemIcon_EmeraldMail[] = INCBIN_U32("graphics/items/icons/emerald_mail.4bpp.lz");
+const u32 gItemIcon_FireMail[] = INCBIN_U32("graphics/items/icons/fire_mail.4bpp.lz");
+const u32 gItemIconPalette_EmeraldMail[] = INCBIN_U32("graphics/items/icons/fire_mail.gbapal.lz");
+const u32 gItemIcon_LeafMail[] = INCBIN_U32("graphics/items/icons/leaf_mail.4bpp.lz");
+const u32 gItemIconPalette_LeafMail[] = INCBIN_U32("graphics/items/icons/leaf_mail.gbapal.lz");
+
+// Artifact items
+
+const u32 gItemIcon_MagmaCuff[] = INCBIN_U32("graphics/items/icons/magma_cuff.4bpp.lz");
+const u32 gItemIconPalette_MagmaCuff[] = INCBIN_U32("graphics/items/icons/magma_cuff.gbapal.lz");
+
+const u32 gItemIcon_AquaNecklace[] = INCBIN_U32("graphics/items/icons/aqua_necklace.4bpp.lz");
+const u32 gItemIconPalette_AquaNecklace[] = INCBIN_U32("graphics/items/icons/aqua_necklace.gbapal.lz");
+
+const u32 gItemIcon_TempestPin[] = INCBIN_U32("graphics/items/icons/tempest_pin.4bpp.lz");
+const u32 gItemIconPalette_TempestPin[] = INCBIN_U32("graphics/items/icons/tempest_pin.gbapal.lz");
+
+const u32 gItemIcon_FlameBrooch[] = INCBIN_U32("graphics/items/icons/flame_brooch.4bpp.lz");
+const u32 gItemIconPalette_FlameBrooch[] = INCBIN_U32("graphics/items/icons/flame_brooch.gbapal.lz");
+
+const u32 gItemIcon_IvyBand[] = INCBIN_U32("graphics/items/icons/ivy_band.4bpp.lz");
+const u32 gItemIconPalette_IvyBand[] = INCBIN_U32("graphics/items/icons/ivy_band.gbapal.lz");
+
+const u32 gItemIcon_OceanAnklet[] = INCBIN_U32("graphics/items/icons/ocean_anklet.4bpp.lz");
+const u32 gItemIconPalette_OceanAnklet[] = INCBIN_U32("graphics/items/icons/ocean_anklet.gbapal.lz");

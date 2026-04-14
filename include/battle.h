@@ -619,6 +619,7 @@ extern u16 gBattle_BG2_Y;
 extern u16 gBattle_BG3_X;
 extern u16 gBattle_BG3_Y;
 extern u16 gBattle_WIN0H;
+extern bool8 gExpShareCheck;
 extern u16 gBattle_WIN0V;
 extern u16 gBattle_WIN1H;
 extern u16 gBattle_WIN1V;
